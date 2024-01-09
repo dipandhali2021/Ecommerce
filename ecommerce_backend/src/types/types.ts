@@ -11,7 +11,10 @@ export interface NewUserRequstBody {
 }
 
 export type ControllerType = (
-  req: Request<{}, {}, NewUserRequstBody>,
+  req: Request<{id:string}, {}, NewUserRequstBody>,
   res: Response,
   next: NextFunction
 ) => Promise<void | Response<any, Record<string, any>>>;
+
+
+
