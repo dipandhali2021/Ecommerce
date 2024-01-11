@@ -45,7 +45,6 @@ export const getAllUsers = tryCatch(async (req, res, next) => {
   });
 });
 
-
 export const getUser = tryCatch(async (req, res, next) => {
   const id = req.params.id;
   const user = await User.findById(id);
@@ -56,14 +55,15 @@ export const getUser = tryCatch(async (req, res, next) => {
   });
 });
 
-
 export const deleteUser = tryCatch(async (req, res, next) => {
   const id = req.params.id;
   const user = await User.findById(id);
   if (!user) return next(new ErrorHandler("User not found", 404));
-  await user.deleteOne()
+  await user.deleteOne();
   return res.status(200).json({
     status: "success",
     user,
   });
 });
+
+
