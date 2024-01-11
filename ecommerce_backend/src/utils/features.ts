@@ -1,28 +1,62 @@
-import  mongoose  from "mongoose"
-import { invalidateCacheProps } from "../types/types.js"
-import { myCache } from "../app.js"
-import { Product } from "../models/product.js"
+import mongoose from "mongoose";
+import { myCache } from "../app.js";
+import { Product } from "../models/product.js";
+import { OrderItemType, invalidateCacheProps } from "../types/types.js";
+import ErrorHandler from "./utility-class.js";
 
-export const connectDB = async () => {
+export const connectDB = async (uri: string) => {
+  mongoose
+    .connect(uri, {
+      dbName: "ecommerce",
+    })
+    .then((c) => console.log(`connected to ${c.connection.host}`))
+    .catch((err) => console.log(err));
+};
 
-    mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.9.0", {
-        dbName: "ecommerce",
+export const invalidateCache = async ({
+  product,
+  admin,
+  order,
+  userId,
+  orderId,
+  productId
+}: invalidateCacheProps) => {
+  if (product) {
+    const productKeys: string[] = [
+      "latest-product",
+      "categories",
+      "all-products",
+      
+    ];
 
-    }).then((c) => console.log(`connected to ${c.connection.host}`))
-    .catch((err) => console.log(err))
-}
-
-
-export const invalidateCache =async ({product,admin,order}:invalidateCacheProps) => {
-    if(product){
-        const productKeys:string[] = ["latest-product","categories","all-products"]
-        const products = await Product.find({}).select("_id")
-        products.forEach((i) => {
-            productKeys.push(`product-${i._id}`)
-
-        })
-        myCache.del(productKeys)
+    if(typeof productId === "string"){
+      productKeys.push(`product-${productId}`)
     }
-    if(order){}
-    if(admin){}
-}
+    if(typeof productId === "object"){
+      productKeys.forEach((i)=>productKeys.push(`product-${i}`))
+    }
+    
+    myCache.del(productKeys);
+  }
+  if (order) {
+    const orderKeys: string[] = [
+      "all-orders",
+      `my-orders-${userId}`,
+      `order-${orderId}`,
+    ];
+    
+    myCache.del(orderKeys);
+  }
+  if (admin) {
+  }
+};
+
+export const reduceStock = async (orderItems: OrderItemType[]) => {
+  for (let i = 0; i < orderItems.length; i++) {
+    const order = orderItems[i];
+    const product = await Product.findById(order.productId);
+    if (!product) throw new ErrorHandler("product not found", 404);
+    product.stock -= order.quantity;
+    await product.save();
+  }
+};
