@@ -11,13 +11,17 @@ import dashboardRoute from "./routes/stats.js";
 import { connectDB } from "./utils/features.js";
 import { ErrorMiddleware } from "./middlewares/error.js";
 import morgan from "morgan";
+import Stripe from "stripe";
 config({
   path: "./.env",
 });
 
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI || "";
+const stripeKey = process.env.STRIPE_KEY || "";
 connectDB(mongoURI);
+export const stripe  = new Stripe(stripeKey)
+
 export const myCache = new NodeCache();
 const app = express();
 
