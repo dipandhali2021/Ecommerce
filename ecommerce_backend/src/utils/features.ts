@@ -13,7 +13,7 @@ export const connectDB = async (uri: string) => {
     .catch((err) => console.log(err));
 };
 
-export const invalidateCache = async ({
+export const invalidateCache = ({
   product,
   admin,
   order,
@@ -47,6 +47,14 @@ export const invalidateCache = async ({
     myCache.del(orderKeys);
   }
   if (admin) {
+    const adminKeys: string[] = [
+      "admin-stats",
+      "admin-pie-charts",
+      "admin-bar-charts",
+      "admin-line-charts",
+    ];
+
+    myCache.del(adminKeys);
   }
 };
 
@@ -60,9 +68,63 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
   }
 };
 
-
 export const calculatePercentage = (thisMonth: number, lastMonth: number) => {
-  if(lastMonth === 0) return Number((thisMonth * 100).toFixed(0));
-  const percent = ((thisMonth - lastMonth) / lastMonth) * 100;
+  if (lastMonth === 0) return Number((thisMonth * 100).toFixed(0));
+  const percent = (thisMonth / lastMonth) * 100;
   return Number(percent.toFixed(0));
+};
+
+export const getInventories = async ({
+  categories,
+  productCount,
+}: {
+  categories: string[];
+  productCount: number;
+}) => {
+  const categoriesCountPromise = categories.map((category) =>
+    Product.countDocuments({ category })
+  );
+
+  const categoriesCount = await Promise.all(categoriesCountPromise);
+
+  const categoryCount: Record<string, number>[] = [];
+
+  categories.forEach((category, index) => {
+    categoryCount.push({
+      [category]: Math.round((categoriesCount[index] / productCount) * 100),
+    });
+  });
+  return categoryCount;
+};
+
+export interface MyDocument extends Document {
+  createdAt: Date;
+  discount?: number;
+  total?: number;
+}
+
+type FuncProps = {
+  length: number;
+  docArr: MyDocument[];
+  today: Date;
+  property?: "discount" | "total";
+};
+
+export const getChartData = ({
+  length,
+  docArr,
+  today,
+  property,
+}: FuncProps) => {
+  const data = new Array(length).fill(0);
+
+  docArr.forEach((i) => {
+    const creationDate = i.createdAt;
+    const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
+    if (monthDiff < length) {
+      data[length - monthDiff - 1] += property ? i[property]! : 1;
+    }
+  });
+
+  return data;
 };
