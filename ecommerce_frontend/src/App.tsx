@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
 import { Toaster } from "react-hot-toast";
-
-
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { userExists, userNotExists } from "./redux/reducer/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "./redux/api/userAPI";
+import { userReducerInitialState } from "./types/reducer-types";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -14,7 +17,6 @@ const Search = lazy(() => import("./pages/Search"));
 const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrderDetails = lazy(() => import("./pages/order-details"));
-
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -36,18 +38,31 @@ const TransactionManagement = lazy(
 );
 
 const App = () => {
-  return (
+  const {user,loading} = useSelector((state:{userReducer:userReducerInitialState})=> state.userReducer)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid)
+        dispatch(userExists(data.user))
+      } else {
+        dispatch(userNotExists());
+      }
+    });
+  }, []);
+
+
+
+  return loading? <Loader/>:(
     <Router>
-      <Header />
+      <Header user={user} />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
-
           {/* no logged in route */}
           <Route path="/login" element={<Login />} />
-
           {/* Logged In User Routes */}
           <Route>
             <Route path="/shipping" element={<Shipping />} />
@@ -90,9 +105,9 @@ const App = () => {
           ;
         </Routes>
       </Suspense>
-      <Toaster position="bottom-center"/>
+      <Toaster position="bottom-center" />
     </Router>
-  );
+  )
 };
 
 export default App;

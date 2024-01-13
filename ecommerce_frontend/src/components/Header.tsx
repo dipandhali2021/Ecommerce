@@ -1,33 +1,42 @@
 import { useState } from "react";
-import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import {
+  FaSearch,
+  FaShoppingBag,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUser,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { User } from "../types/types";
 
-const user = {
-  _id: "",
-  role: "",
-};
 
-const Header = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const logoutHandler = () => {
-        // logout
-        setIsOpen(false);
-    }
 
+interface PropsType {
+  user:User|null;
+}
+
+const Header = ({user}:PropsType) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const logoutHandler = () => {
+    // logout
+    setIsOpen(false);
+  };
 
   return (
     <nav className="header">
-      <Link onClick={()=>setIsOpen(false)} to={"/"}>HOME</Link>
-      <Link onClick={()=>setIsOpen(false)} to={"/search"}>
+      <Link onClick={() => setIsOpen(false)} to={"/"}>
+        HOME
+      </Link>
+      <Link onClick={() => setIsOpen(false)} to={"/search"}>
         <FaSearch />
       </Link>
-      <Link onClick={()=>setIsOpen(false)} to={"/cart"}>
+      <Link onClick={() => setIsOpen(false)} to={"/cart"}>
         <FaShoppingBag />
       </Link>
 
       {user?._id ? (
         <>
-          <button onClick={()=>setIsOpen((prev)=> !prev)}>
+          <button onClick={() => setIsOpen((prev) => !prev)}>
             <FaUser />
           </button>
           <dialog open={isOpen}>
@@ -36,7 +45,9 @@ const Header = () => {
                 <Link to={"/admin/dashboard"}>Admin</Link>
               )}
 
-              <Link onClick={()=>setIsOpen(false)} to={"/orders"}>Orders</Link>
+              <Link onClick={() => setIsOpen(false)} to={"/orders"}>
+                Orders
+              </Link>
               <button onClick={logoutHandler}>
                 <FaSignOutAlt />
               </button>
@@ -44,7 +55,7 @@ const Header = () => {
           </dialog>
         </>
       ) : (
-        <Link onClick={()=>setIsOpen(false)} to={"/login"}>
+        <Link onClick={() => setIsOpen(false)} to={"/login"}>
           <FaSignInAlt />
         </Link>
       )}
