@@ -10,6 +10,7 @@ import paymentRoute from "./routes/payment.js";
 import dashboardRoute from "./routes/stats.js";
 import { connectDB } from "./utils/features.js";
 import { ErrorMiddleware } from "./middlewares/error.js";
+import cors from 'cors';
 import morgan from "morgan";
 import Stripe from "stripe";
 config({
@@ -27,6 +28,8 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors());
+
 
 app.get("/", (req, res) => {
   res.send("API is running");
