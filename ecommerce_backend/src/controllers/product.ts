@@ -10,6 +10,7 @@ import ErrorHandler from "../utils/utility-class.js";
 import { rm } from "fs";
 import { myCache } from "../app.js";
 import { invalidateCache } from "../utils/features.js";
+import { error } from "console";
 // import {faker} from "@faker-js/faker";
 
 //revalidate on new update or delete product and new order
@@ -22,6 +23,7 @@ export const getLatestProducts = tryCatch(async (req, res, next) => {
     products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
     myCache.set("latest-product", JSON.stringify(products));
   }
+  invalidateCache({ product: true ,admin: true});
   return res.status(200).json({
     status: "success",
     products,
@@ -147,9 +149,13 @@ export const deleteProduct = tryCatch(async (req, res, next) => {
  invalidateCache({ product: true ,admin: true,productId:String(product._id)});
   return res.status(200).json({
     status: "success",
+    message: "Product deleted successfully",
     product,
   });
 });
+
+
+
 
 export const getAllProducts = tryCatch(
   async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {

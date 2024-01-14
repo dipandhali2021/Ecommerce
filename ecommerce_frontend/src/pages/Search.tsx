@@ -1,12 +1,41 @@
 import { useState } from "react";
 import ProductCard from "../components/product-card";
+import {
+  useAllcategoriesQuery,
+  useSearchProductsQuery,
+} from "../redux/api/productAPI";
+import { CustomError } from "../types/api-types";
+import toast from "react-hot-toast";
+import { Skeleton } from "../components/Loader";
 
 const Search = () => {
+  const {
+    data: categoriesResponse,
+    isLoading: loadingCategories,
+    isError: productIsError,
+    error: productError,
+  } = useAllcategoriesQuery("");
+
+  if (productIsError) {
+    const err = productError as CustomError;
+    toast.error(err.data.message);
+  }
+
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [maxPrice, setMaxPrice] = useState(1000000);
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
+
+  const { isLoading: productLoading, data: searchData } =
+    useSearchProductsQuery({
+      search,
+      sort,
+      category,
+      page,
+      price: maxPrice,
+    });
+
   const addToCartHandler = () => {};
 
   const isPrevPage = page < 2;
@@ -39,9 +68,13 @@ const Search = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="">All</option>
-            <option value="">Sample1</option>
-            <option value="">Sample2</option>
+            <option value="">ALL</option>
+            {!loadingCategories &&
+              categoriesResponse?.categories.map((i) => (
+                <option key={i} value={i}>
+                  {i.toUpperCase()}
+                </option>
+              ))}
           </select>
         </div>
       </aside>
@@ -54,34 +87,43 @@ const Search = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <div className="search-product-list">
-          <ProductCard
-            productId="awdwfwf"
-            name="mackbook"
-            price={4545}
-            stock={243}
-            handler={addToCartHandler}
-            photo="https://m.media-amazon.com/images/I/51G0815SGQL.jpg"
-          />
-        </div>
+        {productLoading ? (
+          <Skeleton length={10} />
+        ) : (
+          <div className="search-product-list">
+            {searchData?.products.map((i) => (
+              <ProductCard
+                key={i._id}
+                productId={i._id}
+                name={i.name}
+                price={i.price}
+                stock={i.stock}
+                handler={addToCartHandler}
+                photo={i.photo}
+              />
+            ))}
+          </div>
+        )}
 
-        <article>
-          <button
-            disabled={isPrevPage}
-            onClick={() => setPage((prev) => prev - 1)}
+        {searchData && searchData.totalPage > 1 && (
+          <article>
+            <button
+              disabled={isPrevPage}
+              onClick={() => setPage((prev) => prev - 1)}
             >
-            Prev
-          </button>
-          <span>
-            {page} of {5}
-          </span>
-          <button
-            disabled={isNextPage}
-            onClick={() => setPage((prev) => prev + 1)}
-          >
-            Next
-          </button>
-        </article>
+              Prev
+            </button>
+            <span>
+              {page} of {searchData.totalPage}
+            </span>
+            <button
+              disabled={isNextPage}
+              onClick={() => setPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </article>
+        )}
       </main>
     </div>
   );
