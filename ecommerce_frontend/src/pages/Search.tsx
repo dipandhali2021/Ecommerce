@@ -41,11 +41,11 @@ const Search = () => {
       price: maxPrice,
     });
 
-    const addToCartHandler = (cartItem: CartItem) => {
-      if (cartItem?.stock < 1) return toast.error("Out of Stock");
-      dispatch(addToCart(cartItem));
-      toast.success("Added to Cart");
-    };
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem?.stock < 1) return toast.error("Out of Stock");
+    dispatch(addToCart(cartItem));
+    toast.success("Added to Cart");
+  };
 
   const isPrevPage = page < 2;
   const isNextPage = page > 4;
