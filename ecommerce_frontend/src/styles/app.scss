@@ -46,22 +46,22 @@ $color3: rgb(0, 104, 136);
 @import "admin-styles/dashboardapp";
 @import "admin-styles/mediaquery";
 
-.container{
+.container {
   max-width: 1367px;
   width: 100%;
   margin: auto;
   overflow: auto;
-  >h1{
+  > h1 {
     @include heading;
     margin: 1rem 0;
     text-align: left;
   }
 }
 
-.heading{
+.heading {
   @include heading(2px);
   margin: 1rem 0;
-  text-align: center
+  text-align: center;
 }
 
 .header {
@@ -99,6 +99,14 @@ $color3: rgb(0, 104, 136);
     > div {
       @include flex(column, flext-start, center, 0.25rem);
     }
+  }
+}
+
+.not-found {
+  height: 80vh;
+  @include flex(column); 
+  > svg {
+    font-size: 4rem;
   }
 }
 
@@ -266,18 +274,17 @@ $color3: rgb(0, 104, 136);
   }
 }
 
-.skeleton-loader{
+.skeleton-loader {
   display: flex;
   flex-direction: column;
-
 }
-.skeleton-shape{
+.skeleton-shape {
   height: 30px;
   width: 100%;
   background-color: #ddd;
   margin-bottom: 10px;
   border-radius: 4px;
-  animation: skeleton-loading 1.5s infinite; 
+  animation: skeleton-loading 1.5s infinite;
 }
 @keyframes loading-animation {
   to {
@@ -290,15 +297,14 @@ $color3: rgb(0, 104, 136);
   }
 }
 
-@keyframes skeleton-loader{
-  0%{
-    opacity:0.6
-
+@keyframes skeleton-loader {
+  0% {
+    opacity: 0.6;
   }
-  50%{
+  50% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 0.6;
   }
 }

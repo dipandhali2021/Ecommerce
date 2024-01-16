@@ -1,4 +1,4 @@
-export type User =  {
+export type User = {
   name: string;
   email: string;
   photo: string;
@@ -6,7 +6,7 @@ export type User =  {
   role: string;
   dob: string;
   _id: string;
-}
+};
 
 export type Product = {
   name: string;
@@ -15,15 +15,14 @@ export type Product = {
   category: string;
   photo: string;
   _id: string;
-}
-export type ShippingInfo  = {
+};
+export type ShippingInfo = {
   address: string;
   city: string;
   state: string;
   country: string;
   pinCode: string;
-}
-
+};
 
 export type CartItem = {
   productId: string;
@@ -32,4 +31,24 @@ export type CartItem = {
   price: number;
   quantity: number;
   stock: number;
+};
+
+export type OrderItem = Omit<CartItem, "stock"> & {
+  _id: string;
+};
+
+export type Order = {
+  orderItems: OrderItem[];
+  shippingInfo: ShippingInfo;
+  subtotal: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  total: number;
+  status: string;
+  _id: string;
+  user:{
+    name:string;
+    _id:string;
+  }
 }

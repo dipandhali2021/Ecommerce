@@ -11,6 +11,7 @@ import { getUser } from "./redux/api/userAPI";
 import { userReducerInitialState } from "./types/reducer-types";
 import ProtectedRoute from "./components/protected-route";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Shipping = lazy(() => import("./pages/Shipping"));
@@ -18,6 +19,7 @@ const Search = lazy(() => import("./pages/Search"));
 const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrderDetails = lazy(() => import("./pages/order-details"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -114,7 +116,7 @@ const App = () => {
               element={<TransactionManagement />}
             />
           </Route>
-          ;
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />

@@ -1,7 +1,13 @@
-import { ReactElement, useState } from "react";
-import TableHOC from "../components/admin/TableHOC";
-import { Column } from "react-table";
+import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Column } from "react-table";
+import { Skeleton } from "../components/Loader";
+import TableHOC from "../components/admin/TableHOC";
+import { useMyOrdersQuery } from "../redux/api/orderAPI";
+import { CustomError } from "../types/api-types";
+import { userReducerInitialState } from "../types/reducer-types";
 type DataType = {
   _id: string;
   amount: number;
@@ -39,27 +45,49 @@ const column: Column<DataType>[] = [
 ];
 
 const Orders = () => {
-  const [rows] = useState<DataType[]>([
-    {
-      _id: "1efe",
-      amount: 100,
-      quantity: 10,
-      discount: 10,
-      status: <span className="red">Processing</span>,
-      action: <Link to="/order/1efe">View</Link>,
-    },
-  ]);
+  const { user } = useSelector(
+    (state: { userReducer: userReducerInitialState }) => state.userReducer
+  );
+  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
+  if (isError) toast.error((error as CustomError).data.message);
+
+  const [rows, setRows] = useState<DataType[]>([]);
+  useEffect(() => {
+    if (data)
+      setRows(
+        data.orders.map((i) => ({
+          _id: i._id,
+          amount: i.total,
+          discount: i.discount,
+          quantity: i.orderItems.length,
+          status: (
+            <span
+              className={
+                i.status === "Processing"
+                  ? "red"
+                  : i.status === "Shipped"
+                  ? "green"
+                  : "purple"
+              }
+            >
+              {i.status}
+            </span>
+          ),
+          action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
+        }))
+      );
+  }, [data]);
   const Table = TableHOC<DataType>(
     column,
     rows,
     "dashboard-product-box",
     "Orders",
-    rows.length>6? true:false
+    rows.length > 6 ? true : false
   )();
   return (
     <div className="container">
       <h1>My Orders</h1>
-      {Table}
+      <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
     </div>
   );
 };
