@@ -104,9 +104,23 @@ $color3: rgb(0, 104, 136);
 
 .not-found {
   height: 80vh;
-  @include flex(column); 
+  @include flex(column);
   > svg {
     font-size: 4rem;
+  }
+}
+
+.checkout-container {
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  > form {
+    @include flex(column, flext-start, stretch, 2rem);
+    > button {
+      @include btn(1rem, $color3, $color1);
+      width: 100%;
+      font-size: 1.1rem;
+    }
   }
 }
 

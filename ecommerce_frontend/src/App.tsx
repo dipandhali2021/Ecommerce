@@ -12,6 +12,7 @@ import { userReducerInitialState } from "./types/reducer-types";
 import ProtectedRoute from "./components/protected-route";
 
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Shipping = lazy(() => import("./pages/Shipping"));
@@ -20,6 +21,9 @@ const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrderDetails = lazy(() => import("./pages/order-details"));
 const NotFound = lazy(() => import("./pages/not-found"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+
+
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -82,6 +86,8 @@ const App = () => {
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/order/:id" element={<OrderDetails />} />
+            <Route path="/pay" element={<Checkout />} />
+
           </Route>
           {/* admin routes */}
           <Route

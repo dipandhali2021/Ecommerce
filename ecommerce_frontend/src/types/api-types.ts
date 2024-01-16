@@ -74,6 +74,7 @@ export type newOrderRequest = {
   discount: number;
   total: number;
   user: string;
+  subtotal: number;
 };
 
 export type orderDetailsResponse = {
