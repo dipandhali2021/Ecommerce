@@ -1,4 +1,3 @@
-import { RootState } from "@reduxjs/toolkit/query";
 import {
   Elements,
   PaymentElement,
@@ -10,13 +9,10 @@ import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { newOrderRequest } from "../types/api-types";
-import {
-  cartReducerInitialState,
-  userReducerInitialState,
-} from "../types/reducer-types";
 import { useNewOrderMutation } from "../redux/api/orderAPI";
 import { resetCart } from "../redux/reducer/cartReducer";
+import { RootState } from "../redux/store";
+import { newOrderRequest } from "../types/api-types";
 import { responseToast } from "../utils/features";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
@@ -27,9 +23,7 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
-  );
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
   const {
     shippingCharge: shippingCharges,
@@ -39,9 +33,7 @@ const CheckoutForm = () => {
     tax,
     discount,
     total,
-  } = useSelector(
-    (state: { cartReducer: cartReducerInitialState }) => state.cartReducer
-  );
+  } = useSelector((state: RootState) => state.cartReducer);
 
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 

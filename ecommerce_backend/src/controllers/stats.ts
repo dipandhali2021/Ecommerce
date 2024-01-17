@@ -260,7 +260,7 @@ export const getPieChart = tryCatch(async (req, res, next) => {
       customer: customerUsers,
     };
 
-    const chart = {
+    charts = {
       orderFullfillment,
       productCategories,
       stockAvailablitity,
@@ -269,7 +269,7 @@ export const getPieChart = tryCatch(async (req, res, next) => {
       adminCustomer,
     };
 
-    myCache.set(key, JSON.stringify(chart));
+    myCache.set(key, JSON.stringify(charts));
   }
   return res.status(200).json({
     success: true,
@@ -320,13 +320,12 @@ export const getBarChart = tryCatch(async (req, res, next) => {
 
     myCache.set(key, JSON.stringify(charts));
   }
+
   return res.status(200).json({
     success: true,
     charts,
   });
 });
-
-
 
 export const getLineChart = tryCatch(async (req, res, next) => {
   let charts;
@@ -336,15 +335,12 @@ export const getLineChart = tryCatch(async (req, res, next) => {
   else {
     const today = new Date();
 
-
     const twelveMonthAgo = new Date();
     twelveMonthAgo.setMonth(today.getMonth() - 12);
 
-  
-
     const twelveMonthOrdersPromise = Order.find<MyDocument>({
       createdAt: { $gte: twelveMonthAgo, $lte: today },
-    }).select(["createdAt","discount","total"]);
+    }).select(["createdAt", "discount", "total"]);
     const twelveMonthUsersPromise = Order.find<MyDocument>({
       createdAt: { $gte: twelveMonthAgo, $lte: today },
     }).select("createdAt");
@@ -360,8 +356,18 @@ export const getLineChart = tryCatch(async (req, res, next) => {
 
     const productCounts = getChartData({ docArr: products, today, length: 12 });
     const userCounts = getChartData({ docArr: users, today, length: 12 });
-    const discount = getChartData({ docArr: orders, today, length: 12 ,property:"discount"});
-    const revenue = getChartData({ docArr: orders, today, length: 12 ,property:"total"});
+    const discount = getChartData({
+      docArr: orders,
+      today,
+      length: 12,
+      property: "discount",
+    });
+    const revenue = getChartData({
+      docArr: orders,
+      today,
+      length: 12,
+      property: "total",
+    });
 
     charts = {
       users: userCounts,
@@ -377,4 +383,3 @@ export const getLineChart = tryCatch(async (req, res, next) => {
     charts,
   });
 });
-

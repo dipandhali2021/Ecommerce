@@ -3,13 +3,11 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { useNewProductMutation } from "../../../redux/api/productAPI";
-import { userReducerInitialState } from "../../../types/reducer-types";
+import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
 
 const NewProduct = () => {
-  const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
-  );
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
@@ -38,15 +36,16 @@ const NewProduct = () => {
   };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
-    if(!photo || !price || !stock || !category || !name) return;
+    e.preventDefault();
+    if (!photo || !price || stock < 0 || !category || !name) return;
     const formData = new FormData();
     formData.set("name", name);
     formData.set("price", String(price));
     formData.set("stock", String(stock));
     formData.set("category", category);
     formData.set("photo", photo);
-    const res = await newProdut({id: user?._id!, formData});
-    responseToast(res,navigate,"/admin/product")
+    const res = await newProdut({ id: user?._id!, formData });
+    responseToast(res, navigate, "/admin/product");
   };
 
   return (

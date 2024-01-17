@@ -1,16 +1,15 @@
 import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
+import { Skeleton } from "../../components/Loader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
 import { useAllProductsQuery } from "../../redux/api/productAPI";
-import { server } from "../../redux/store";
-import toast from "react-hot-toast";
+import { RootState, server } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
-import { useSelector } from "react-redux";
-import { userReducerInitialState } from "../../types/reducer-types";
-import { Skeleton } from "../../components/Loader";
 
 interface DataType {
   photo: ReactElement;
@@ -45,7 +44,7 @@ const columns: Column<DataType>[] = [
 
 const Products = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
+    (state: RootState) => state.userReducer
   );
   const { data, isLoading, isError, error } = useAllProductsQuery(user?._id!);
   const [rows, setRows] = useState<DataType[]>([]);

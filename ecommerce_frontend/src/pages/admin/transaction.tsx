@@ -7,8 +7,8 @@ import { Skeleton } from "../../components/Loader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
 import { useAllOrdersQuery } from "../../redux/api/orderAPI";
+import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
-import { userReducerInitialState } from "../../types/reducer-types";
 
 interface DataType {
   user: string;
@@ -50,7 +50,7 @@ const columns: Column<DataType>[] = [
 
 const Transaction = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
+    (state: RootState) => state.userReducer
   );
   const { isLoading, data, isError, error } = useAllOrdersQuery(user?._id!);
   if (isError) toast.error((error as CustomError).data.message);
@@ -60,7 +60,7 @@ const Transaction = () => {
     if (data)
       setRows(
         data.orders.map((i) => ({
-          user: i.user.name,
+          user: i.user?.name,
           amount: i.total,
           discount: i.discount,
           quantity: i.orderItems.length,

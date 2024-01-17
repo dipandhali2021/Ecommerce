@@ -3,6 +3,7 @@ import { MessageResponse } from "../types/api-types";
 import { SerializedError } from "@reduxjs/toolkit";
 import { NavigateFunction } from "react-router-dom";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 type ResType =
   | {
@@ -25,4 +26,25 @@ export const responseToast = (
     const message = error.data as MessageResponse;
     toast.error(message.message);
   }
+};
+
+export const getLastMonths = () => {
+  const currentDate = moment();
+  currentDate.date(1);
+  const lastSixMonths: string[] = [];
+  const lastTwelveMonths: string[] = [];
+
+  for (let i = 0; i < 6; i++) {
+    const monthDdate = currentDate.clone().subtract(i, "months");
+    const monthName = monthDdate.format("MMMM");
+    lastSixMonths.unshift(monthName);
+  }
+
+  for (let i = 0; i < 12; i++) {
+    const monthDdate = currentDate.clone().subtract(i, "months");
+    const monthName = monthDdate.format("MMM");
+    lastTwelveMonths.unshift(monthName);
+  }
+
+  return { lastSixMonths, lastTwelveMonths };
 };
