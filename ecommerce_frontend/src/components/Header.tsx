@@ -33,13 +33,13 @@ const Header = ({user}:PropsType) => {
 
   return (
     <nav className="header">
-      <Link onClick={() => setIsOpen(false)} to={"/"}>
+      <Link to={"/"}>
         HOME
       </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/search"}>
+      <Link to={"/search"}>
         <FaSearch />
       </Link>
-      <Link onClick={() => setIsOpen(false)} to={"/cart"}>
+      <Link  to={"/cart"}>
         <FaShoppingBag />
       </Link>
 
@@ -51,7 +51,7 @@ const Header = ({user}:PropsType) => {
           <dialog open={isOpen}>
             <div>
               {user.role === "admin" && (
-                <Link to={"/admin/dashboard"}>Admin</Link>
+                <Link onClick={() => setIsOpen(false)} to={"/admin/dashboard"}>Admin</Link>
               )}
 
               <Link onClick={() => setIsOpen(false)} to={"/orders"}>

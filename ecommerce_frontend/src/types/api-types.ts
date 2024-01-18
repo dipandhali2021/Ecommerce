@@ -91,7 +91,7 @@ export type deleteProductRequest = {
 export type newOrderRequest = {
   shippingInfo: ShippingInfo;
   orderItems: CartItem[];
-  shippingCharges: number;
+  shippingCharge: number;
   tax: number;
   discount: number;
   total: number;

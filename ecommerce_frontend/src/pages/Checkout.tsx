@@ -26,7 +26,7 @@ const CheckoutForm = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const {
-    shippingCharge: shippingCharges,
+    shippingCharge,
     shippingInfo,
     cartItems,
     subtotal,
@@ -45,7 +45,7 @@ const CheckoutForm = () => {
     setIsProcessing(true);
     const orderData: newOrderRequest = {
       shippingInfo,
-      shippingCharges,
+      shippingCharge,
       orderItems: cartItems,
       subtotal,
       tax,
@@ -56,7 +56,7 @@ const CheckoutForm = () => {
 
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
-      confirmParams: { return_url: window.location.origin },
+      confirmParams: { return_url: `${window.location.origin}/orders` },
       redirect: "if_required",
     });
 
@@ -86,7 +86,9 @@ const CheckoutForm = () => {
 
 const Checkout = () => {
   const location = useLocation();
+
   const clientSecret: string | undefined = location.state;
+
   if (!clientSecret) return <Navigate to={"/shipping"} />;
   return (
     <Elements

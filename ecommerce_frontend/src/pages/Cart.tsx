@@ -20,7 +20,7 @@ const Cart = () => {
     cartItems,
     tax,
     subtotal,
-    shippingCharge: shippingCharges,
+    shippingCharge,
     discount,
     total,
   } = useSelector((state: RootState) => state.cartReducer);
@@ -29,7 +29,7 @@ const Cart = () => {
 
   const incrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity >= cartItem.stock) return toast.error("Out of Stock");
-    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity +1 }));
   };
   const decrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity <= 1) return toast.error("Minimum Quantity is 1");
@@ -90,7 +90,7 @@ const Cart = () => {
       </main>
       <aside>
         <p>Subtotal:₹{subtotal}</p>
-        <p>Shipping Charges : ₹{shippingCharges}</p>
+        <p>Shipping Charges : ₹{shippingCharge}</p>
         <p>Tax : ₹{tax}</p>
         <p>
           Discount : <em className="red"> - ₹{discount}</em>

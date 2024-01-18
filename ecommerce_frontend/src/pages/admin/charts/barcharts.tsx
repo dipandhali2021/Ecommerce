@@ -1,30 +1,14 @@
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { Skeleton } from "../../../components/Loader";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { BarChart } from "../../../components/admin/Charts";
 import { useBarQuery } from "../../../redux/api/dashboardAPI";
 import { RootState } from "../../../redux/store";
 import { CustomError } from "../../../types/api-types";
-import toast from "react-hot-toast";
-import { Skeleton } from "../../../components/Loader";
 import { getLastMonths } from "../../../utils/features";
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-const {lastSixMonths,lastTwelveMonths} = getLastMonths();
-console.log(lastSixMonths,lastTwelveMonths);
+const { lastSixMonths, lastTwelveMonths } = getLastMonths();
 
 const Barcharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);

@@ -59,11 +59,11 @@ export const deleteUser = tryCatch(async (req, res, next) => {
   const id = req.params.id;
   const user = await User.findById(id);
   if (!user) return next(new ErrorHandler("User not found", 404));
+  if (user.role === "admin")
+    return next(new ErrorHandler("Admin cannot be deleted", 400));
   await user.deleteOne();
   return res.status(200).json({
     status: "success",
     message: "User deleted successfully",
   });
 });
-
-

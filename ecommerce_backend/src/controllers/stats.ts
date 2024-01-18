@@ -181,7 +181,7 @@ export const getPieChart = tryCatch(async (req, res, next) => {
       "discount",
       "subtotal",
       "tax",
-      "shippingCharges",
+      "shippingCharge",
     ]);
     const [
       processingOrders,

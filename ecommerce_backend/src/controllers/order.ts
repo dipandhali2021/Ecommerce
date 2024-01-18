@@ -18,16 +18,7 @@ export const newOrder = tryCatch(
       discount,
       total,
     } = req.body;
-    if (
-      !shippingInfo ||
-      !orderItems ||
-      !user ||
-      !subtotal ||
-      !tax ||
-      !shippingCharge ||
-      !discount ||
-      !total
-    ) {
+    if (!shippingInfo || !orderItems || !user || !subtotal || !tax || !total) {
       return next(new ErrorHandler("Please fill all the fields", 400));
     }
     await Order.create({
@@ -47,7 +38,7 @@ export const newOrder = tryCatch(
       product: true,
       admin: true,
       userId: user,
-      productId:orderItems.map(item=>String(item.productId))
+      productId: orderItems.map((item) => String(item.productId)),
     });
     return res.status(201).json({
       status: "success",
@@ -130,7 +121,7 @@ export const processOrder = tryCatch(async (req: Request, res, next) => {
   return res.status(200).json({
     status: "success",
     message: "order processed successfully",
-    order
+    order,
   });
 });
 export const deleteOrder = tryCatch(async (req: Request, res, next) => {

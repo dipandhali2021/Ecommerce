@@ -17,6 +17,7 @@ const initialState: cartReducerInitialState = {
     country: "",
     pinCode: "",
   },
+  
 };
 
 export const cartReducer = createSlice({

@@ -12,7 +12,7 @@ const Shipping = () => {
     (state: RootState) => state.cartReducer
   );
 
-  console.log(total);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [shippingInfo, setShippingInfo] = useState({
