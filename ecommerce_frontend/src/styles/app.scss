@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -22,6 +24,8 @@ a {
 $color1: white;
 $color2: rgb(46, 46, 46);
 $color3: rgb(0, 104, 136);
+$color4: rgb(219, 68, 68);
+
 
 .red {
   color: red;
@@ -65,8 +69,29 @@ $color3: rgb(0, 104, 136);
 }
 
 .header {
-  @include flex(row, flex-end, stretch, 1.2rem);
+  @include flex(row, space-between, stretch, 1.2rem);
   padding: 1rem;
+
+  .navigation {
+    @include flex(row, center, center, 1rem);
+    gap: 5rem;
+  }
+  .search-box {
+    @include flex(row, center, center, 0rem);
+    background: #f5f5f5;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1rem;
+    > input {
+      @include inputStyle(100%, 0.5rem);
+      max-width: fit-content;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      gap: 3px;
+    }
+    > svg {
+      @include square(1.5rem);
+    }
+  }
   a {
     color: $color2;
     letter-spacing: 2px;
@@ -76,14 +101,40 @@ $color3: rgb(0, 104, 136);
       color: $color3;
     }
   }
+  .logo{
+    @include heading(5px,400);
+    font-size: 1.5rem
+  }
+  .account {
+    @include flex(row, center, center, 1rem);
 
-  button {
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background-color: transparent;
-    &:hover {
-      color: $color3;
+    > a {
+      > svg {
+        @include square(1.5rem);
+      }
+    }
+    > button {
+      border: none;
+
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: transparent;
+      &:hover {
+        color: $color3;
+      }
+      > svg {
+        @include square(1.4rem);
+      }
+    }
+    button {
+      border: none;
+
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: transparent;
+      &:hover {
+        color: $color3;
+      }
     }
   }
 

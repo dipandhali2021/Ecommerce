@@ -31,6 +31,12 @@
   outline: none;
 }
 
+@mixin listStyle($p:0, $m:0){
+  list-style: none;
+  padding: $p;
+  margin: $m;
+}
+
 @mixin posCenter {
   position: absolute;
   top: 50%;

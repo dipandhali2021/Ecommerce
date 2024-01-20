@@ -13,14 +13,29 @@ const Home = () => {
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < 1) return toast.error("Out of Stock");
-    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity  }));
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity }));
     toast.success("Added to Cart");
   };
- 
+
   if (isError) toast.error("Cannot Fetch the Products");
   return (
     <div className="home">
-      <section></section>
+      <div className="hero-banner">
+        <div className="banner">
+          <Link to="/categories">Woman's Fashion</Link>
+          <Link to="/categories">Men's Fashion</Link>
+          <Link to="/categories">Electronics</Link>
+          <Link to="/categories">Home & Lifestyle</Link>
+          <Link to="/categories">Medicine</Link>
+          <Link to="/categories">Sports & Outdoor</Link>
+          <Link to="/categories">Baby's & Toys</Link>
+          <Link to="/categories">Groceries & Pets</Link>
+          <Link to="/categories">Health & Beauty</Link>
+        </div>
+        
+
+        <section></section>
+      </div>
       <h1>
         Latest Products
         <Link to={"/search"} className="findmore">

@@ -1,7 +1,7 @@
-import { FaPlus } from "react-icons/fa";
+import { TiStarFullOutline } from "react-icons/ti";
 import { server } from "../redux/store";
 import { CartItem } from "../types/types";
-
+import { MdFavoriteBorder } from "react-icons/md";
 type ProductCardProps = {
   productId: string;
   photo: string;
@@ -21,11 +21,14 @@ const ProductCard = ({
 }: ProductCardProps) => {
   return (
     <div className="product-card">
-      <img src={`${server}/${photo}`} alt={name} />
-      <p>{name}</p>
-      <span>₹{price}</span>
 
-      <div>
+      <div className="back">
+        <div className="off">
+          <p>-50%</p>
+          <MdFavoriteBorder />
+        </div>
+        
+        <img src={`${server}/${photo}`} alt={name} />
         <button
           onClick={() =>
             handler({
@@ -38,9 +41,23 @@ const ProductCard = ({
             })
           }
         >
-          <FaPlus />
+          Add To Cart
         </button>
+        <p>{name}</p>
+        
+        <span>₹{price}</span>
+        <div className="rating">
+          <TiStarFullOutline />
+          <TiStarFullOutline />
+          <TiStarFullOutline />
+          <TiStarFullOutline />
+          <TiStarFullOutline />
+
+          <p>(78)</p>
+        </div>
       </div>
+
+      
     </div>
   );
 };
