@@ -12,15 +12,18 @@ import { userExists, userNotExists } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
 import Footer from "./components/Footer";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Search = lazy(() => import("./pages/Search"));
 const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
-const OrderDetails = lazy(() => import("./pages/order-details"));
-const NotFound = lazy(() => import("./pages/not-found"));
+const OrderDetails = lazy(() => import("./pages/OrderDetails"));
+const NotFound = lazy(() => import("./pages/Notfound"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -65,6 +68,8 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
           {/* no logged in route */}
@@ -121,7 +126,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      <Footer user={user} />
+      <Footer />
       <Toaster position="bottom-center" />
     </Router>
   );

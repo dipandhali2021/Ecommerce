@@ -43,6 +43,8 @@ $color4: rgb(219, 68, 68);
 @import "login";
 @import "search";
 @import "footer";
+@import "about";
+@import "contact";
 
 
 @import "admin-styles/dashboard";
@@ -62,6 +64,8 @@ $color4: rgb(219, 68, 68);
     text-align: left;
   }
 }
+
+
 
 .heading {
   @include heading(2px);

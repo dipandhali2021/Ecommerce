@@ -1,41 +1,16 @@
-import { useState } from "react";
-import {
-  FaSearch,
-  FaShoppingBag,
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaUser,
-} from "react-icons/fa";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { User } from "../types/types";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
-import toast from "react-hot-toast";
 import { LuSendHorizonal } from "react-icons/lu";
 
 import {
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-  FaFacebookF,
+    FaFacebookF,
+    FaInstagram,
+    FaLinkedinIn,
+    FaTwitter,
 } from "react-icons/fa";
 
-interface PropsType {
-  user: User | null;
-}
 
-const Footer = ({ user }: PropsType) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const logoutHandler = async () => {
-    try {
-      await signOut(auth);
-      toast.success("Sign out successfully");
-      setIsOpen(false);
-    } catch (error) {
-      toast.error("Sign Out Failed");
-    }
-  };
+
+const Footer = () => {
+  
 
   return (
     <footer className="footer">

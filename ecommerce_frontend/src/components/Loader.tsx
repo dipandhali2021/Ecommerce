@@ -1,5 +1,10 @@
 const Loader = () => {
-  return <div>Loader</div>;
+  return (
+    <div className="container not-found">
+      <img src="../src/assets/Rolling-1s-200px.svg" />
+      <h1>Loading...</h1>
+    </div>
+  );
 };
 
 export default Loader;

@@ -170,7 +170,16 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Services />
+    </div>
+  );
+};
 
+export default Home;
+
+export const Services = () => {
+  return (
+    <>
       <div className="features">
         <div className="delivery ">
           <div className="feature-icons">
@@ -200,8 +209,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
-
-export default Home;
