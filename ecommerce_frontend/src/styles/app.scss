@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -26,7 +26,6 @@ $color2: rgb(46, 46, 46);
 $color3: rgb(0, 104, 136);
 $color4: rgb(219, 68, 68);
 
-
 .red {
   color: red;
 }
@@ -43,6 +42,8 @@ $color4: rgb(219, 68, 68);
 @import "shipping";
 @import "login";
 @import "search";
+@import "footer";
+
 
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
@@ -101,9 +102,9 @@ $color4: rgb(219, 68, 68);
       color: $color3;
     }
   }
-  .logo{
-    @include heading(5px,400);
-    font-size: 1.5rem
+  .logo {
+    @include heading(5px, 400);
+    font-size: 1.5rem;
   }
   .account {
     @include flex(row, center, center, 1rem);

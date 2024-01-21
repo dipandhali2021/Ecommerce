@@ -1,0 +1,55 @@
+footer {
+  @include flex(row, space-between, flex-start, 1.5rem);
+  height: 100%;
+  padding: 5rem 10rem;
+  color: $color1;
+  background-color: $color2;
+
+  .subscribe {
+    @include flex(column, flex-start, flex-start, 1rem);
+    height: 100%;
+    width: 100%;
+    max-width: 20rem;
+
+    .input {
+      @include flex(row, center, center, 0.5rem);
+      border: 1px solid $color1;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+
+      > input {
+        @include inputStyle(100%, 0.5rem);
+        max-width: fit-content;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        gap: 3px;
+        font-size: 1rem;
+      }
+    }
+    .download-app {
+      display: flex;
+      gap: 0.5rem;
+      .qr {
+        height: 100%;
+        > img {
+          @include square(5rem);
+          object-fit: cover;
+          height: 100%;
+        }
+      }
+      .link {
+        @include flex(column, center, center, 0.5rem);
+        height: 100%;
+      }
+    }
+    .social-icons {
+      @include flex(row, flex-start, center, 2.5rem);
+      > svg {
+        @include square(1.5rem);
+        &:hover {
+          color: $color4;
+        }
+      }
+    }
+  }
+}
