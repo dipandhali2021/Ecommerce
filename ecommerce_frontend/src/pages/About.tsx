@@ -39,8 +39,8 @@ const About = () => {
             <BsShop />
           </div>
           <div className="details ">
-            <h3>Free Delivery</h3>
-            <p>Free Shipping on all order</p>
+            <h2>10.5k</h2>
+            <p>Sellers active our site</p>
           </div>
         </div>
         <div className="delivery about-features">
@@ -48,8 +48,8 @@ const About = () => {
             <HiOutlineCurrencyRupee />
           </div>
           <div className="details">
-            <h3>Customer Support</h3>
-            <p>24/7 Customer Support</p>
+            <h2>33k</h2>
+            <p>Monthly Product Sale</p>
           </div>
         </div>
         <div className="delivery about-features">
@@ -57,8 +57,8 @@ const About = () => {
             <FaShoppingBag />
           </div>
           <div className="details">
-            <h3>Secure Payment</h3>
-            <p>100% Secure Payment</p>
+            <h2>45.5k</h2>
+            <p>Customer active in our site</p>
           </div>
         </div>
         <div className="delivery about-features">
@@ -66,8 +66,8 @@ const About = () => {
             <TbMoneybag />
           </div>
           <div className="details">
-            <h3>Secure Payment</h3>
-            <p>100% Secure Payment</p>
+            <h2>25k</h2>
+            <p>Annual gross sale in our site</p>
           </div>
         </div>
       </div>

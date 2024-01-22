@@ -1,18 +1,45 @@
 import axios from "axios";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  ReactElement,
+  useEffect,
+  useState,
+} from "react";
 import toast from "react-hot-toast";
-import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Column } from "react-table";
+import TableHOC from "../components/admin/TableHOC";
 import { saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
+
+interface DataType {
+  photo: ReactElement;
+  name: string;
+  price: string;
+}
+
+const columns: Column<DataType>[] = [
+  {
+    Header: "Photo",
+    accessor: "photo",
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Price",
+    accessor: "price",
+  },
+];
 
 const Shipping = () => {
   const { cartItems, total } = useSelector(
     (state: RootState) => state.cartReducer
   );
 
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [shippingInfo, setShippingInfo] = useState({
@@ -53,6 +80,25 @@ const Shipping = () => {
       toast.error("Something went wrong");
     }
   };
+  const [rows, setRows] = useState<DataType[]>([]);
+  useEffect(() => {
+    if (cartItems)
+      setRows(
+        cartItems.map((i) => ({
+          photo: <img src={`${server}/${i.photo}`} />,
+          name: i.name,
+          price: `₹${i.price}`,
+        }))
+      );
+  }, [cartItems]);
+
+  const Table = TableHOC<DataType>(
+    columns,
+    rows,
+    "order-item-heading",
+    "Order Details",
+    rows.length > 6
+  )();
 
   useEffect(() => {
     if (cartItems.length <= 0) {
@@ -62,12 +108,8 @@ const Shipping = () => {
 
   return (
     <div className="shipping">
-      <button className="back-btn" onClick={() => navigate("/cart")}>
-        <BiArrowBack />
-      </button>
-
-      <form onSubmit={submitHandler}>
-        <h1>Shipping Address</h1>
+      <form id="myForm" onSubmit={submitHandler}>
+        <h1>Billing Details</h1>
         <input
           required
           type="text "
@@ -110,8 +152,29 @@ const Shipping = () => {
           value={shippingInfo.pinCode}
           onChange={changeHandler}
         />
-        <button type="submit">Pay Now</button>
       </form>
+      <div className="order-items">
+        <main>{cartItems.length > 0 ? Table : <h1>No Items Added</h1>}</main>
+
+        <h3>
+          Total: <span>₹{total}</span>
+        </h3>
+
+        <form id="payment">
+          <label className="custom-radio">
+            <input type="radio" name="option" value="bank" />
+            Bank Transfer
+          </label>
+          <label className="custom-radio">
+            <input type="radio" name="option" value="cash" />
+            Cash on Delivery
+          </label>
+        </form>
+
+        <button type="submit" form="myForm">
+          Pay Now
+        </button>
+      </div>
     </div>
   );
 };

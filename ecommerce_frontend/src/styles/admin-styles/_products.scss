@@ -96,15 +96,17 @@
         letter-spacing: 2px;
       }
 
-      > img {
-        @include square(5rem);
-        object-fit: cover;
-        border-radius: 5px;
-      }
+      
 
       > div {
+        @include flex(row,center,center,1rem);
         width: 100%;
         position: relative;
+        > img {
+          @include square(5rem);
+          object-fit: cover;
+          border-radius: 5px;
+        }
         > label {
           position: absolute;
           left: 0;

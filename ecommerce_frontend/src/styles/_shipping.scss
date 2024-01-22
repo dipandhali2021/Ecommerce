@@ -1,58 +1,75 @@
-.shipping{
-    @include flex;
+.shipping {
+  @include flex(row, center, stretch, 4rem);
 
-    .back-btn{
-        @include square(2rem);
-        background-color: $color2;
-        color:$color1;
-        @include flex;
-        position: fixed;
-        top: 2rem;
-        left: 2rem;
-        border-radius: 100%;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        @include baseShadow;
+  > form {
+    max-width: 450px;
+    width: 100%;
+    @include flex(column, flex-start, stretch, 2rem);
+    padding: 2rem;
 
-        svg{
-            transition: all 0.3s;
-            &:hover{
-                translate: -0.25rem;
-            }
-        }
-
+    > h1 {
+      @include heading(2px);
+      margin: 2rem;
+      text-align: center;
     }
-    >form{
-        max-width: 450px;
-        width: 100%;
-        @include flex(column, center, stretch, 2rem);
-        padding: 2rem;
 
-        >h1{
-            @include heading(2px);
-            margin: 2rem;
-            text-align: center;
-        }
+    > input,
+    > select {
+      @include inputStyle;
+      border: 1px solid rgba(31, 31, 31, 0.351);
 
-        > input, > select {
-            @include inputStyle;
-            border: 1px solid rgba(31,31,31,0.351);
-            
-            font-size: 1.05rem;
-            border-radius: 5px;
-        }
-
-        >button {
-            @include btn(1rem, $color3 ,$color1);
-            border-radius: 5px;
-            font-size: 1.05rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            &:hover{
-                opacity: 0.8;
-            }
-            
-        }
+      font-size: 1.05rem;
+      border-radius: 5px;
     }
+
+    > button {
+      @include btn(1rem, $color3, $color1);
+      border-radius: 5px;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  .order-items {
+    @include flex(column, center, flex-start, 1rem);
+    padding-bottom: 1rem;
+    > h3 {
+      @include heading(2px);
+      margin: 1rem;
+    }
+    > form {
+      @include flex(row, space-between, center, 2rem);
+      align-self: center;
+      > label {
+        @include flex(row, center, center, 0.5rem);
+        > input {
+          appearance: none;
+          @include square(1rem);
+          border: 1px solid #999;
+          border-radius: 50%;
+          outline: none;
+        }
+
+        >input::before{
+                content: "";
+                display: block;
+                @include square(0.7rem);
+                border-radius: 50%;
+                outline: none;
+                margin: 0.08rem 0 0 0.08rem;
+        }
+        > input:checked::before {
+          background-color: $color4;
+        }
+      }
+    }
+
+    >button {
+        @include btn(1rem, $color4, $color1);
+        align-self: center;
+    }
+  }
 }

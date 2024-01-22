@@ -11,6 +11,7 @@ import { rm } from "fs";
 import { myCache } from "../app.js";
 import { invalidateCache } from "../utils/features.js";
 import { error } from "console";
+
 // import {faker} from "@faker-js/faker";
 
 //revalidate on new update or delete product and new order
@@ -86,23 +87,29 @@ export const newProduct = tryCatch(
     next: NextFunction
   ) => {
     const { name, category, price, stock } = req.body;
-    const photo = req.file;
-    if (!photo) return next(new ErrorHandler("Please provide a photo", 400));
+    const photos = req.files;
+    if (!photos || photos.length === 0) return next(new ErrorHandler("Please provide at least one photo", 400));
     if (!name || !category || !price || !stock) {
-      rm(photo.path, () => {
-        console.log("Photo deleted");
-      });
+      if (Array.isArray(photos)) {
+        photos.forEach(photo => {
+          rm(photo.path, () => {
+            console.log("Photo deleted");
+          });
+        });
+      }
+
       return next(
         new ErrorHandler("Please provide all the required fields", 400)
       );
     }
+    const photoPaths = (photos as Express.Multer.File[]).map(photo => photo.path);
 
     await Product.create({
       name,
       price,
       stock,
       category: category.toLowerCase(),
-      photo: photo?.path,
+      photo: photoPaths,
     });
 
    invalidateCache({ product: true ,admin: true});
@@ -113,26 +120,36 @@ export const newProduct = tryCatch(
   }
 );
 
+
 export const updateProduct = tryCatch(async (req, res, next) => {
-  const { id } = req.params;
-  const { name, category, price, stock } = req.body;
-  const photo = req.file;
-  const product = await Product.findById(id);
+  const { name, price, stock, category } = req.body;
+  const product = await Product.findById(req.params.id);
   if (!product) return next(new ErrorHandler("Product not found", 404));
 
-  if (photo) {
-    rm(product.photo!, () => {
-      console.log("Old Photo deleted");
+  if (req.files) {
+    // Delete old photos
+    product.photo.forEach((photo) => {
+      rm(photo, (err) => {
+        if (err) {
+          console.error(`Failed to delete photo ${photo}: ${err}`);
+        } else {
+          console.log(`Product photo ${photo} deleted`);
+        }
+      });
     });
-    product.photo = photo.path;
+
+    // Add new photos
+    const photos = (req.files as Express.Multer.File[]).map((file) => file.path);
+    product.photo = photos;
   }
 
   if (name) product.name = name;
-  if (category) product.category = category;
   if (price) product.price = price;
+  if (category) product.category = category;
   if (stock) product.stock = stock;
+
   await product.save();
- invalidateCache({ product: true ,admin: true,productId:String(product._id)});
+  invalidateCache({ product: true ,admin: true,productId:String(product._id)});
   return res.status(200).json({
     status: true,
     message: "Product Updated successfully",
@@ -142,8 +159,14 @@ export const updateProduct = tryCatch(async (req, res, next) => {
 export const deleteProduct = tryCatch(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) return next(new ErrorHandler("Product not found", 404));
-  rm(product.photo!, () => {
-    console.log("Product Photo deleted");
+  product.photo.forEach((photo) => {
+    rm(photo, (err) => {
+      if (err) {
+        console.error(`Failed to delete photo ${photo}: ${err}`);
+      } else {
+        console.log(`Product photo ${photo} deleted`);
+      }
+    });
   });
   await product.deleteOne();
  invalidateCache({ product: true ,admin: true,productId:String(product._id)});

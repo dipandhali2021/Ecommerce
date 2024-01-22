@@ -25,6 +25,7 @@ $color1: white;
 $color2: rgb(46, 46, 46);
 $color3: rgb(0, 104, 136);
 $color4: rgb(219, 68, 68);
+$color5: rgba(223, 223, 223, 0.774);
 
 .red {
   color: red;
@@ -46,7 +47,6 @@ $color4: rgb(219, 68, 68);
 @import "about";
 @import "contact";
 
-
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
 @import "admin-styles/chart";
@@ -65,95 +65,140 @@ $color4: rgb(219, 68, 68);
   }
 }
 
-
-
 .heading {
   @include heading(2px);
   margin: 1rem 0;
   text-align: center;
 }
 
-.header {
-  @include flex(row, space-between, stretch, 1.2rem);
-  padding: 1rem;
+.top-bar {
+  @include flex(column, center, none, 0rem);
 
-  .navigation {
-    @include flex(row, center, center, 1rem);
-    gap: 5rem;
+  .offer {
+    @include flex(row, space-between, center, 1rem);
+    width: 100%;
+    background-color: #000000;
+    padding: 0.5rem 4rem;
+
+    color: white;
+    .offer-deatils {
+      @include flex(row, center, center, 1rem);
+      margin-left: 27rem;
+    }
+    > button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #0000009e;
+    }
+    .language {
+      @include flex(row, center, center, 0.5rem);
+
+      > select {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: rgb(255, 255, 255);
+        > option {
+          cursor: pointer;
+
+          font-size: 1.2rem;
+          color: rgb(0, 0, 0);
+
+          background: rgba(0, 0, 0, 0.04);
+
+          backdrop-filter: blur(75px);
+        }
+      }
+    }
   }
-  .search-box {
-    @include flex(row, center, center, 0rem);
-    background: #f5f5f5;
-    border-radius: 0.4rem;
-    padding: 0.5rem 1rem;
-    > input {
-      @include inputStyle(100%, 0.5rem);
-      max-width: fit-content;
-      border-radius: 5px;
+
+  .header {
+    @include flex(row, space-between, center, 1.2rem);
+    padding: 1rem;
+
+    .navigation {
+      @include flex(row, center, center, 1rem);
+      gap: 5rem;
+    }
+    .search-box {
+      @include flex(row, center, center, 0rem);
+      background: #f5f5f5;
+      border-radius: 0.4rem;
       padding: 0.5rem 1rem;
-      gap: 3px;
-    }
-    > svg {
-      @include square(1.5rem);
-    }
-  }
-  a {
-    color: $color2;
-    letter-spacing: 2px;
-    font-size: 1.2rem;
-
-    &:hover {
-      color: $color3;
-    }
-  }
-  .logo {
-    @include heading(5px, 400);
-    font-size: 1.5rem;
-  }
-  .account {
-    @include flex(row, center, center, 1rem);
-
-    > a {
+      > input {
+        @include inputStyle(100%, 0.5rem);
+        max-width: fit-content;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        gap: 3px;
+      }
       > svg {
         @include square(1.5rem);
       }
     }
-    > button {
-      border: none;
-
+    a {
+      color: $color2;
+      letter-spacing: 2px;
       font-size: 1.2rem;
-      cursor: pointer;
-      background-color: transparent;
-      &:hover {
-        color: $color3;
-      }
-      > svg {
-        @include square(1.4rem);
-      }
-    }
-    button {
-      border: none;
 
-      font-size: 1.2rem;
-      cursor: pointer;
-      background-color: transparent;
       &:hover {
         color: $color3;
       }
     }
-  }
+    .logo {
+      @include heading(5px, 400);
+      font-size: 1.5rem;
+    }
+    .account {
+      @include flex(row, center, center, 1rem);
 
-  dialog {
-    border: 1px solid #ccc;
-    z-index: 10;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100px;
-    position: absolute;
-    left: calc(100% - 100px);
-    top: 8%;
-    > div {
-      @include flex(column, flext-start, center, 0.25rem);
+      > a {
+        > svg {
+          @include square(1.5rem);
+        }
+      }
+      > button {
+        border: none;
+
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: transparent;
+        &:hover {
+          color: $color3;
+        }
+        > svg {
+          @include square(1.4rem);
+        }
+      }
+      button {
+        border: none;
+
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: transparent;
+        &:hover {
+          color: $color3;
+        }
+      }
+    }
+
+    dialog {
+      border: 1px solid #ccc;
+      z-index: 10;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100px;
+      position: absolute;
+      left: calc(100% - 100px);
+      top: 8%;
+      > div {
+        @include flex(column, flext-start, center, 0.25rem);
+      }
     }
   }
 }
@@ -163,6 +208,25 @@ $color4: rgb(219, 68, 68);
   @include flex(column);
   > svg {
     font-size: 4rem;
+  }
+}
+
+.error{
+  >h1{
+    font-size: 8rem ;
+    font-weight: 600;
+  }
+
+  >p{
+    @include heading(4px,500);
+    
+  }
+
+  >a{
+    @include btn(1rem, $color4, $color1);
+   margin: 5rem;
+   padding:1rem;
+    font-size: 1.1rem;
   }
 }
 

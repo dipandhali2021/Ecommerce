@@ -20,6 +20,7 @@ export const newUser = tryCatch(
     }
     if (!_id || !name || !email || !photo || !gender || !dob)
       return next(
+        
         new ErrorHandler("Please provide all the required fields", 400)
       );
     user = await User.create({

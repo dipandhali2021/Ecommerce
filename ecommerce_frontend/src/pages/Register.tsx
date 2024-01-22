@@ -1,29 +1,29 @@
 import {
+  signInWithPopup,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
 import { auth } from "../firebase";
+import toast from "react-hot-toast";
 import { useLoginMutation } from "../redux/api/userAPI";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { MessageResponse } from "../types/api-types";
+import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name] = useState("");
-  const [gender] = useState("");
-  const [date] = useState("");
+  const [name, setName] = useState("");
+
+  const [gender, setGender] = useState("");
+  const [date, setDate] = useState("");
   const [login] = useLoginMutation();
-  
   const registerHandler = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
@@ -32,7 +32,7 @@ const Login = () => {
       const res = await login({
         name: name!,
         email: user.email!,
-        photo: "https://lh3.googleusercontent.com/a/ACg8ocJaB9K3t-ZXLSXALLmn5LmwBRTrhEFklmgHeJdup9Bw=s96-c",
+        photo: "../src/assets/profile.png",
         gender,
         role: "user",
         dob: date,
@@ -61,12 +61,13 @@ const Login = () => {
         email: user.user.email!,
         photo:
           user.user.photoURL ||
-          "https://lh3.googleusercontent.com/a/ACg8ocJaB9K3t-ZXLSXALLmn5LmwBRTrhEFklmgHeJdup9Bw=s96-c",
+          "../src/assets/profile.png",
         gender,
         role: "user",
         dob: date,
         _id: user.user.uid!,
       });
+      console.log(user);
 
       if ("data" in res) {
         toast.success(res.data.message);
@@ -85,9 +86,17 @@ const Login = () => {
       <section></section>
 
       <main>
-        <h1>Log in to Ecommerce</h1>
+        <h1>Create an account</h1>
         <p>Enter your details below</p>
-        
+        <div>
+          <input
+            required
+            type="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+        </div>
         <div>
           <input
             required
@@ -107,23 +116,37 @@ const Login = () => {
             placeholder="Password"
           />
         </div>
-        
         <div>
-          <button onClick={registerHandler}>Log In</button>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div>
+          <input
+            required
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+        <div>
+          <button onClick={registerHandler}>Register</button>
         </div>
         <aside>
           <button onClick={loginHandler}>
             <FcGoogle />
-            <span>Log In with Google</span>
+            <span>Sign In with Google</span>
           </button>
         </aside>
         <div>
-          <p>Create new Account </p>
-          <Link to={"/register"}>Register</Link>
+          <p>Already have account?</p>
+          <Link to={"/login"}>Log In</Link>
         </div>
       </main>
     </div>
   );
 };
 
-export default Login;
+export default Register;

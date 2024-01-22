@@ -17,6 +17,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Search = lazy(() => import("./pages/Search"));
+const Register = lazy(() => import("./pages/Register"));
 const Login = lazy(() => import("./pages/Login"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrderDetails = lazy(() => import("./pages/OrderDetails"));
@@ -73,6 +74,14 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
           {/* no logged in route */}
+          <Route
+            path="/register"
+            element={
+              <ProtectedRoute isAuthenticated={!user ? true : false}>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/login"
             element={

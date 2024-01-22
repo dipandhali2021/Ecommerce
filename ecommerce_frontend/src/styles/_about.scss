@@ -101,4 +101,11 @@
     @include flex(column, center, flex-start, 0.5rem);
     margin-top: 1rem;
   }
+  .profile-social{
+    @include flex(row, center, center, 0.5rem);
+    margin-top: 1rem;
+    >svg{
+      @include square(2rem);
+    }
+  }
 }

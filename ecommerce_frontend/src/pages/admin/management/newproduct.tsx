@@ -14,40 +14,55 @@ const NewProduct = () => {
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
   const [stock, setStock] = useState<number>(1);
-  const [photoPrev, setPhotoPrev] = useState<string>("");
-  const [photo, setPhoto] = useState<File>();
 
   const [newProdut] = useNewProductMutation();
 
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [photoPrevs, setPhotoPrevs] = useState<string[]>([]);
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
+    const files: FileList | null = e.target.files;
+    const allFiles: File[] = [];
+    const allFilePrevs: string[] = [];
 
-    const reader: FileReader = new FileReader();
+    if (files) {
+      const promises = Array.from(files).map((file, index) => {
+        return new Promise((resolve, reject) => {
+          const reader: FileReader = new FileReader();
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setPhotoPrev(reader.result);
-          setPhoto(file);
-        }
-      };
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+              allFilePrevs[index] = reader.result;
+              allFiles[index] = file;
+              resolve(null);
+            } else {
+              reject();
+            }
+          };
+        });
+      });
+
+      Promise.all(promises).then(() => {
+        setPhotoPrevs(allFilePrevs);
+        setPhotos(allFiles);
+      });
     }
   };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!photo || !price || stock < 0 || !category || !name) return;
+    if (!photos.length || !price || stock < 0 || !category || !name) return;
     const formData = new FormData();
     formData.set("name", name);
     formData.set("price", String(price));
     formData.set("stock", String(stock));
     formData.set("category", category);
-    formData.set("photo", photo);
+    photos.forEach((photo) => {
+      formData.append("photo", photo);
+    });
     const res = await newProdut({ id: user?._id!, formData });
     responseToast(res, navigate, "/admin/product");
   };
-
   return (
     <div className="admin-container">
       <AdminSidebar />
@@ -99,10 +114,19 @@ const NewProduct = () => {
 
             <div>
               <label>Photo</label>
-              <input required type="file" onChange={changeImageHandler} />
+              <input
+                required
+                type="file"
+                multiple
+                onChange={changeImageHandler}
+              />
             </div>
 
-            {photoPrev && <img src={photoPrev} alt="New Image" />}
+            <div>
+              {photoPrevs.map((photoPrev, index) => (
+                <img key={index} src={photoPrev} alt="preview" />
+              ))}
+            </div>
             <button type="submit">Create</button>
           </form>
         </article>

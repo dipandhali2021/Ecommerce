@@ -2,9 +2,10 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { server } from "../redux/store";
 import { CartItem } from "../types/types";
 import { MdFavoriteBorder } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 type ProductCardProps = {
   productId: string;
-  photo: string;
+  photo: string[];
   name: string;
   price: number;
   stock: number;
@@ -19,16 +20,20 @@ const ProductCard = ({
   stock,
   handler,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
   return (
     <div className="product-card">
-
       <div className="back">
         <div className="off">
           <p>-50%</p>
           <MdFavoriteBorder />
         </div>
-        
-        <img src={`${server}/${photo}`} alt={name} />
+
+        <img
+          src={`${server}/${photo[0]}`}
+          alt={name}
+          onClick={() => navigate(`/product/${productId}`)}
+        />
         <button
           onClick={() =>
             handler({
@@ -44,7 +49,7 @@ const ProductCard = ({
           Add To Cart
         </button>
         <p>{name}</p>
-        
+
         <span>₹{price}</span>
         <div className="rating">
           <TiStarFullOutline />
@@ -56,8 +61,6 @@ const ProductCard = ({
           <p>(78)</p>
         </div>
       </div>
-
-      
     </div>
   );
 };

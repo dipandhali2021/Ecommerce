@@ -1,0 +1,58 @@
+.contact {
+  @include flex(row, space-between, center, 1.5rem);
+  padding: 6rem 20%;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  .left-contact-container {
+    @include flex(column, center, flex-start, 1rem);
+    width: 40%;
+    padding: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    .call {
+      .heading {
+        @include heading(0.2rem, 700);
+        @include flex(row, flex-start, center, 1.5rem);
+
+        > svg {
+          @include square(2.5rem);
+          background-color: $color4;
+          color: $color1;
+          padding: 0.5rem;
+          border-radius: 50%;
+        }
+      }
+      .description {
+        @include flex(column, center, flex-start, 1rem);
+      }
+    }
+  }
+  .right-contact-container {
+    width: 60%;
+    height: 26rem;
+    padding: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    > form {
+      height: 100%;
+      @include flex(column, space-between, stretch, 1rem);
+      .input-box {
+        @include flex(row, space-between, center, 1rem);
+        > input {
+          @include inputStyle(100%, 1rem, none, 1px solid $color2);
+        
+        }
+      }
+      > textarea {
+        @include inputStyle(100%, 1rem, none, 1px solid $color2);
+        resize: none;
+        height: 100%;
+      }
+
+      >button{
+        @include btn( 1rem, $color4, $color1);
+        width: 10rem;
+        align-self: flex-end;
+      }
+    }
+  }
+}
