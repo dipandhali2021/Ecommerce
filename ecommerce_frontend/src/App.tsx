@@ -13,6 +13,8 @@ import { RootState } from "./redux/store";
 import Footer from "./components/Footer";
 
 
+
+
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Shipping = lazy(() => import("./pages/Shipping"));
@@ -25,6 +27,8 @@ const NotFound = lazy(() => import("./pages/Notfound"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const Categories = lazy(() => import("./pages/Categories"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -98,6 +102,9 @@ const App = () => {
             <Route path="/orders" element={<Orders />} />
             <Route path="/order/:id" element={<OrderDetails />} />
             <Route path="/pay" element={<Checkout />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/categories/:category" element={<Categories />} />
+            
           </Route>
           {/* admin routes */}
           <Route

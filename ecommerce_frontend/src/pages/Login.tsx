@@ -32,7 +32,7 @@ const Login = () => {
       const res = await login({
         name: name!,
         email: user.email!,
-        photo: "https://lh3.googleusercontent.com/a/ACg8ocJaB9K3t-ZXLSXALLmn5LmwBRTrhEFklmgHeJdup9Bw=s96-c",
+        photo: "../src/assets/profile.png",
         gender,
         role: "user",
         dob: date,
@@ -61,7 +61,7 @@ const Login = () => {
         email: user.user.email!,
         photo:
           user.user.photoURL ||
-          "https://lh3.googleusercontent.com/a/ACg8ocJaB9K3t-ZXLSXALLmn5LmwBRTrhEFklmgHeJdup9Bw=s96-c",
+          "../src/assets/profile.png",
         gender,
         role: "user",
         dob: date,

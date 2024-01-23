@@ -86,10 +86,10 @@ export const newProduct = tryCatch(
     res: Response,
     next: NextFunction
   ) => {
-    const { name, category, price, stock } = req.body;
+    const { name, category, price, stock,description } = req.body;
     const photos = req.files;
     if (!photos || photos.length === 0) return next(new ErrorHandler("Please provide at least one photo", 400));
-    if (!name || !category || !price || !stock) {
+    if (!name || !category || !price || !stock || !description) {
       if (Array.isArray(photos)) {
         photos.forEach(photo => {
           rm(photo.path, () => {
@@ -108,6 +108,7 @@ export const newProduct = tryCatch(
       name,
       price,
       stock,
+      description,
       category: category.toLowerCase(),
       photo: photoPaths,
     });
@@ -122,7 +123,7 @@ export const newProduct = tryCatch(
 
 
 export const updateProduct = tryCatch(async (req, res, next) => {
-  const { name, price, stock, category } = req.body;
+  const { name, price, stock, category,description } = req.body;
   const product = await Product.findById(req.params.id);
   if (!product) return next(new ErrorHandler("Product not found", 404));
 
@@ -147,6 +148,7 @@ export const updateProduct = tryCatch(async (req, res, next) => {
   if (price) product.price = price;
   if (category) product.category = category;
   if (stock) product.stock = stock;
+  if(description) product.description=description;
 
   await product.save();
   invalidateCache({ product: true ,admin: true,productId:String(product._id)});

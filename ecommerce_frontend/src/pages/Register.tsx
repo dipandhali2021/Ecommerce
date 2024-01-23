@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { MessageResponse } from "../types/api-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +20,9 @@ const Register = () => {
 
   const [gender, setGender] = useState("");
   const [date, setDate] = useState("");
+
+const navigate = useNavigate();
+
   const [login] = useLoginMutation();
   const registerHandler = async () => {
     try {
@@ -41,6 +44,7 @@ const Register = () => {
 
       if ("data" in res) {
         toast.success(res.data.message);
+        navigate("/");
       } else {
         const error = res.error as FetchBaseQueryError;
         const messsage = (error.data as MessageResponse).message;
@@ -67,7 +71,7 @@ const Register = () => {
         dob: date,
         _id: user.user.uid!,
       });
-      console.log(user);
+      
 
       if ("data" in res) {
         toast.success(res.data.message);

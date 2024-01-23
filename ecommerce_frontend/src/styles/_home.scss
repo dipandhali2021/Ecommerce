@@ -131,76 +131,6 @@
     }
   }
 
-  .product-card {
-    width: 18.75rem;
-    padding: 1rem;
-    flex: none;
-    position: relative;
-    background-color: white;
-    @include flex(column, flex-start, center, 4px);
-
-    .back {
-      @include flex(column, center, flex-start, 0px);
-
-      .off {
-        @include flex(row, space-between, center, 0.5rem);
-        width: 100%;
-        padding: 1.9rem 2rem 1.9rem 2rem;
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        > p {
-          background-color: $color4;
-          color: $color1;
-          padding: 0.2rem 0.5rem;
-          border-radius: 0.5rem;
-          font-size: 0.8rem;
-        }
-
-        > svg {
-          background-color: $color1;
-          padding: 0.3rem;
-          @include square(2rem);
-          border-radius: 50%;
-
-          &:hover {
-            color: $color4;
-          }
-        }
-      }
-      > button {
-        @include btn(0.8rem, $color4, $color1);
-        width: 100%;
-        border-radius: 0 0 0.5rem 0.5rem;
-
-        &:hover {
-          background-color: $color2;
-          color: $color1;
-        }
-      }
-      > img {
-        border-radius: 0.5rem 0.5rem 0 0;
-        background-color: #c0c0c06b;
-        @include square(calc(17.75rem - 1rem));
-        object-fit: contain;
-      }
-    }
-    span {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: $color4;
-    }
-
-    .rating {
-      @include flex(row, center, center, 0);
-      > svg {
-        @include square(1.5rem);
-        color: #ffad33;
-      }
-    }
-  }
-
   .features {
     width: 100%;
     margin: auto;
@@ -217,13 +147,13 @@
         padding: 0.3rem;
         > svg {
           @include square(4rem);
-          background-color:black;
+          background-color: black;
           color: $color1;
           padding: 0.5rem;
           border-radius: 50%;
         }
       }
-      .details{
+      .details {
         text-align: center;
       }
     }
@@ -279,7 +209,7 @@
     }
     > img {
       border-radius: 0.5rem 0.5rem 0 0;
-      background-color: #c0c0c06b;
+      background-color: $color1;
       @include square(calc(17.75rem - 1rem));
       object-fit: contain;
     }

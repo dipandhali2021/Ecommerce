@@ -72,12 +72,13 @@ const Cart = () => {
     dispatch(removeCartItem(productId));
     toast.error("Removed from Cart");
   };
+
   const [rows, setRows] = useState<DataType[]>([]);
   useEffect(() => {
     if (cartItems)
       setRows(
         cartItems.map((i) => ({
-          photo: <img src={`${server}/${i.photo[0]}`} />,
+          photo: <img src={`${server}/${i.photo}`} />,
           name: i.name,
           price: i.price,
           quantity: (
@@ -191,7 +192,9 @@ const Cart = () => {
             <span>₹{total}</span>
           </div>
 
-          {cartItems.length > 0 && <Link to={"/shipping"}>Process to Checkout</Link>}
+          {cartItems.length > 0 && (
+            <Link to={"/shipping"}>Process to Checkout</Link>
+          )}
         </aside>
       </div>
     </div>

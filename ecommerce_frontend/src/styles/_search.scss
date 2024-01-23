@@ -30,7 +30,7 @@
 
   >main{
     width: 100%;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     >h1{
         @include heading;
     }
@@ -45,7 +45,7 @@
     .search-product-list{
         @include flex(row, flex-start, flex-start);
         flex-wrap: wrap;
-        height: calc(100% - 10rem);
+        height: calc(100% - 8rem);
         overflow-y: auto;
 
 

@@ -5,7 +5,7 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 type ProductCardProps = {
   productId: string;
-  photo: string[];
+  photo: string;
   name: string;
   price: number;
   stock: number;
@@ -30,7 +30,7 @@ const ProductCard = ({
         </div>
 
         <img
-          src={`${server}/${photo[0]}`}
+          src={`${server}/${photo}`}
           alt={name}
           onClick={() => navigate(`/product/${productId}`)}
         />

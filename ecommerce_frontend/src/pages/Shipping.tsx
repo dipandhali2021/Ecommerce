@@ -11,8 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Column } from "react-table";
 import TableHOC from "../components/admin/TableHOC";
-import { saveShippingInfo } from "../redux/reducer/cartReducer";
+import { resetCart, saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
+import { newOrderRequest } from "../types/api-types";
+import { useNewOrderMutation } from "../redux/api/orderAPI";
+import { responseToast } from "../utils/features";
 
 interface DataType {
   photo: ReactElement;
@@ -36,9 +39,12 @@ const columns: Column<DataType>[] = [
 ];
 
 const Shipping = () => {
-  const { cartItems, total } = useSelector(
-    (state: RootState) => state.cartReducer
-  );
+  const [paymentMethod, setPaymentMethod] = useState("Bank");
+
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const [newOrder] = useNewOrderMutation();
+  const { shippingCharge, cartItems, subtotal, tax, discount, total } =
+    useSelector((state: RootState) => state.cartReducer);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -73,9 +79,26 @@ const Shipping = () => {
         }
       );
 
-      navigate("/pay", {
-        state: data.clientSecret,
-      });
+      if (paymentMethod === "Bank") {
+        navigate("/pay", {
+          state: data.clientSecret,
+        });
+      } else {
+        const orderData: newOrderRequest = {
+          shippingInfo,
+          shippingCharge,
+          orderItems: cartItems,
+          subtotal,
+          tax,
+          discount,
+          total,
+          user: user?._id!,
+        };
+
+        const res = await newOrder(orderData);
+        dispatch(resetCart());
+        responseToast(res, navigate, "/orders");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -160,16 +183,30 @@ const Shipping = () => {
           Total: <span>₹{total}</span>
         </h3>
 
-        <form id="payment">
+        <div id="payment">
           <label className="custom-radio">
-            <input type="radio" name="option" value="bank" />
+            <input
+              form="myform"
+              required
+              type="radio"
+              name="option"
+              value="Bank"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            />
             Bank Transfer
           </label>
           <label className="custom-radio">
-            <input type="radio" name="option" value="cash" />
+            <input
+              form="myform"
+              required
+              type="radio"
+              name="option"
+              value="Cash"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            />
             Cash on Delivery
           </label>
-        </form>
+        </div>
 
         <button type="submit" form="myForm">
           Pay Now

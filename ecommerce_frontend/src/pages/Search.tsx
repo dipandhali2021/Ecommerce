@@ -43,12 +43,12 @@ const Search = () => {
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < 1) return toast.error("Out of Stock");
-    dispatch(addToCart(cartItem));
+    dispatch(addToCart({ ...cartItem }));
     toast.success("Added to Cart");
   };
 
-  const isPrevPage = page < 2;
-  const isNextPage = page > 4;
+  const isPrevPage = page < 2 ;
+  const isNextPage = page > searchData?.totalPage! - 1;
   return (
     <div className="product-search-name">
       <aside>
@@ -108,7 +108,7 @@ const Search = () => {
                 price={i.price}
                 stock={i.stock}
                 handler={addToCartHandler}
-                photo={i.photo}
+                photo={i.photo[0]}
               />
             ))}
           </div>

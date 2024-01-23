@@ -1,0 +1,131 @@
+.product-page {
+  @include flex(column, center,flex-start,  1rem);
+  padding: 2rem 10%;
+  .product {
+   
+    @include flex(row, space-around, center, 1rem);
+    height: 100%;
+    width: 100%;
+
+    .product-images {
+      @include flex(row, center, center, 2rem);
+      .all-images {
+        @include flex(column, center, center, 1rem);
+        > img {
+          @include square(6rem);
+          object-fit: contain;
+          cursor: pointer;
+        }
+      }
+      .live-image {
+        @include flex(column, center, center, 1rem);
+        > img {
+          @include square(30rem);
+          object-fit: contain;
+        }
+      }
+    }
+
+    .product-details {
+      @include flex(column, center, flex-start, 1rem);
+      width: 40%;
+      > h1 {
+        @include heading(2px, 400);
+      }
+
+      > h2 {
+        @include heading(1px, 400);
+      }
+
+      > span {
+        border-bottom: 0.5px solid $color2;
+        padding-bottom: 1rem;
+      }
+
+      > div {
+        @include flex(row, center, center, 1rem);
+        > div {
+          @include flex(row, center, center, 0.5rem);
+          > svg {
+            @include square(1.5rem);
+          }
+        }
+        .quantity {
+          @include flex(row, center, center, 0rem);
+          height: 3rem;
+          border: 0.5px solid $color2;
+          border-left: none;
+          border-right: none;
+
+          > button {
+            @include flex(row, center, center, 0.5rem);
+            @include square(3rem);
+            border: 0.5px solid $color2;
+            padding: 0.5rem;
+            background: transparent;
+            color: $color2;
+            cursor: pointer;
+            &:hover {
+              background: $color4;
+              color: $color1;
+            }
+          }
+          > p {
+            padding: 0 2rem;
+          }
+        }
+        > button {
+          @include btn(1rem 3rem, $color4, $color1);
+          @include flex(row, center, center, 0.5rem);
+          border-radius: 0.2rem;
+          height: 3rem;
+          &:hover {
+            background: $color2;
+            color: $color1;
+          }
+        }
+
+        > span {
+          @include flex(row, center, center, 0.5rem);
+          border: 1px solid $color2;
+          border-radius: 0.2rem;
+          padding: 0.5rem;
+          height: 3rem;
+          > svg {
+            @include square(2rem);
+
+            &:hover {
+              color: $color4;
+            }
+          }
+        }
+      }
+
+      > aside {
+        @include flex(column, center, flex-start, 0rem);
+
+        > div {
+          @include flex(row, flex-start, center, 1rem);
+          padding: 1rem 2rem;
+          border: 0.5px solid $color2;
+          width: 100%;
+          > svg {
+            @include square(2rem);
+            &:hover {
+              color: $color4;
+            }
+          }
+        }
+      }
+    }
+  }
+  >h3{
+    @include heading(1px, 500);
+    padding-left: 1rem
+  }
+
+  .search-product-list{
+    @include flex(row, flex-start, center, 1rem);
+    
+  }
+}

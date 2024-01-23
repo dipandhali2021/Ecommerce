@@ -13,6 +13,7 @@ export type Product = {
   price: number;
   stock: number;
   category: string;
+  description: string;
   photo: string[];
   _id: string;
 };
@@ -26,7 +27,7 @@ export type ShippingInfo = {
 
 export type CartItem = {
   productId: string;
-  photo: string[];
+  photo: string;
   name: string;
   price: number;
   quantity: number;

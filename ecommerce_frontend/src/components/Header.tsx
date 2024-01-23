@@ -17,8 +17,10 @@ interface PropsType {
   user: User | null;
 }
 
+
 const Header = ({ user }: PropsType) => {
   const [isOpen, setIsOpen] = useState(false);
+  
   const logoutHandler = async () => {
     try {
       await signOut(auth);
@@ -28,6 +30,8 @@ const Header = ({ user }: PropsType) => {
       toast.error("Sign Out Failed");
     }
   };
+
+ 
 
   return (
     <div className="top-bar">
@@ -40,12 +44,14 @@ const Header = ({ user }: PropsType) => {
         </div>
 
         <div className="language">
-          <select>
+          {/* <select>
             <option value="">English</option>
             <option value="">Hindi</option>
             <option value="asc">Japanese</option>
             <option value="dsc">Spanish</option>
-          </select>
+          </select> */}
+
+          <div id="google_translate_element"></div>
         </div>
       </nav>
       <nav className="header">

@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Skeleton } from "../components/Loader";
 import ProductCard from "../components/product-card";
-import { useLatestProductsQuery } from "../redux/api/productAPI";
+import {
+  useAllcategoriesQuery,
+  useLatestProductsQuery,
+} from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { CartItem } from "../types/types";
 import {
@@ -13,14 +16,60 @@ import {
   MdOutlineHeadphones,
   MdVideogameAsset,
 } from "react-icons/md";
+import { FaTabletScreenButton } from "react-icons/fa6";
 import { BsSmartwatch } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { RiCustomerServiceLine } from "react-icons/ri";
 import { GoShieldCheck } from "react-icons/go";
+import { useEffect } from "react";
+import { CustomError } from "../types/api-types";
+
+declare global {
+  interface Window {
+    google: any;
+    googleTranslateElementInit: () => void;
+  }
+}
 
 const Home = () => {
   const { data, isLoading, isError } = useLatestProductsQuery("");
   const dispatch = useDispatch();
+
+  const {
+    data: categoriesResponse,
+    isLoading: loadingCategories,
+    isError: productIsError,
+    error: productError,
+  } = useAllcategoriesQuery("");
+
+  if (productIsError) {
+    const err = productError as CustomError;
+    toast.error(err.data.message);
+  }
+
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        includedLanguages: "en,es,fr,de,ja,ko,ru,ar",
+        autoDisplay: false,
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    if (!document.getElementById("google-translate-script")) {
+      var addScript = document.createElement("script");
+      addScript.setAttribute(
+        "src",
+        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      );
+      addScript.setAttribute("id", "google-translate-script");
+      document.body.appendChild(addScript);
+    }
+
+    window.googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < 1) return toast.error("Out of Stock");
@@ -33,15 +82,10 @@ const Home = () => {
     <div className="home">
       <div className="hero-banner">
         <div className="banner">
-          <Link to="/categories">Woman's Fashion</Link>
-          <Link to="/categories">Men's Fashion</Link>
-          <Link to="/categories">Electronics</Link>
-          <Link to="/categories">Home & Lifestyle</Link>
-          <Link to="/categories">Medicine</Link>
-          <Link to="/categories">Sports & Outdoor</Link>
-          <Link to="/categories">Baby's & Toys</Link>
-          <Link to="/categories">Groceries & Pets</Link>
-          <Link to="/categories">Health & Beauty</Link>
+          {!loadingCategories &&
+            categoriesResponse?.categories.map((i) => (
+              <Link to={`/categories/${i}`}>{i.toLocaleUpperCase()}</Link>
+            ))}
         </div>
 
         <section></section>
@@ -65,47 +109,43 @@ const Home = () => {
               price={i.price}
               stock={i.stock}
               handler={addToCartHandler}
-              photo={i.photo}
+              photo={i.photo[0]}
             />
           ))
         )}
       </main>
 
-      <h1>
-        Browse By Category
-        <Link to={"/categories"} className="findmore">
-          More
-        </Link>
-      </h1>
+      <h1>Browse By Category</h1>
       <div className="categories-box">
-        <Link to="/categories">
+        <Link to="/categories/phone">
           <MdOutlinePhoneIphone />
           Phone
         </Link>
-        <Link to="/categories">
+        <Link to="/categories/laptop">
           <MdOutlineComputer />
-          Computer
+          Laptop
         </Link>
-        <Link to="/categories">
+        <Link to="/categories/watch">
           <BsSmartwatch />
           SmartWatch
         </Link>
-        <Link to="/categories">
+        <Link to="/categories/camera">
           <MdOutlineCameraAlt />
           Camera
         </Link>
-        <Link to="/categories">
+        <Link to="/categories/headphone">
           <MdOutlineHeadphones />
           HeadPhone
         </Link>
 
-        <Link to="/categories">
+        <Link to="/categories/gaming">
           <MdVideogameAsset />
           Gaming
         </Link>
-        <Link to="/categories">
-          <MdOutlineCameraAlt />
-          Camera
+
+        <Link to="/categories/tablet">
+          <FaTabletScreenButton />
+          Tablet
         </Link>
       </div>
       <h1>
@@ -127,7 +167,7 @@ const Home = () => {
               price={i.price}
               stock={i.stock}
               handler={addToCartHandler}
-              photo={i.photo}
+              photo={i.photo[0]}
             />
           ))
         )}
@@ -153,7 +193,7 @@ const Home = () => {
               price={i.price}
               stock={i.stock}
               handler={addToCartHandler}
-              photo={i.photo}
+              photo={i.photo[0]}
             />
           ))
         )}

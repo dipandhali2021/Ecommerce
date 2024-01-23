@@ -11,6 +11,7 @@ const NewProduct = () => {
 
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
+  const [description,setDescription]=useState<string>("")
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
   const [stock, setStock] = useState<number>(1);
@@ -57,6 +58,7 @@ const NewProduct = () => {
     formData.set("price", String(price));
     formData.set("stock", String(stock));
     formData.set("category", category);
+    formData.set("description",description);
     photos.forEach((photo) => {
       formData.append("photo", photo);
     });
@@ -78,6 +80,16 @@ const NewProduct = () => {
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Description</label>
+              <input
+                required
+                type="text"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div>

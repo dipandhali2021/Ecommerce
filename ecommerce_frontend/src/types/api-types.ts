@@ -1,4 +1,14 @@
-import { Bar, CartItem, Line, Order, Pie, Product, ShippingInfo, Stats, User } from "./types";
+import {
+  Bar,
+  CartItem,
+  Line,
+  Order,
+  Pie,
+  Product,
+  ShippingInfo,
+  Stats,
+  User,
+} from "./types";
 
 export type MessageResponse = {
   success: boolean;
@@ -117,5 +127,3 @@ export type deleteOrderRequest = {
   userId: string;
   orderId: string;
 };
-
-

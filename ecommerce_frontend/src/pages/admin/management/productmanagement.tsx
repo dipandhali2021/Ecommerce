@@ -22,37 +22,55 @@ const Productmanagement = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useProductDetailsQuery(params.id!);
 
-  const { photo, name, price, stock, category } = data?.product || {
-    photo: "",
-    name: "",
-    price: 0,
-    stock: 0,
-    category: "",
-  };
+  const { photo, name, price, stock, category, description } =
+    data?.product || {
+      photo: "",
+      name: "",
+      price: 0,
+      stock: 0,
+      description: "",
+      category: "",
+    };
 
   const [priceUpdate, setPriceUpdate] = useState<number>(price);
   const [stockUpdate, setStockUpdate] = useState<number>(stock);
   const [nameUpdate, setNameUpdate] = useState<string>(name);
+  const [descriptionUpdate, setDescriptionUpdate] =
+    useState<string>(description);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
-  const [photoUpdate, setPhotoUpdate] = useState<string>();
-  const [photoFile, setPhotoFile] = useState<File>();
 
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
 
+  const [photoFile, setPhotoFile] = useState<File[]>([]);
+  const [photoUpdate, setPhotoUpdate] = useState<string[]>([]);
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
+    const files: FileList | null = e.target.files;
+    const allFiles: File[] = [];
+    const allFilePrevs: string[] = [];
 
-    const reader: FileReader = new FileReader();
+    if (files) {
+      const promises = Array.from(files).map((file, index) => {
+        return new Promise((resolve, reject) => {
+          const reader: FileReader = new FileReader();
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setPhotoUpdate(reader.result);
-          setPhotoFile(file);
-        }
-      };
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+              allFilePrevs[index] = reader.result;
+              allFiles[index] = file;
+              resolve(null);
+            } else {
+              reject();
+            }
+          };
+        });
+      });
+
+      Promise.all(promises).then(() => {
+        setPhotoUpdate(allFilePrevs);
+        setPhotoFile(allFiles);
+      });
     }
   };
 
@@ -63,7 +81,12 @@ const Productmanagement = () => {
     if (priceUpdate) formData.set("price", String(priceUpdate));
     if (stockUpdate !== undefined) formData.set("stock", String(stockUpdate));
     if (categoryUpdate) formData.set("category", categoryUpdate);
-    if (photoFile) formData.set("photo", photoFile);
+    if(descriptionUpdate) formData.set("description",descriptionUpdate);
+    if (photoFile) {
+      photoFile.forEach((photo) => {
+        formData.append("photo", photo);
+      });
+    }
 
     const res = await updateProduct({
       formData,
@@ -100,7 +123,7 @@ const Productmanagement = () => {
           <>
             <section>
               <strong>{data?.product._id}</strong>
-              <img src={`${server}/${photo}`} alt="Product" />
+              <img src={`${server}/${photo[0]}`} alt="Product" />
               <p>{name}</p>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>
@@ -122,6 +145,15 @@ const Productmanagement = () => {
                     placeholder="Name"
                     value={nameUpdate}
                     onChange={(e) => setNameUpdate(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Description</label>
+                  <input
+                    type="text"
+                    placeholder="Description"
+                    value={descriptionUpdate}
+                    onChange={(e) => setDescriptionUpdate(e.target.value)}
                   />
                 </div>
                 <div>
@@ -155,10 +187,14 @@ const Productmanagement = () => {
 
                 <div>
                   <label>Photo</label>
-                  <input type="file" onChange={changeImageHandler} />
+                  <input type="file" multiple onChange={changeImageHandler} />
+                </div>
+                <div>
+                  {photoUpdate.map((photoUpdate, index) => (
+                    <img key={index} src={photoUpdate} alt="preview" />
+                  ))}
                 </div>
 
-                {photoUpdate && <img src={photoUpdate} alt="New Image" />}
                 <button type="submit">Update</button>
               </form>
             </article>
