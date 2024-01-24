@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AiFillFileText } from "react-icons/ai";
+import { AiFillContacts, AiFillFileText } from "react-icons/ai";
 import {
   FaChartBar,
   FaChartLine,
@@ -100,6 +100,12 @@ const DivOne = ({ location }: { location: Location }) => (
         url="/admin/transaction"
         text="Transaction"
         Icon={AiFillFileText}
+        location={location}
+      />
+      <Li
+        url="/admin/contact"
+        text="Contact"
+        Icon={AiFillContacts}
         location={location}
       />
     </ul>

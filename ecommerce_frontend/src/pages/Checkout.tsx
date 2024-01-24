@@ -71,11 +71,21 @@ const CheckoutForm = () => {
     }
     setIsProcessing(false);
   };
-
+  const options = {
+    type: "accordion",
+    defaultCollapsed: false,
+    radios: false,
+    spacedAccordionItems: true,
+  };
   return (
     <div className="checkout-container">
       <form onSubmit={submitHandler}>
-        <PaymentElement />
+        <PaymentElement
+          options={{
+            layout: "accordion",
+            paymentMethodOrder: ["apple_pay", "google_pay", "card", "klarna"],
+          }}
+        />
         <button type="submit" disabled={isProcessing}>
           {isProcessing ? "Processing..." : "Pay"}
         </button>
@@ -83,7 +93,6 @@ const CheckoutForm = () => {
     </div>
   );
 };
-
 const Checkout = () => {
   const location = useLocation();
 
@@ -94,6 +103,9 @@ const Checkout = () => {
     <Elements
       options={{
         clientSecret,
+        appearance: {
+          theme: "flat",
+        },
       }}
       stripe={stripePromise}
     >

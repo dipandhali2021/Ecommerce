@@ -39,7 +39,7 @@ const columns: Column<DataType>[] = [
 ];
 
 const Shipping = () => {
-  const [paymentMethod, setPaymentMethod] = useState("Bank");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const { user } = useSelector((state: RootState) => state.userReducer);
   const [newOrder] = useNewOrderMutation();
@@ -78,6 +78,9 @@ const Shipping = () => {
           },
         }
       );
+      if (paymentMethod == "") {
+        return toast.error("Please select a payment method");
+      }
 
       if (paymentMethod === "Bank") {
         navigate("/pay", {

@@ -71,6 +71,7 @@ const Header = ({ user }: PropsType) => {
               type="text"
               className="search-bar"
               placeholder="What are you looking for?"
+              disabled
             />
 
             <FaSearch />

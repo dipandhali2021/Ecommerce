@@ -10,11 +10,6 @@ import ErrorHandler from "../utils/utility-class.js";
 import { rm } from "fs";
 import { myCache } from "../app.js";
 import { invalidateCache } from "../utils/features.js";
-import { error } from "console";
-
-// import {faker} from "@faker-js/faker";
-
-//revalidate on new update or delete product and new order
 
 export const getLatestProducts = tryCatch(async (req, res, next) => {
   let products;
@@ -24,7 +19,19 @@ export const getLatestProducts = tryCatch(async (req, res, next) => {
     products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
     myCache.set("latest-product", JSON.stringify(products));
   }
-  invalidateCache({ product: true ,admin: true});
+  invalidateCache({ product: true, admin: true });
+  return res.status(200).json({
+    status: "success",
+    products,
+  });
+});
+
+export const getBestSellingProducts = tryCatch(async (req, res, next) => {
+  let products;
+
+  products = await Product.find({ sold: { $gt: 0 } })
+    .sort({ sold: -1 })
+    .limit(5);
   return res.status(200).json({
     status: "success",
     products,
@@ -86,12 +93,13 @@ export const newProduct = tryCatch(
     res: Response,
     next: NextFunction
   ) => {
-    const { name, category, price, stock,description } = req.body;
+    const { name, category, price, stock, description } = req.body;
     const photos = req.files;
-    if (!photos || photos.length === 0) return next(new ErrorHandler("Please provide at least one photo", 400));
+    if (!photos || photos.length === 0)
+      return next(new ErrorHandler("Please provide at least one photo", 400));
     if (!name || !category || !price || !stock || !description) {
       if (Array.isArray(photos)) {
-        photos.forEach(photo => {
+        photos.forEach((photo) => {
           rm(photo.path, () => {
             console.log("Photo deleted");
           });
@@ -102,7 +110,9 @@ export const newProduct = tryCatch(
         new ErrorHandler("Please provide all the required fields", 400)
       );
     }
-    const photoPaths = (photos as Express.Multer.File[]).map(photo => photo.path);
+    const photoPaths = (photos as Express.Multer.File[]).map(
+      (photo) => photo.path
+    );
 
     await Product.create({
       name,
@@ -113,7 +123,7 @@ export const newProduct = tryCatch(
       photo: photoPaths,
     });
 
-   invalidateCache({ product: true ,admin: true});
+    invalidateCache({ product: true, admin: true });
     return res.status(201).json({
       status: true,
       message: "Product created successfully",
@@ -121,9 +131,8 @@ export const newProduct = tryCatch(
   }
 );
 
-
 export const updateProduct = tryCatch(async (req, res, next) => {
-  const { name, price, stock, category,description } = req.body;
+  const { name, price, stock, category, description } = req.body;
   const product = await Product.findById(req.params.id);
   if (!product) return next(new ErrorHandler("Product not found", 404));
 
@@ -140,7 +149,9 @@ export const updateProduct = tryCatch(async (req, res, next) => {
     });
 
     // Add new photos
-    const photos = (req.files as Express.Multer.File[]).map((file) => file.path);
+    const photos = (req.files as Express.Multer.File[]).map(
+      (file) => file.path
+    );
     product.photo = photos;
   }
 
@@ -148,10 +159,14 @@ export const updateProduct = tryCatch(async (req, res, next) => {
   if (price) product.price = price;
   if (category) product.category = category;
   if (stock) product.stock = stock;
-  if(description) product.description=description;
+  if (description) product.description = description;
 
   await product.save();
-  invalidateCache({ product: true ,admin: true,productId:String(product._id)});
+  invalidateCache({
+    product: true,
+    admin: true,
+    productId: String(product._id),
+  });
   return res.status(200).json({
     status: true,
     message: "Product Updated successfully",
@@ -171,16 +186,17 @@ export const deleteProduct = tryCatch(async (req, res, next) => {
     });
   });
   await product.deleteOne();
- invalidateCache({ product: true ,admin: true,productId:String(product._id)});
+  invalidateCache({
+    product: true,
+    admin: true,
+    productId: String(product._id),
+  });
   return res.status(200).json({
     status: "success",
     message: "Product deleted successfully",
     product,
   });
 });
-
-
-
 
 export const getAllProducts = tryCatch(
   async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {
@@ -225,33 +241,3 @@ export const getAllProducts = tryCatch(
     });
   }
 );
-
-// const generateRandomProducts = async (count:number  = 10) => {
-//   const products = [];
-//   for (let i = 0; i < count; i++) {
-//     const product = {
-//       name: faker.commerce.productName(),
-//       photo: "uploads\\ccb34a01-a9b1-474f-94b4-1e11ff724d55.png",
-//       price: faker.commerce.price({min:1500,max:80000,dec:0}),
-//       stock: faker.commerce.price({min:0,max:1000,dec:0}),
-//       category: faker.commerce.department(),
-//       createdAt: new Date(faker.date.past()),
-//       updatedAt: new Date(faker.date.recent()),
-//       __v: 0,
-//     };
-//     products.push(product);
-//   }
-//   await Product.create(products);
-//   console.log({success:true, message:"Products created successfully"});
-
-// }
-
-// const deleteRandomProducts = async (count:number  = 10) => {
-
-//   const products = await Product.find({}).skip(2);
-//   for (let i = 0; i < products.length; i++) {
-//     const product = products[i];
-//     await product.deleteOne();
-//   }
-//   console.log({success:true, message:"Products deleted successfully"});
-// }

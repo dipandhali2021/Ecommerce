@@ -13,8 +13,9 @@ import {
 } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { server } from "../redux/store";
-import { CartItem } from "../types/types";
+import { CartItem, WishlistItem } from "../types/types";
 import ProductCard from "../components/product-card";
+import { addToWishlist } from "../redux/reducer/wishlistReducer";
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const ProductDetails = () => {
       category: "",
       description: "",
     };
+
+    
   const { isLoading: productLoading, data: searchData } =
     useSearchProductsQuery({
       category,
@@ -60,16 +63,19 @@ const ProductDetails = () => {
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < quantity) return toast.error("Out of Stock");
-    dispatch(
-      addToCart({ ...cartItem, quantity: quantity })
-    );
+    dispatch(addToCart({ ...cartItem, quantity: quantity }));
     toast.success("Added to Cart");
+  };
+  const addtoWishlistHandler = (wishlistItem: WishlistItem) => {
+    if (wishlistItem?.stock < 1) return toast.error("Out of Stock");
+    dispatch(
+      addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity })
+    );
+    toast.success("Added to Wishlist");
   };
   const buyNowHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < quantity) return toast.error("Out of Stock");
-    dispatch(
-      addToCart({ ...cartItem, quantity: quantity })
-    );
+    dispatch(addToCart({ ...cartItem, quantity: quantity }));
     navigate("/cart");
   };
 
@@ -147,7 +153,15 @@ const ProductDetails = () => {
                 >
                   Buy Now
                 </button>
-                <span>
+                <span onClick={()=>addtoWishlistHandler({
+                  photo:photo[0],
+                  price,
+                  name,
+                  stock,
+                  productId: _id!,
+                  quantity: 1,
+
+                })}>
                   <MdFavoriteBorder />
                 </span>
               </div>
@@ -167,7 +181,7 @@ const ProductDetails = () => {
           </>
         )}
       </div>
-      {searchData?.products.length! > 1 ?(<h3>Related Items</h3>):""}
+      {searchData?.products.length! > 1 ? <h3>Related Items</h3> : ""}
       {productLoading ? (
         <Skeleton length={10} />
       ) : (
@@ -183,9 +197,9 @@ const ProductDetails = () => {
                 stock={i.stock}
                 handler={addToCartHandler}
                 photo={i.photo[0]}
+                wishHandler={addtoWishlistHandler}
               />
             ))}
-            
         </div>
       )}
     </div>

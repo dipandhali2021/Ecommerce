@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
   > section {
     position: relative;
     @include flex(row, space-around, center, 5rem);

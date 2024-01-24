@@ -7,9 +7,10 @@ import {
 import { CustomError } from "../types/api-types";
 import toast from "react-hot-toast";
 import { Skeleton } from "../components/Loader";
-import { CartItem } from "../types/types";
+import { CartItem, WishlistItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
+import { addToWishlist } from "../redux/reducer/wishlistReducer";
 
 const Search = () => {
   const {
@@ -46,6 +47,11 @@ const Search = () => {
     dispatch(addToCart({ ...cartItem }));
     toast.success("Added to Cart");
   };
+  const addtoWishlistHandler = (wishlistItem: WishlistItem) => {
+    if (wishlistItem?.stock < 1) return toast.error("Out of Stock");
+    dispatch(addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity }));
+    toast.success("Added to Wishlist");
+  }
 
   const isPrevPage = page < 2 ;
   const isNextPage = page > searchData?.totalPage! - 1;
@@ -109,6 +115,7 @@ const Search = () => {
                 stock={i.stock}
                 handler={addToCartHandler}
                 photo={i.photo[0]}
+                wishHandler={addtoWishlistHandler}
               />
             ))}
           </div>

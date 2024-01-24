@@ -54,7 +54,7 @@ $color1: white;
 $color2: rgb(46, 46, 46);
 $color3: rgb(0, 104, 136);
 $color4: rgb(219, 68, 68);
-$color5: rgba(223, 223, 223, 0.774);
+$color5: rgba(223, 223, 223, 0.596);
 
 .red {
   color: red;
@@ -77,11 +77,25 @@ $color5: rgba(223, 223, 223, 0.774);
 @import "contact";
 @import "product";
 
+
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
 @import "admin-styles/chart";
 @import "admin-styles/dashboardapp";
 @import "admin-styles/mediaquery";
+@import "admin-styles/admincontact";
+
+.wishlist {
+  padding: 2rem 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+.margin{
+  padding:10rem;
+}
 
 .categories {
   padding: 2rem 10%;
@@ -275,15 +289,27 @@ $color5: rgba(223, 223, 223, 0.774);
 }
 
 .checkout-container {
-  max-width: 400px;
-  width: 100%;
-  margin: auto;
+ padding:  10rem 15rem;
+ width: 100%;
+@include flex(column, center, center, 1rem);
+
+
+ 
   > form {
     @include flex(column, flext-start, stretch, 2rem);
+    padding: 2rem;
+    @include baseShadow;
+    .StripeElement{
+    }
     > button {
-      @include btn(1rem, $color3, $color1);
+      @include btn(1rem, $color2, $color1);
       width: 100%;
       font-size: 1.1rem;
+
+      &:hover {
+        background-color: $color4;
+        color: $color1;
+      }
     }
   }
 }

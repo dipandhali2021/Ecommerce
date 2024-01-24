@@ -63,7 +63,9 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
     const order = orderItems[i];
     const product = await Product.findById(order.productId);
     if (!product) throw new ErrorHandler("product not found", 404);
+    if(product.stock==0) product.stock=0;
     product.stock -= order.quantity;
+    product.sold = (product.sold || 0) + order.quantity
     await product.save();
   }
 };

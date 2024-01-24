@@ -4,6 +4,7 @@ import {
   getAdminProducts,
   getAllCategories,
   getAllProducts,
+  getBestSellingProducts,
   getLatestProducts,
   getSingleProduct,
   newProduct,
@@ -17,6 +18,7 @@ const app = express.Router();
 app.post("/new", adminOnly, photosUpload, newProduct);
 app.get("/all", getAllProducts);
 app.get("/latest", getLatestProducts);
+app.get("/best-selling",getBestSellingProducts)
 app.get("/categories", getAllCategories);
 app.get("/admin-products", adminOnly, getAdminProducts);
 

@@ -1,12 +1,35 @@
-import { FormEvent} from "react";
-import { IoMailOutline, IoCallOutline } from "react-icons/io5";
+import axios from "axios";
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
+import { IoCallOutline, IoMailOutline } from "react-icons/io5";
+
+export const databaseServer = import.meta.env.VITE_REALTIME_DATABASE;
 
 const Contact = () => {
+  const [userData, setUserata] = useState({
+    name: "",
+    email: "",
+    phone: +91,
+    message: "",
+  });
+  
 
-  const submitHandler = (e:FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
-  }
+    const res = await axios.post(`${databaseServer}/contact.json`, userData);
+    if (res.status === 200) {
+      toast.success("Message sent successfully");
+      setUserata({
+        name: "",
+        email: "",
+        phone: 0,
+        message: "",
+      });
+    }
+  };
+
+  
+
   return (
     <div className="contact">
       <div className="left-contact-container">
@@ -37,18 +60,35 @@ const Contact = () => {
       <div className="right-contact-container">
         <form onSubmit={submitHandler}>
           <div className="input-box">
-            <input required type="text " placeholder="Your Name" name="name" />
+            <input
+              required
+              type="text "
+              placeholder="Your Name"
+              name="name"
+              value={userData.name}
+              onChange={(e) =>
+                setUserata({ ...userData, name: e.target.value })
+              }
+            />
             <input
               required
               type="text "
               placeholder="Your Email"
               name="email"
+              value={userData.email}
+              onChange={(e) =>
+                setUserata({ ...userData, email: e.target.value })
+              }
             />
             <input
               required
-              type="text "
+              type="number"
               placeholder="Your Phone"
               name="phone"
+              value={userData.phone}
+              onChange={(e) =>
+                setUserata({ ...userData, phone: Number(e.target.value) })
+              }
             />
           </div>
           <textarea
@@ -56,6 +96,10 @@ const Contact = () => {
             placeholder="Message"
             name="message"
             rows={5}
+            value={userData.message}
+            onChange={(e) =>
+              setUserata({ ...userData, message: e.target.value })
+            }
           ></textarea>
 
           <button type="submit" className="btn">

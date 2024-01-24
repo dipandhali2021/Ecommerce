@@ -34,6 +34,16 @@ export type CartItem = {
   stock: number;
 };
 
+
+export type WishlistItem = {
+  productId: string;
+  photo: string;
+  name: string;
+  price: number;
+  quantity: number;
+  stock: number;
+};
+
 export type OrderItem = Omit<CartItem, "stock"> & {
   _id: string;
 };

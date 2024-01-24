@@ -1,8 +1,9 @@
-import { TiStarFullOutline } from "react-icons/ti";
-import { server } from "../redux/store";
-import { CartItem } from "../types/types";
+import { FaCircleMinus } from "react-icons/fa6";
 import { MdFavoriteBorder } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { TiStarFullOutline } from "react-icons/ti";
+import { useLocation, useNavigate } from "react-router-dom";
+import { server } from "../redux/store";
+import { CartItem, WishlistItem } from "../types/types";
 type ProductCardProps = {
   productId: string;
   photo: string;
@@ -10,6 +11,7 @@ type ProductCardProps = {
   price: number;
   stock: number;
   handler: (cartItem: CartItem) => string | undefined;
+  wishHandler: (wishlistItem: WishlistItem) => string | undefined | void;
 };
 
 const ProductCard = ({
@@ -19,14 +21,32 @@ const ProductCard = ({
   price,
   stock,
   handler,
+  wishHandler,
 }: ProductCardProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  
+
   return (
     <div className="product-card">
       <div className="back">
         <div className="off">
           <p>-50%</p>
-          <MdFavoriteBorder />
+          <div
+            onClick={() =>
+              wishHandler({
+                productId,
+                photo,
+                name,
+                price,
+                stock,
+                quantity: 1,
+              })
+            }
+          >
+            {pathname == "/wishlist" ? <FaCircleMinus /> : <MdFavoriteBorder />}
+          </div>
         </div>
 
         <img

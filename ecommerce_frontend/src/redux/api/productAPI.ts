@@ -22,6 +22,11 @@ export const productApi = createApi({
       query: () => "latest",
       providesTags: ["product"],
     }),
+
+    bestSellingProducts: builder.query<AllProductResponse, string>({
+      query: () => "best-selling",
+      providesTags: ["product"],
+    }),
     allcategories: builder.query<AllCategoriesResponse, string>({
       query: () => "categories",
       providesTags: ["product"],
@@ -82,4 +87,5 @@ export const {
   useProductDetailsQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useBestSellingProductsQuery
 } = productApi;

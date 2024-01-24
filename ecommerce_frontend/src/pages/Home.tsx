@@ -1,28 +1,32 @@
+import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { BsSmartwatch } from "react-icons/bs";
+import { FaTabletScreenButton } from "react-icons/fa6";
+import { GoShieldCheck } from "react-icons/go";
+import {
+  MdOutlineCameraAlt,
+  MdOutlineComputer,
+  MdOutlineHeadphones,
+  MdOutlinePhoneIphone,
+  MdVideogameAsset,
+} from "react-icons/md";
+import { RiCustomerServiceLine } from "react-icons/ri";
+import { TbTruckDelivery } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Skeleton } from "../components/Loader";
 import ProductCard from "../components/product-card";
 import {
   useAllcategoriesQuery,
+  useBestSellingProductsQuery,
   useLatestProductsQuery,
 } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
-import { CartItem } from "../types/types";
-import {
-  MdOutlinePhoneIphone,
-  MdOutlineComputer,
-  MdOutlineCameraAlt,
-  MdOutlineHeadphones,
-  MdVideogameAsset,
-} from "react-icons/md";
-import { FaTabletScreenButton } from "react-icons/fa6";
-import { BsSmartwatch } from "react-icons/bs";
-import { TbTruckDelivery } from "react-icons/tb";
-import { RiCustomerServiceLine } from "react-icons/ri";
-import { GoShieldCheck } from "react-icons/go";
-import { useEffect } from "react";
 import { CustomError } from "../types/api-types";
+import { CartItem, WishlistItem } from "../types/types";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { addToWishlist } from "../redux/reducer/wishlistReducer";
 
 declare global {
   interface Window {
@@ -33,6 +37,11 @@ declare global {
 
 const Home = () => {
   const { data, isLoading, isError } = useLatestProductsQuery("");
+  const {
+    data: bestSellingData,
+    isLoading: bestSellingLoading,
+    isError: bestSellingError,
+  } = useBestSellingProductsQuery("");
   const dispatch = useDispatch();
 
   const {
@@ -77,7 +86,16 @@ const Home = () => {
     toast.success("Added to Cart");
   };
 
+  const addtoWishlistHandler = (wishlistItem: WishlistItem) => {
+    if (wishlistItem?.stock < 1) return toast.error("Out of Stock");
+    dispatch(
+      addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity })
+    );
+    toast.success("Added to Wishlist");
+  };
+
   if (isError) toast.error("Cannot Fetch the Products");
+  if (bestSellingError) toast.error("Cannot Fetch the Products");
   return (
     <div className="home">
       <div className="hero-banner">
@@ -88,7 +106,27 @@ const Home = () => {
             ))}
         </div>
 
-        <section></section>
+        <section>
+          <Carousel
+            autoPlay
+            interval={10000}
+            infiniteLoop
+            useKeyboardArrows
+            dynamicHeight
+            showThumbs={false}
+            showStatus={false}
+          >
+            <div>
+              <img src="../src/assets/banner.png" alt="Image 1" />
+            </div>
+            <div>
+              <img src="../src/assets/banner.png" alt="Image 2" />
+            </div>
+            <div>
+              <img src="../src/assets/banner.png" alt="Image 3" />
+            </div>
+          </Carousel>
+        </section>
       </div>
       <h1>
         Latest Products
@@ -110,6 +148,7 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+              wishHandler={addtoWishlistHandler}
             />
           ))
         )}
@@ -150,16 +189,14 @@ const Home = () => {
       </div>
       <h1>
         Best Selling Products
-        <Link to={"/search"} className="findmore">
-          More
-        </Link>
+       
       </h1>
 
       <main>
-        {isLoading ? (
+        {bestSellingLoading ? (
           <Skeleton width="80vw" />
         ) : (
-          data?.products?.map((i) => (
+          bestSellingData?.products?.map((i) => (
             <ProductCard
               key={i._id}
               productId={i._id}
@@ -168,12 +205,33 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+              wishHandler={addtoWishlistHandler}
             />
           ))
         )}
       </main>
 
-      <section className="categoriesB"></section>
+      <section>
+        <Carousel
+          autoPlay
+          interval={10000}
+          infiniteLoop
+          useKeyboardArrows
+          dynamicHeight
+          showThumbs={false}
+          showStatus={false}
+        >
+          <div>
+            <img src="../src/assets/categoriesB.png" alt="Image 1" />
+          </div>
+          <div>
+            <img src="../src/assets/categoriesB.png" alt="Image 2" />
+          </div>
+          <div>
+            <img src="../src/assets/categoriesB.png" alt="Image 3" />
+          </div>
+        </Carousel>
+      </section>
       <h1>
         Explore Our Products
         <Link to={"/search"} className="findmore">
@@ -194,6 +252,7 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+              wishHandler={addtoWishlistHandler}
             />
           ))
         )}

@@ -2,7 +2,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Header from "./components/Header";
 import Loader from "./components/Loader";
 import ProtectedRoute from "./components/protected-route";
@@ -10,10 +15,7 @@ import { auth } from "./firebase";
 import { getUser } from "./redux/api/userAPI";
 import { userExists, userNotExists } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
-import Footer from "./components/Footer";
-
-
-
+import Footer, { PrivacyPolicy } from "./components/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -29,12 +31,14 @@ const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ProductDetails = lazy(() => import("./pages/ProductDetails"));
 const Categories = lazy(() => import("./pages/Categories"));
+const WishList = lazy(() => import("./pages/WishList"));
 
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
 const Customers = lazy(() => import("./pages/admin/customers"));
 const Transaction = lazy(() => import("./pages/admin/transaction"));
+const AdminContact = lazy(() => import("./pages/admin/AdminContact"));
 const Barcharts = lazy(() => import("./pages/admin/charts/barcharts"));
 const Piecharts = lazy(() => import("./pages/admin/charts/piecharts"));
 const Linecharts = lazy(() => import("./pages/admin/charts/linecharts"));
@@ -65,18 +69,29 @@ const App = () => {
     });
   }, []);
 
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
+
   return loading ? (
     <Loader />
   ) : (
     <Router>
+       <ScrollToTop />
       <Header user={user} />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About/>} />
-          <Route path="/contact" element={<Contact/>} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           {/* no logged in route */}
           <Route
             path="/register"
@@ -104,7 +119,8 @@ const App = () => {
             <Route path="/pay" element={<Checkout />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/categories/:category" element={<Categories />} />
-            
+            <Route path="/wishlist" element={<WishList />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
           {/* admin routes */}
           <Route
@@ -120,6 +136,8 @@ const App = () => {
             <Route path="/admin/product" element={<Products />} />
             <Route path="/admin/customer" element={<Customers />} />
             <Route path="/admin/transaction" element={<Transaction />} />
+            <Route path="/admin/contact" element={<AdminContact />} />
+
             {/* Charts */}
             <Route path="/admin/chart/bar" element={<Barcharts />} />
             <Route path="/admin/chart/pie" element={<Piecharts />} />

@@ -2,10 +2,11 @@ import { useParams } from "react-router-dom";
 import { useSearchProductsQuery } from "../redux/api/productAPI";
 import { Skeleton } from "../components/Loader";
 import ProductCard from "../components/product-card";
-import { CartItem } from "../types/types";
+import { CartItem, WishlistItem } from "../types/types";
 import toast from "react-hot-toast";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
+import { addToWishlist } from "../redux/reducer/wishlistReducer";
 
 const Categories = () => {
   const params = useParams();
@@ -25,6 +26,11 @@ const Categories = () => {
     dispatch(addToCart({ ...cartItem }));
     toast.success("Added to Cart");
   };
+  const addtoWishlistHandler = (wishlistItem: WishlistItem) => {
+    if (wishlistItem?.stock < 1) return toast.error("Out of Stock");
+    dispatch(addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity }));
+    toast.success("Added to Wishlist");
+  }
 
   return (
     <>
@@ -45,6 +51,7 @@ const Categories = () => {
                   stock={i.stock}
                   handler={addToCartHandler}
                   photo={i.photo[0]}
+                  wishHandler={addtoWishlistHandler}
                 />
               ))
             )}

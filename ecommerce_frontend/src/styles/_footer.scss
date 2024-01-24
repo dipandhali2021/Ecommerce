@@ -11,6 +11,10 @@ footer {
     width: 100%;
     max-width: 20rem;
 
+    >a{
+      color: $color1;
+    }
+
     .input {
       @include flex(row, center, center, 0.5rem);
       border: 1px solid $color1;
@@ -45,12 +49,32 @@ footer {
     }
     .social-icons {
       @include flex(row, flex-start, center, 2.5rem);
-      > svg {
-        @include square(1.5rem);
-        &:hover {
-          color: $color4;
+      >a{
+        > svg {
+          @include square(1.5rem);
+          color: $color1;
+          &:hover {
+            color: $color4;
+          }
         }
       }
     }
+  }
+}
+
+.privacy{
+  padding: 2rem 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  width: 100%;
+
+  >h1,>h2{
+    @include heading(2px ,400)
+  }
+
+  ul >li{
+    @include listStyle;
   }
 }

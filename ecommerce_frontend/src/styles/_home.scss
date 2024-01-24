@@ -25,9 +25,15 @@
     }
 
     > section {
+      @include flex(column, center, center, 1rem);
       width: 100%;
       height: 27rem;
-      background: url("../assets/banner.png") no-repeat center/ cover;
+      // position: fixed; /* add this code for position fixed */
+    }
+    > section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
   .findmore {
@@ -186,14 +192,17 @@
         font-size: 0.8rem;
       }
 
-      > svg {
-        background-color: $color1;
-        padding: 0.3rem;
-        @include square(2rem);
-        border-radius: 50%;
+      > div {
+        > svg {
+          background-color: $color1;
+          padding: 0.3rem;
+          @include square(2rem);
+          border-radius: 50%;
+          
 
-        &:hover {
-          color: $color4;
+          &:hover {
+            color: $color4;
+          }
         }
       }
     }
