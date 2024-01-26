@@ -43,10 +43,10 @@
     }
 
     .search-product-list{
-        @include flex(row, flex-start, flex-start);
+        @include flex(row, center, flex-start, 1rem);
         flex-wrap: wrap;
         height: calc(100% - 8rem);
-        overflow-y: auto;
+      width: 100%;
 
 
     }
@@ -54,7 +54,7 @@
         @include flex;
         >button{
             @include flex;
-            @include btn(0.5rem 1rem , $color3, $color1);
+            @include btn(0.5rem 1rem , $color4, $color1);
             border-radius: 10px;
             &:disabled{
                 cursor: not-allowed;

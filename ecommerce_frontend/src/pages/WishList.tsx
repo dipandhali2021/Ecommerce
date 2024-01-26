@@ -8,7 +8,7 @@ import { addToCart } from "../redux/reducer/cartReducer";
 import { removeFromWishlist } from "../redux/reducer/wishlistReducer";
 
 const WishList = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { loading, wishlist } = useSelector(
     (state: RootState) => state.wishlistReducer
   );
@@ -22,28 +22,29 @@ const WishList = () => {
     toast.error("Removed from Whislist");
   };
 
-  if(wishlist.length ==0) return (
-    <h1 className="heading margin">No Wishlist Items Selected</h1>
-  )
-  return <div className="wishlist">
-
-    {loading?<Skeleton/>:(
-        wishlist.map((i)=>{
-            return (
-                <ProductCard
-                productId={i.productId}
-                name= {i.name}
-                photo={i.photo}
-                price={i.price}
-                stock={i.stock}
-                handler={addToCartHandler}
-                wishHandler={remove}
-
-                />
-            )
+  if (wishlist.length == 0)
+    return <h1 className="heading margin">No Wishlist Items Selected</h1>;
+  return (
+    <div className="wishlist">
+      {loading ? (
+        <Skeleton />
+      ) : (
+        wishlist.map((i: WishlistItem) => {
+          return (
+            <ProductCard
+              productId={i.productId}
+              name={i.name}
+              photo={i.photo}
+              price={i.price}
+              stock={i.stock}
+              handler={addToCartHandler}
+              wishHandler={remove}
+            />
+          );
         })
-    )}
-  </div>;
+      )}
+    </div>
+  );
 };
 
 export default WishList;

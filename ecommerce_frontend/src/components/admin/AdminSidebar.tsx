@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
+import { IconType } from "react-icons";
 import { AiFillContacts, AiFillFileText } from "react-icons/ai";
-import {
-  FaChartBar,
-  FaChartLine,
-  FaChartPie,
-  FaGamepad,
-  FaStopwatch,
-} from "react-icons/fa";
+import { FaChartBar, FaChartLine, FaChartPie } from "react-icons/fa";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosPeople } from "react-icons/io";
 import {
@@ -15,7 +10,6 @@ import {
   RiShoppingBag3Fill,
 } from "react-icons/ri";
 import { Link, Location, useLocation } from "react-router-dom";
-import { IconType } from "react-icons";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -59,7 +53,6 @@ const AdminSidebar = () => {
             : {}
         }
       >
-        <h2>Logo.</h2>
         <DivOne location={location} />
         <DivTwo location={location} />
         <DivThree location={location} />
@@ -143,21 +136,9 @@ const DivThree = ({ location }: { location: Location }) => (
     <h5>Apps</h5>
     <ul>
       <Li
-        url="/admin/app/stopwatch"
-        text="Stopwatch"
-        Icon={FaStopwatch}
-        location={location}
-      />
-      <Li
         url="/admin/app/coupon"
         text="Coupon"
         Icon={RiCoupon3Fill}
-        location={location}
-      />
-      <Li
-        url="/admin/app/toss"
-        text="Toss"
-        Icon={FaGamepad}
         location={location}
       />
     </ul>
@@ -174,14 +155,14 @@ const Li = ({ url, text, location, Icon }: LiProps) => (
   <li
     style={{
       backgroundColor: location.pathname.includes(url)
-        ? "rgba(0,115,255,0.1)"
+        ? "rgb(223 109 109)"
         : "white",
     }}
   >
     <Link
       to={url}
       style={{
-        color: location.pathname.includes(url) ? "rgb(0,115,255)" : "black",
+        color: location.pathname.includes(url) ? "white" : "black",
       }}
     >
       <Icon />

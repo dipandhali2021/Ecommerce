@@ -43,9 +43,7 @@ const columns: Column<DataType>[] = [
 ];
 
 const Products = () => {
-  const { user } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+  const { user } = useSelector((state: RootState) => state.userReducer);
   const { data, isLoading, isError, error } = useAllProductsQuery(user?._id!);
   const [rows, setRows] = useState<DataType[]>([]);
   if (isError) toast.error((error as CustomError).data.message);
@@ -61,6 +59,7 @@ const Products = () => {
         }))
       );
   }, [data]);
+
   const Table = TableHOC<DataType>(
     columns,
     rows,
@@ -72,10 +71,14 @@ const Products = () => {
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
-      <Link to="/admin/product/new" className="create-product-btn">
-        <FaPlus />
-      </Link>
+      <div>
+        <div className="create-button">
+          <Link to="/admin/product/new" className="create-product-btn">
+            <FaPlus />
+          </Link>
+        </div>
+        <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
+      </div>
     </div>
   );
 };

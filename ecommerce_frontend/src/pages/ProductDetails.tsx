@@ -197,6 +197,7 @@ const ProductDetails = () => {
                 stock={i.stock}
                 handler={addToCartHandler}
                 photo={i.photo[0]}
+      
                 wishHandler={addtoWishlistHandler}
               />
             ))}

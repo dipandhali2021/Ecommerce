@@ -1,74 +1,81 @@
-import { useEffect, useState } from "react";
-import { databaseServer } from "../Contact";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Column } from "react-table";
+import { Skeleton } from "../../components/Loader";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import TableHOC from "../../components/admin/TableHOC";
+import { databaseServer } from "../Contact";
 
-const AdminContact = () => {
-  const [contactData, setContactData] = useState<ContactPersonProps[]>([
-    {
-      name: "abc",
-      email: "abc@gmail.com",
-      phone: +921232345,
-      message: "abc",
-    },
-  ]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(`${databaseServer}/contact.json`);
-
-      let values = Object.values(data);
-      setContactData(values as ContactPersonProps[]);
-    };
-
-    fetchData();
-  }, []);
-
-  return (
-    <div className="admin-contact">
-      <h1>Contact</h1>
-
-      <div>
-        {contactData.map((contact, key) => {
-          return (
-            <ContactPerson
-              key={key}
-              name={contact.name}
-              email={contact.email}
-              phone={contact.phone}
-              message={contact.message}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-export default AdminContact;
-
-interface ContactPersonProps {
+interface DataType {
   name: string;
   email: string;
   phone: number;
   message: string;
 }
 
-const ContactPerson = ({ name, email, phone, message }: ContactPersonProps) => {
+const columns: Column<DataType>[] = [
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Phone",
+    accessor: "phone",
+  },
+  {
+    Header: "Message",
+    accessor: "message",
+  },
+];
+
+const AdminContact = () => {
+  const [contactData, setContactData] = useState<DataType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const { data } = await axios.get(`${databaseServer}/contact.json`);
+      let values = Object.values(data);
+      setContactData(values as DataType[]);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const [rows, setRows] = useState<DataType[]>([]);
+  useEffect(() => {
+    if (contactData)
+      setRows(
+        contactData.map((i) => ({
+          name: i.name,
+          email: i.email,
+          phone: i.phone,
+          message: i.message,
+        }))
+      );
+  }, [contactData]);
+
+  const Table = TableHOC<DataType>(
+    columns,
+    rows,
+    "contact-box",
+    "Contact",
+    rows.length > 6
+  )();
+
   return (
-    <div className="contact-person">
-      <h2>{name}</h2>
-      <div className="email">
-        <h3>Email :</h3>
-        <span>{email}</span>
-      </div>
-      <div className="phone">
-        <h3>Phone :</h3>
-        <span>{phone}</span>
-      </div>
-      <div className="message">
-        <h3>Message : </h3>
-        <span>{message}</span>
+    <div className="admin-container">
+      <AdminSidebar />
+      <div className="admin-contact">
+        <main>{loading ? <Skeleton length={20} /> : Table}</main>
       </div>
     </div>
   );
 };
+
+export default AdminContact;

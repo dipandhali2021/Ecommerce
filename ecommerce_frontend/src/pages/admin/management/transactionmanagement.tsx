@@ -82,69 +82,73 @@ const TransactionManagement = () => {
     <div className="admin-container">
       <AdminSidebar />
       <main className="product-management">
-        {isLoading ? (
-          <Skeleton length={20} />
-        ) : (
-          <>
-            <section
-              style={{
-                padding: "2rem",
-              }}
-            >
-              <h2>Order Items</h2>
+        <h2>Transaction Management</h2>
+        <article>
+          {isLoading ? (
+            <Skeleton length={20} />
+          ) : (
+            <>
+              <section
+                style={{
+                  padding: "2rem",
+                }}
+              >
+                <h2>Order Items</h2>
 
-              {orderItems.map((i) => (
-                <ProductCard
-                  key={i._id}
-                  name={i.name}
-                  photo={`${server}/${i.photo}`}
-                  productId={i.productId}
-                  _id={i._id}
-                  quantity={i.quantity}
-                  price={i.price}
-                />
-              ))}
-            </section>
+                {orderItems.map((i) => (
+                  <ProductCard
+                    key={i._id}
+                    name={i.name}
+                    photo={`${server}/${i.photo}`}
+                    productId={i.productId}
+                    _id={i._id}
+                    quantity={i.quantity}
+                    price={i.price}
+                    
+                  />
+                ))}
+              </section>
 
-            <article className="shipping-info-card">
-              <button className="product-delete-btn" onClick={deleteHandler}>
-                <FaTrash />
-              </button>
-              <h1>Order Info</h1>
-              <h5>User Info</h5>
-              <p>Name: {name}</p>
-              <p>
-                Address:{" "}
-                {`${address}, ${city}, ${state}, ${country} ${pinCode}`}
-              </p>
-              <h5>Amount Info</h5>
-              <p>Subtotal: {subtotal}</p>
-              <p>Shipping Charges: {shippingCharge}</p>
-              <p>Tax: {tax}</p>
-              <p>Discount: {discount}</p>
-              <p>Total: {total}</p>
+              <article className="shipping-info-card">
+                <button className="product-delete-btn" onClick={deleteHandler}>
+                  <FaTrash />
+                </button>
+                <h1>Order Info</h1>
+                <h5>User Info</h5>
+                <p>Name: {name}</p>
+                <p>
+                  Address:{" "}
+                  {`${address}, ${city}, ${state}, ${country} ${pinCode}`}
+                </p>
+                <h5>Amount Info</h5>
+                <p>Subtotal: {subtotal}</p>
+                <p>Shipping Charges: {shippingCharge}</p>
+                <p>Tax: {tax}</p>
+                <p>Discount: {discount}</p>
+                <p>Total: {total}</p>
 
-              <h5>Status Info</h5>
-              <p>
-                Status:{" "}
-                <span
-                  className={
-                    status === "Delivered"
-                      ? "purple"
-                      : status === "Shipped"
-                      ? "green"
-                      : "red"
-                  }
-                >
-                  {status}
-                </span>
-              </p>
-              <button className="shipping-btn" onClick={updateHandler}>
-                Process Status
-              </button>
-            </article>
-          </>
-        )}
+                <h5>Status Info</h5>
+                <p>
+                  Status:{" "}
+                  <span
+                    className={
+                      status === "Delivered"
+                        ? "purple"
+                        : status === "Shipped"
+                        ? "green"
+                        : "red"
+                    }
+                  >
+                    {status}
+                  </span>
+                </p>
+                <button className="shipping-btn" onClick={updateHandler}>
+                  Process Status
+                </button>
+              </article>
+            </>
+          )}
+        </article>
       </main>
     </div>
   );
@@ -156,6 +160,7 @@ const ProductCard = ({
   price,
   quantity,
   productId,
+
 }: OrderItem) => (
   <div className="transaction-product-card">
     <img src={photo} alt={name} />

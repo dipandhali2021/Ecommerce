@@ -136,6 +136,7 @@ const Home = () => {
       </h1>
 
       <main>
+        
         {isLoading ? (
           <Skeleton width="80vw" />
         ) : (
@@ -148,6 +149,7 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+  
               wishHandler={addtoWishlistHandler}
             />
           ))
@@ -205,6 +207,7 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+  
               wishHandler={addtoWishlistHandler}
             />
           ))
@@ -252,6 +255,7 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
+      
               wishHandler={addtoWishlistHandler}
             />
           ))

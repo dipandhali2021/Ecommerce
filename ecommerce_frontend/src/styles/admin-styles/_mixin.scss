@@ -19,7 +19,7 @@
 @mixin grid($col: 1fr, $gap: 1rem, $row: unset) {
   display: grid;
   grid-template-columns: $col;
-  grid-template-rows: $row;
+  grid-template-row: $row;
   gap: $gap;
 }
 

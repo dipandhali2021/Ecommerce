@@ -81,7 +81,7 @@ const Productmanagement = () => {
     if (priceUpdate) formData.set("price", String(priceUpdate));
     if (stockUpdate !== undefined) formData.set("stock", String(stockUpdate));
     if (categoryUpdate) formData.set("category", categoryUpdate);
-    if(descriptionUpdate) formData.set("description",descriptionUpdate);
+    if (descriptionUpdate) formData.set("description", descriptionUpdate);
     if (photoFile) {
       photoFile.forEach((photo) => {
         formData.append("photo", photo);
@@ -110,7 +110,7 @@ const Productmanagement = () => {
     setStockUpdate(data?.product.stock!);
     setCategoryUpdate(data?.product.category!);
   }, [data]);
-
+  let photoArray = Array.isArray(photo) ? photo : [photo];
   if (isError) return <Navigate to="/404" />;
 
   return (
@@ -120,11 +120,21 @@ const Productmanagement = () => {
         {isLoading ? (
           <Skeleton length={20} />
         ) : (
-          <>
+          <article>
             <section>
-              <strong>{data?.product._id}</strong>
-              <img src={`${server}/${photo[0]}`} alt="Product" />
-              <p>{name}</p>
+              <strong>Id: {data?.product._id}</strong>
+
+              <img src={`${server}/${photoArray[0]}`} alt="Product" />
+
+              <aside>
+                {photoArray.slice(1).map((photo, index) => (
+                  <img key={index} src={`${server}/${photo}`} alt="Product" />
+                ))}
+              </aside>
+              <p>
+                {name} ({category})
+              </p>
+              <div>{description}</div>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>
               ) : (
@@ -132,12 +142,17 @@ const Productmanagement = () => {
               )}
               <h3>₹{price}</h3>
             </section>
-            <article>
-              <button className="product-delete-btn" onClick={deleteHandler}>
-                <FaTrash />
-              </button>
+            <main>
               <form onSubmit={submitHandler}>
-                <h2>Manage</h2>
+                <header>
+                  <h2>Manage</h2>
+                  <button
+                    className="product-delete-btn"
+                    onClick={deleteHandler}
+                  >
+                    <FaTrash />
+                  </button>
+                </header>
                 <div>
                   <label>Name</label>
                   <input
@@ -189,16 +204,16 @@ const Productmanagement = () => {
                   <label>Photo</label>
                   <input type="file" multiple onChange={changeImageHandler} />
                 </div>
-                <div>
+                <aside>
                   {photoUpdate.map((photoUpdate, index) => (
                     <img key={index} src={photoUpdate} alt="preview" />
                   ))}
-                </div>
+                </aside>
 
                 <button type="submit">Update</button>
               </form>
-            </article>
-          </>
+            </main>
+          </article>
         )}
       </main>
     </div>

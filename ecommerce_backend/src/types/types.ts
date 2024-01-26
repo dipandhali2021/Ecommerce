@@ -17,6 +17,11 @@ export interface NewProductRequstBody {
   description:string;
 }
 
+export interface NewCouponRequstBody {
+  coupon: string;
+  amount: number;
+}
+
 export type ControllerType = (
   req: Request,
   res: Response,

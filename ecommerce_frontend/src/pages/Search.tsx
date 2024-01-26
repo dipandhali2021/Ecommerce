@@ -49,11 +49,13 @@ const Search = () => {
   };
   const addtoWishlistHandler = (wishlistItem: WishlistItem) => {
     if (wishlistItem?.stock < 1) return toast.error("Out of Stock");
-    dispatch(addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity }));
+    dispatch(
+      addToWishlist({ ...wishlistItem, quantity: wishlistItem.quantity })
+    );
     toast.success("Added to Wishlist");
-  }
+  };
 
-  const isPrevPage = page < 2 ;
+  const isPrevPage = page < 2;
   const isNextPage = page > searchData?.totalPage! - 1;
   return (
     <div className="product-search-name">

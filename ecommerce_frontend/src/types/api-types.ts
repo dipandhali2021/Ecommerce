@@ -1,6 +1,7 @@
 import {
   Bar,
   CartItem,
+  Coupon,
   Line,
   Order,
   Pie,
@@ -63,6 +64,14 @@ export type StatsResponse = {
   success: boolean;
   stats: Stats;
 };
+export type NewCouponResponse = {
+  success: boolean;
+  message: string;
+};
+export type AllCouponResponse = {
+  status: string;
+  coupons: Coupon[];
+};
 
 export type PieResponse = {
   success: boolean;
@@ -85,6 +94,10 @@ export type SearchProductRequest = {
   sort: string;
 };
 export type NewProductRequest = {
+  id: string;
+  formData: FormData;
+};
+export type NewCouponRequest = {
   id: string;
   formData: FormData;
 };

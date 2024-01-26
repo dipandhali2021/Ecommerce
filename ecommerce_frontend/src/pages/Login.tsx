@@ -1,7 +1,7 @@
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
 } from "firebase/auth";
 
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -20,7 +20,7 @@ const Login = () => {
   const [gender] = useState("");
   const [date] = useState("");
   const [login] = useLoginMutation();
-  
+
   const registerHandler = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -59,9 +59,7 @@ const Login = () => {
       const res = await login({
         name: user.user.displayName!,
         email: user.user.email!,
-        photo:
-          user.user.photoURL ||
-          "../src/assets/profile.png",
+        photo: user.user.photoURL || "../src/assets/profile.png",
         gender,
         role: "user",
         dob: date,
@@ -85,9 +83,9 @@ const Login = () => {
       <section></section>
 
       <main>
-        <h1>Log in to Ecommerce</h1>
+        <h1>Log in to ByteBazaar</h1>
         <p>Enter your details below</p>
-        
+
         <div>
           <input
             required
@@ -107,7 +105,7 @@ const Login = () => {
             placeholder="Password"
           />
         </div>
-        
+
         <div>
           <button onClick={registerHandler}>Log In</button>
         </div>

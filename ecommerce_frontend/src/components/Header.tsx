@@ -17,10 +17,9 @@ interface PropsType {
   user: User | null;
 }
 
-
 const Header = ({ user }: PropsType) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const logoutHandler = async () => {
     try {
       await signOut(auth);
@@ -31,8 +30,6 @@ const Header = ({ user }: PropsType) => {
     }
   };
 
- 
-
   return (
     <div className="top-bar">
       <nav className="offer">
@@ -40,23 +37,15 @@ const Header = ({ user }: PropsType) => {
           <p>
             Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
           </p>
-          <Link to={"/"}>ShopNow</Link>
         </div>
 
         <div className="language">
-          {/* <select>
-            <option value="">English</option>
-            <option value="">Hindi</option>
-            <option value="asc">Japanese</option>
-            <option value="dsc">Spanish</option>
-          </select> */}
-
           <div id="google_translate_element"></div>
         </div>
       </nav>
       <nav className="header">
         <Link className="logo" to={"/"}>
-          Ecommerce
+          ByteBazaar
         </Link>
 
         <div className="navigation">
@@ -67,12 +56,8 @@ const Header = ({ user }: PropsType) => {
 
         <Link to={"/search"}>
           <div className="search-box">
-            <input
-              type="text"
-              className="search-bar"
-              placeholder="What are you looking for?"
-              disabled
-            />
+            <span>What are you looking for?</span>
+         
 
             <FaSearch />
           </div>
@@ -105,6 +90,7 @@ const Header = ({ user }: PropsType) => {
                     Orders
                   </Link>
                   <button onClick={logoutHandler}>
+                    <span>Logout</span>
                     <FaSignOutAlt />
                   </button>
                 </div>

@@ -20,19 +20,29 @@ const ProductCard = ({
   name,
   price,
   stock,
+
   handler,
   wishHandler,
 }: ProductCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  
+  const generateDiscount = () => {
+    const min = 10;
+    const max = 50;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  const generateReviews = () => {
+    const min = 10;
+    const max = 100;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
   return (
     <div className="product-card">
       <div className="back">
         <div className="off">
-          <p>-50%</p>
+          <p>-{generateDiscount()}%</p>
           <div
             onClick={() =>
               wishHandler({
@@ -78,7 +88,7 @@ const ProductCard = ({
           <TiStarFullOutline />
           <TiStarFullOutline />
 
-          <p>(78)</p>
+          <p>({generateReviews()})</p>
         </div>
       </div>
     </div>

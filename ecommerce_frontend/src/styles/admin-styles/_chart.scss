@@ -1,25 +1,72 @@
-.chart-container {
-  background-color: white;
-  padding: 4rem;
-  overflow-y: auto;
-  > h1 {
-    margin: 0 0 5rem 2rem;
-  }
-  > section {
-    width: 80%;
-    margin: 4rem auto;
+.admin-container {
+  @include flex(row, space-between, flex-start);
+  .chart-container {
+    background-color: white;
+   
+    height: 100%;
+    overflow-y: auto;
+    @include flex(row, center, center, 0);
+    width: 100%;
 
     > div {
-      max-width: 25rem;
-      margin: auto;
-      margin-top: 6rem;
-      margin-bottom: -1rem;
+      width: 100%;
+      height: 100%;
+
+      > section {
+        > h2 {
+          margin: 0;
+          text-align: center;
+          @include heading(2px);
+        }
+        > canvas {
+          margin: 0 auto;
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
 
-    > h2 {
-      margin: 2rem 0;
-      text-align: center;
-      @include heading(2px);
+    > main {
+      @include flex(column, flex-start, center);
+      height: 100%;
+      width: 100%;
+      > section {
+        height: 100%;
+        width: 100%;
+        @include flex(column, center, center, 0);
+        > canvas {
+          margin: 0 auto;
+          width: 100%;
+          height: 100%;
+        }
+        > h2 {
+          margin: 0;
+          text-align: center;
+          @include heading(2px);
+        }
+      }
+    }
+
+    > h1 {
+      margin: 0 0 5rem 2rem;
+    }
+    > section {
+      @include flex(column, flex-end, center);
+      height: 50%;
+      width: 50%;
+
+      > div {
+        max-width: 25rem;
+        margin: auto;
+        margin-top: 6rem;
+        margin-bottom: -1rem;
+      }
+
+      > h2 {
+        margin: 2rem 0;
+        text-align: center;
+        @include heading(2px);
+      }
     }
   }
 }

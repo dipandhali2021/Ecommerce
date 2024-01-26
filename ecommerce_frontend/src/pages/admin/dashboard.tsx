@@ -1,24 +1,61 @@
 import { BiMaleFemale } from "react-icons/bi";
-import { BsSearch } from "react-icons/bs";
-import { FaRegBell } from "react-icons/fa";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 import { Skeleton } from "../../components/Loader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import { BarChart, DoughnutChart } from "../../components/admin/Charts";
-import Table from "../../components/admin/DashboardTable";
+import DashboardTable from "../../components/admin/DashboardTable";
 
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { Column } from "react-table";
+import TableHOC from "../../components/admin/TableHOC";
 import { useStatsQuery } from "../../redux/api/dashboardAPI";
 import { RootState } from "../../redux/store";
+import { CustomError } from "../../types/api-types";
 
-const userImg =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJxA5cTf-5dh5Eusm0puHbvAhOrCRPtckzjA&usqp";
+interface DataType {
+  name: string;
+  value: string;
+}
+
+const columns: Column<DataType>[] = [
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Value",
+    accessor: "value",
+  },
+];
 
 const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const { isLoading, data, isError } = useStatsQuery(user?._id!);
+  const { isLoading, data, isError, error } = useStatsQuery(user?._id!);
   const stats = data?.stats!;
+
+  const [rows, setRows] = useState<DataType[]>([]);
+  if (isError) toast.error((error as CustomError).data.message);
+  useEffect(() => {
+    if (data)
+      setRows(
+        data.stats.categoryCount.map((i) => ({
+          name: Object.keys(i)[0],
+          value: `${Object.values(i)[0]}%`,
+        }))
+      );
+  }, [data]);
+
+  const Table = TableHOC<DataType>(
+    columns,
+    rows,
+    "dashboard-product-box",
+    "Inventory",
+    rows.length > 6
+  )();
+
   if (isError) return <Navigate to={"/"} />;
   return (
     <div className="admin-container">
@@ -28,13 +65,6 @@ const Dashboard = () => {
           <Skeleton length={20} />
         ) : (
           <>
-            <div className="bar">
-              <BsSearch />
-              <input type="text" placeholder="Search for data, users, docs" />
-              <FaRegBell />
-              <img src={user?.photo || userImg} alt="User" />
-            </div>
-
             <section className="widget-container">
               <WidgetItem
                 percent={stats.changePercent.revenue}
@@ -73,27 +103,14 @@ const Dashboard = () => {
                   data_2={stats.chart.order}
                   title_1="Revenue"
                   title_2="Transaction"
-                  bgColor_1="rgb(0, 115, 255)"
+                  bgColor_1="rgb(219, 68, 68)"
                   bgColor_2="rgba(53, 162, 235, 0.8)"
                 />
               </div>
 
               <div className="dashboard-categories">
-                <h2>Inventory</h2>
-
                 <div>
-                  {stats.categoryCount.map((i) => {
-                    const [heading, value] = Object.entries(i)[0];
-
-                    return (
-                      <CategoryItem
-                        key={heading}
-                        value={value}
-                        heading={heading}
-                        color={`hsl(${value * 4}, ${value}%, 50%)`}
-                      />
-                    );
-                  })}
+                  <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
                 </div>
               </div>
             </section>
@@ -114,7 +131,7 @@ const Dashboard = () => {
                   <BiMaleFemale />
                 </p>
               </div>
-              <Table data={stats.latestTransaction} />
+              <DashboardTable data={stats.latestTransaction} />
             </section>
           </>
         )}
@@ -172,27 +189,6 @@ const WidgetItem = ({
       </span>
     </div>
   </article>
-);
-
-interface CategoryItemProps {
-  color: string;
-  value: number;
-  heading: string;
-}
-
-const CategoryItem = ({ color, value, heading }: CategoryItemProps) => (
-  <div className="category-item">
-    <h5>{heading}</h5>
-    <div>
-      <div
-        style={{
-          backgroundColor: color,
-          width: `${value}%`,
-        }}
-      ></div>
-    </div>
-    <span>{value}%</span>
-  </div>
 );
 
 export default Dashboard;

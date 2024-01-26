@@ -23,7 +23,6 @@ const Barcharts = () => {
     <div className="admin-container">
       <AdminSidebar />
       <main className="chart-container">
-        <h1>Bar Charts</h1>
         {isLoading ? (
           <Skeleton length={20} />
         ) : (

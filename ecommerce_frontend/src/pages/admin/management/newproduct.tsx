@@ -5,13 +5,14 @@ import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { useNewProductMutation } from "../../../redux/api/productAPI";
 import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
+import toast from "react-hot-toast";
 
 const NewProduct = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
-  const [description,setDescription]=useState<string>("")
+  const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
   const [stock, setStock] = useState<number>(1);
@@ -52,13 +53,13 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!photos.length || !price || stock < 0 || !category || !name) return;
+    if (!photos.length || !price || stock < 0 || !category || !name) return toast.error("Please Fill All The Fields");
     const formData = new FormData();
     formData.set("name", name);
     formData.set("price", String(price));
     formData.set("stock", String(stock));
     formData.set("category", category);
-    formData.set("description",description);
+    formData.set("description", description);
     photos.forEach((photo) => {
       formData.append("photo", photo);
     });
@@ -69,9 +70,9 @@ const NewProduct = () => {
     <div className="admin-container">
       <AdminSidebar />
       <main className="product-management">
+        <h2>New Product</h2>
         <article>
-          <form onSubmit={submitHandler}>
-            <h2>New Product</h2>
+          <form id="new-product-form" onSubmit={submitHandler}>
             <div>
               <label>Name</label>
               <input
@@ -123,24 +124,31 @@ const NewProduct = () => {
                 onChange={(e) => setCategory(e.target.value)}
               />
             </div>
-
-            <div>
-              <label>Photo</label>
+            <main>
+              <label className="upload-photo" htmlFor="file-upload">
+                Upload Photo
+              </label>
               <input
+                id="file-upload"
+                style={{ display: "none" }}
+                form="new-product-form"
                 required
                 type="file"
                 multiple
                 onChange={changeImageHandler}
               />
-            </div>
+              <button type="submit">Create</button>
+            </main>
+            <p>Upload Maximum 4 Photos of the Product</p>
+          </form>
 
+          <div>
             <div>
               {photoPrevs.map((photoPrev, index) => (
                 <img key={index} src={photoPrev} alt="preview" />
               ))}
             </div>
-            <button type="submit">Create</button>
-          </form>
+          </div>
         </article>
       </main>
     </div>

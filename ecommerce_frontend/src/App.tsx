@@ -15,7 +15,7 @@ import { auth } from "./firebase";
 import { getUser } from "./redux/api/userAPI";
 import { userExists, userNotExists } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
-import Footer, { PrivacyPolicy } from "./components/Footer";
+import Footer, { PrivacyPolicy, TermsOfUse,FAQ } from "./components/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -43,8 +43,6 @@ const Barcharts = lazy(() => import("./pages/admin/charts/barcharts"));
 const Piecharts = lazy(() => import("./pages/admin/charts/piecharts"));
 const Linecharts = lazy(() => import("./pages/admin/charts/linecharts"));
 const Coupon = lazy(() => import("./pages/admin/apps/coupon"));
-const Stopwatch = lazy(() => import("./pages/admin/apps/stopwatch"));
-const Toss = lazy(() => import("./pages/admin/apps/toss"));
 const NewProduct = lazy(() => import("./pages/admin/management/newproduct"));
 const ProductManagement = lazy(
   () => import("./pages/admin/management/productmanagement")
@@ -83,7 +81,7 @@ const App = () => {
     <Loader />
   ) : (
     <Router>
-       <ScrollToTop />
+      <ScrollToTop />
       <Header user={user} />
       <Suspense fallback={<Loader />}>
         <Routes>
@@ -92,6 +90,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
+          <Route path="/faq" element={<FAQ />} />
           {/* no logged in route */}
           <Route
             path="/register"
@@ -144,8 +144,6 @@ const App = () => {
             <Route path="/admin/chart/line" element={<Linecharts />} />
             {/* Apps */}
             <Route path="/admin/app/coupon" element={<Coupon />} />
-            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
-            <Route path="/admin/app/toss" element={<Toss />} />
 
             {/* Management */}
             <Route path="/admin/product/new" element={<NewProduct />} />

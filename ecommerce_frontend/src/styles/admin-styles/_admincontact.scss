@@ -4,34 +4,7 @@
 
   height: 100%;
   width: 100%;
-  > h1 {
-    @include heading(2px);
-    margin: 1rem 0;
-    text-align: center;
-  }
-
-  > div {
-    width: 50%;
-    @include flex(row, center, center, 1rem);
-    flex-wrap: wrap;
-    .contact-person {
-      @include flex(column, flex-start, flex-start, 0.5rem);
-      background-color: $color1;
-
-      padding: 2rem;
-      box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.1);
-      width: 100%;
-      > h2 {
-        @include heading(2px, 400);
-        margin: 1rem 0;
-        text-align: center;
-      }
-      > div {
-        @include flex(row, flex-start, flex-start, 0.5rem);
-        > h3 {
-          @include heading(2px);
-        }
-      }
-    }
+  > main {
+    width: 100%;
   }
 }

@@ -23,7 +23,7 @@
     }
 
     > button {
-      @include btn(1rem, $color3, $color1);
+      @include btn(1rem, $color4, $color1);
       border-radius: 5px;
       font-size: 1.05rem;
       text-transform: uppercase;

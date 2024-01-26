@@ -1,21 +1,24 @@
 .dashboard-product-box {
   background-color: white;
-  padding: 2rem;
+  padding: 0 2rem;
   overflow: auto;
   @include square(100%);
 }
+.create-button {
+  width: 100%;
+  background-color: white;
+  @include flex(row, flex-end, center, 1rem);
+  padding: 0 2rem;
 
-.create-product-btn {
-  position: fixed;
-  right: 2rem;
-  top: 2rem;
-  @include square(2.5rem);
-  @include flex(row, center, center, 0);
-  border-radius: 50%;
-  background-color: rgb(201, 9, 9);
-  color: white;
-  &:hover {
-    opacity: 0.8;
+  .create-product-btn {
+    @include square(2.5rem);
+    @include flex(row, center, center, 0);
+    border-radius: 50%;
+    background-color: rgb(201, 9, 9);
+    color: white;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 .product-delete-btn {
@@ -27,91 +30,155 @@
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  position: absolute;
-  top: -1.2rem;
-  right: -1.2rem;
+  align-self: flex-end;
 }
 
 .product-management {
-  @include flex(row, center, unset);
-  padding: 4rem;
-
-  > section {
-    overflow-y: auto;
-    width: 100%;
-    height: 85vh;
-    max-width: 500px;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.216);
-    background-color: white;
-    padding: 5rem;
-    @include flex(column, unset, unset, 1rem);
-    position: relative;
-    border-radius: 5px;
-
-    > h2 {
-      @include heading(2px);
-      text-align: center;
-    }
-
-    > img {
-      @include square(100%);
-      object-fit: contain;
-    }
-
-    > strong {
-      font-weight: 300;
-    }
-
-    > span {
-      position: absolute;
-      right: 2rem;
-      top: 2rem;
-    }
-
-    > p {
-      text-align: center;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    > h3 {
-      text-align: center;
-      font-size: 2rem;
-    }
+  @include flex(column, center, center);
+  height: 100%;
+  padding: 0 2rem;
+  > h2 {
+    @include heading(2px);
+    text-align: center;
   }
 
   > article {
-    height: 85vh;
-    padding: 2rem;
+    height: 100%;
+    padding: 0rem rem;
     width: 100%;
-    max-width: 400px;
+    @include flex(row, space-between, center, 1rem);
     background-color: white;
     border-radius: 5px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.216);
+
     position: relative;
 
-    > form {
-      @include flex(column, unset, center, 2rem);
+    > section {
+      width: 50%;
+      height: 100%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      background-color: white;
+      padding: 2rem;
+      @include flex(column, unset, unset, 1rem);
+      position: relative;
+
       > h2 {
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        @include heading(2px, 400);
+        text-align: center;
       }
-
-      
-
-      > div {
-        @include flex(row,center,center,1rem);
-        width: 100%;
-        position: relative;
+      .transaction-product-card {
         > img {
           @include square(5rem);
-          object-fit: cover;
-          border-radius: 5px;
+          object-fit: contain;
         }
-        > label {
-          position: absolute;
-          left: 0;
-          top: -1.5rem;
+      }
+
+      > strong {
+        font-weight: 300;
+      }
+
+      > span {
+        position: absolute;
+        right: 2rem;
+        top: 2rem;
+      }
+      >div{
+        text-align: center;
+      }
+      >aside{
+        @include flex(row, center, center, 1rem);
+        >img{
+          @include square(8rem);
+          object-fit: contain;
         }
+      }
+      > p {
+        text-align: center;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      > h3 {
+        text-align: center;
+        font-size: 2rem;
+      }
+    }
+
+    > main {
+      width: 50%;
+      @include flex(column, unset, flex-start, 0.5rem);
+      padding: 1rem;
+      height: 100%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      
+
+      > form {
+        @include flex(column, unset, flex-start, 0.5rem);
+        height: 100%;
+        width: 100%;
+        >header{
+          @include flex(row, space-between, center, 1rem);
+          width: 100%;
+          >h2{
+            @include heading(2px, 400);
+            font-size: 2rem;
+            align-self: center
+          }
+          
+        }
+        > div {
+          @include flex(column, center, flex-start, 0.5rem);
+          width: 100%;
+          
+          > input {
+            @include inputStyle(
+              100%,
+              1rem,
+              unset,
+              1px solid rgba(13, 13, 13, 0.196)
+            );
+          }
+        }
+        > aside {
+          padding: 1rem;
+          @include flex(row, center, center, 1rem);
+        
+          width: 100%;
+          > img {
+            @include square(6rem);
+            object-fit: contain;
+            justify-self: center;
+            align-self: center;
+          }
+        }
+        > button {
+          align-self: center;
+          padding: 1rem;
+          
+          border: none;
+          background-color: $color4;
+          color: white;
+          width: 50%;
+          font-size: 1rem;
+          text-align: center;
+          cursor: pointer;
+          &:hover {
+            background-color: $color2;
+            color: $color1;
+          }
+        }
+      }
+    }
+
+    > form {
+      @include flex(column, unset, center, 0.5rem);
+      width: 50%;
+      > h2 {
+        @include heading(2px, 400);
+        font-size: 2rem;
+      }
+
+      > div {
+        @include flex(column, center, flex-start, 0.5rem);
+        width: 100%;
 
         > input {
           @include inputStyle(
@@ -120,48 +187,94 @@
             unset,
             1px solid rgba(13, 13, 13, 0.196)
           );
-          border-radius: 5px;
+        }
+        
+      }
+     
+    
+      > p {
+        @include heading(2px, 300);
+
+        text-decoration: underline;
+      }
+      > main {
+        @include flex(row, center, center, 1rem);
+        width: 100%;
+        .upload-photo,
+        > button {
+          @include flex(row, center, stretch, 0);
+          padding: 1rem;
+          height: 100%;
+          border: none;
+          background-color: $color4;
+          color: white;
+          width: 50%;
+          font-size: 1rem;
+          text-align: center;
+          cursor: pointer;
+          &:hover {
+            background-color: $color2;
+            color: $color1;
+          }
+        }
+        > button {
+          width: 100%;
+          padding: 1.2rem 1rem;
         }
       }
+    }
+    > div {
+      @include flex(column, space-around, center, 1rem);
+      width: 50%;
+      height: 100%;
 
-      > button {
+      > div {
         padding: 1rem;
-        border: none;
-        background-color: rgb(5, 107, 224);
-        color: white;
+        @include grid(1fr 1fr, 1rem);
         width: 100%;
-        border-radius: 5px;
-        font-size: 1.1rem;
-        cursor: pointer;
+        > img {
+          @include square(15rem);
+          object-fit: contain;
+          justify-self: center;
+          align-self: center;
+        }
       }
     }
   }
 
   .shipping-info-card {
+    @include flex(column, flex-start, flex-start, 0.3rem);
+    padding: 2rem;
+    width: 50%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     > h1 {
       text-align: center;
-      @include heading(2px);
+      @include heading(2px, 400);
+      align-self: center;
+      font-size: 1.5rem;
     }
     > h5 {
-      margin: 2rem 0 0 0.5rem;
+      padding-top: 1rem;
       font-size: 1.1rem;
       font-weight: 700;
+      @include heading(2px, 300);
     }
-    > p {
-      margin: 0.5rem;
-    }
+
     > .shipping-btn {
       margin: 2rem 0;
       padding: 1rem;
       border: none;
-      background-color: rgb(5, 107, 224);
+      width: 50%;
+      background-color: $color4;
       color: white;
-      width: 100%;
-      border-radius: 5px;
+      width: 50%;
+      align-self: center;
       font-size: 1.1rem;
       cursor: pointer;
       &:hover {
-        opacity: 0.8;
+        background-color: $color2;
+        color: $color1;
       }
     }
   }

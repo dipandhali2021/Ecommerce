@@ -15,6 +15,7 @@ export type Product = {
   category: string;
   description: string;
   photo: string[];
+ 
   _id: string;
 };
 export type ShippingInfo = {
@@ -34,7 +35,6 @@ export type CartItem = {
   stock: number;
 };
 
-
 export type WishlistItem = {
   productId: string;
   photo: string;
@@ -42,6 +42,7 @@ export type WishlistItem = {
   price: number;
   quantity: number;
   stock: number;
+  
 };
 
 export type OrderItem = Omit<CartItem, "stock"> & {
@@ -92,6 +93,12 @@ export type Stats = {
     female: number;
   };
   latestTransaction: LatestTransaction[];
+};
+
+export type Coupon = {
+  _id: string;
+  coupon: string;
+  amount: number;
 };
 
 type RevenueDistribution = {
