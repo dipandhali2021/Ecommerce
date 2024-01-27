@@ -1,7 +1,7 @@
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithPopup
 } from "firebase/auth";
 
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -20,6 +20,8 @@ const Login = () => {
   const [gender] = useState("");
   const [date] = useState("");
   const [login] = useLoginMutation();
+
+
 
   const registerHandler = async () => {
     try {
@@ -45,6 +47,7 @@ const Login = () => {
         const error = res.error as FetchBaseQueryError;
         const messsage = (error.data as MessageResponse).message;
         toast.error(messsage);
+        
       }
     } catch (error) {
       console.log(error);

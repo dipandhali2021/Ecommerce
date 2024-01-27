@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Column } from "react-table";
@@ -7,6 +7,7 @@ import AdminSidebar from "../../../components/admin/AdminSidebar";
 import TableHOC from "../../../components/admin/TableHOC";
 import {
   useAllCouponQuery,
+  useDeleteCouponMutation,
   useNewCouponMutation,
 } from "../../../redux/api/couponAPI";
 import { RootState } from "../../../redux/store";
@@ -20,6 +21,7 @@ const allSymbols = "!@#$%^&*()_+";
 interface DataType {
   code: string;
   amount: number;
+  action: ReactElement;
 }
 
 const columns: Column<DataType>[] = [
@@ -30,6 +32,10 @@ const columns: Column<DataType>[] = [
   {
     Header: "Amount",
     accessor: "amount",
+  },
+  {
+    Header: "Action",
+    accessor: "action",
   },
 ];
 
@@ -45,7 +51,11 @@ const Coupon = () => {
 
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { isLoading, data, isError, error } = useAllCouponQuery(user?._id!);
-
+  const [deleteCoupon] = useDeleteCouponMutation();
+  const deleteHandler = async (id: string) => {
+    const res = await deleteCoupon({ couponId:id, adminId: user?._id! });
+    responseToast(res, null, "");
+  };
   const [rows, setRows] = useState<DataType[]>([]);
   if (isError) toast.error((error as CustomError).data.message);
   useEffect(() => {
@@ -54,6 +64,7 @@ const Coupon = () => {
         data.coupons.map((i) => ({
           code: i.coupon,
           amount: i.amount,
+          action:(<button onClick={() => deleteHandler(i._id)}>Delete</button>)
         }))
       );
   }, [data]);
@@ -115,10 +126,9 @@ const Coupon = () => {
     <div className="admin-container">
       <AdminSidebar />
       <main className="dashboard-app-container">
-        
         <div>
           <section>
-          <h1>New Coupon</h1>
+            <h1>New Coupon</h1>
             <form className="coupon-form" onSubmit={submitHandler}>
               <input
                 type="text"

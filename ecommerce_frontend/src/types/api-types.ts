@@ -101,6 +101,10 @@ export type NewCouponRequest = {
   id: string;
   formData: FormData;
 };
+export type deleteCouponRequest = {
+  adminId:string,
+  couponId:string
+};
 export type updateProductRequest = {
   userId: string;
   productId: string;
@@ -137,6 +141,10 @@ export type deleteUserRequest = {
   adminUserId: string;
 };
 export type deleteOrderRequest = {
+  userId: string;
+  orderId: string;
+};
+export type deleteMyOrderRequest = {
   userId: string;
   orderId: string;
 };

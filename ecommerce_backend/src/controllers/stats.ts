@@ -200,7 +200,7 @@ export const getPieChart = tryCatch(async (req, res, next) => {
       Order.countDocuments({ status: "Delivered" }),
       Product.distinct("category"),
       Product.countDocuments(),
-      Product.countDocuments({ srock: 0 }),
+      Product.countDocuments({ stock: 0 }),
       allOrderPromise,
       User.find({}).select(["dob"]),
       User.countDocuments({ role: "admin" }),
@@ -290,11 +290,11 @@ export const getBarChart = tryCatch(async (req, res, next) => {
     const twelveMonthAgo = new Date();
     twelveMonthAgo.setMonth(today.getMonth() - 12);
 
-    const sixMonthProductsPromise = Order.find<MyDocument>({
+    const sixMonthProductsPromise = Product.find<MyDocument>({
       createdAt: { $gte: sixMonthsAgo, $lte: today },
     }).select("createdAt");
 
-    const sixMonthUsersPromise = Order.find<MyDocument>({
+    const sixMonthUsersPromise = User.find<MyDocument>({
       createdAt: { $gte: sixMonthsAgo, $lte: today },
     }).select("createdAt");
 
@@ -338,20 +338,21 @@ export const getLineChart = tryCatch(async (req, res, next) => {
     const twelveMonthAgo = new Date();
     twelveMonthAgo.setMonth(today.getMonth() - 12);
 
-    const twelveMonthOrdersPromise = Order.find<MyDocument>({
-      createdAt: { $gte: twelveMonthAgo, $lte: today },
-    }).select(["createdAt", "discount", "total"]);
-    const twelveMonthUsersPromise = Order.find<MyDocument>({
-      createdAt: { $gte: twelveMonthAgo, $lte: today },
-    }).select("createdAt");
-    const twelveMonthProductsPromise = Order.find<MyDocument>({
-      createdAt: { $gte: twelveMonthAgo, $lte: today },
-    }).select("createdAt");
+    const baseQuery = {
+      createdAt: {
+        $gte: twelveMonthAgo,
+        $lte: today,
+      },
+    };
 
     const [products, users, orders] = await Promise.all([
-      twelveMonthProductsPromise,
-      twelveMonthUsersPromise,
-      twelveMonthOrdersPromise,
+      Product.find(baseQuery).select("createdAt") as Promise<MyDocument[]>,
+      User.find(baseQuery).select("createdAt") as Promise<MyDocument[]>,
+      Order.find(baseQuery).select([
+        "createdAt",
+        "discount",
+        "total",
+      ]) as Promise<MyDocument[]>,
     ]);
 
     const productCounts = getChartData({ docArr: products, today, length: 12 });

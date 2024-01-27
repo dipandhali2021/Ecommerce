@@ -63,9 +63,9 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
     const order = orderItems[i];
     const product = await Product.findById(order.productId);
     if (!product) throw new ErrorHandler("product not found", 404);
-    if(product.stock==0) product.stock=0;
+    if (product.stock == 0) product.stock = 0;
     product.stock -= order.quantity;
-    product.sold = (product.sold || 0) + order.quantity
+    product.sold = (product.sold || 0) + order.quantity;
     await product.save();
   }
 };
@@ -118,13 +118,19 @@ export const getChartData = ({
   today,
   property,
 }: FuncProps) => {
-  const data = new Array(length).fill(0);
+  const data: number[] = new Array(length).fill(0);
 
   docArr.forEach((i) => {
     const creationDate = i.createdAt;
     const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
     if (monthDiff < length) {
-      data[length - monthDiff - 1] += property ? i[property]! : 1;
+      if (monthDiff < length) {
+        if (property) {
+          data[length - monthDiff - 1] += i[property] || 0;
+        } else {
+          data[length - monthDiff - 1] += 1;
+        }
+      }
     }
   });
 

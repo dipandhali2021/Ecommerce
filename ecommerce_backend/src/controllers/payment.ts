@@ -82,6 +82,7 @@ export const allCoupons = tryCatch(async (req, res, next) => {
 
 export const deleteCoupon = tryCatch(async (req, res, next) => {
   const { id } = req.params;
+  if(!id) return next(new ErrorHandler("Please provide coupon id", 400));
   const coupon = await Coupon.findByIdAndDelete(id);
   if (!coupon) return next(new ErrorHandler("Coupon not found", 404));
   return res.status(200).json({

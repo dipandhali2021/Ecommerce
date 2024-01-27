@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Column } from "react-table";
 import TableHOC from "../components/admin/TableHOC";
+import { useNewOrderMutation } from "../redux/api/orderAPI";
 import { resetCart, saveShippingInfo } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 import { newOrderRequest } from "../types/api-types";
-import { useNewOrderMutation } from "../redux/api/orderAPI";
+import { CartItem } from "../types/types";
 import { responseToast } from "../utils/features";
 
 interface DataType {
@@ -40,7 +41,7 @@ const columns: Column<DataType>[] = [
 
 const Shipping = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
-
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.userReducer);
   const [newOrder] = useNewOrderMutation();
   const { shippingCharge, cartItems, subtotal, tax, discount, total } =
@@ -65,6 +66,7 @@ const Shipping = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsProcessing(true);
     dispatch(saveShippingInfo(shippingInfo));
     try {
       const { data } = await axios.post(
@@ -101,6 +103,7 @@ const Shipping = () => {
         const res = await newOrder(orderData);
         dispatch(resetCart());
         responseToast(res, navigate, "/orders");
+        setIsProcessing(false);
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -110,7 +113,7 @@ const Shipping = () => {
   useEffect(() => {
     if (cartItems)
       setRows(
-        cartItems.map((i) => ({
+        cartItems.map((i: CartItem) => ({
           photo: <img src={`${server}/${i.photo}`} />,
           name: i.name,
           price: `₹${i.price}`,
@@ -125,12 +128,6 @@ const Shipping = () => {
     "Order Details",
     rows.length > 6
   )();
-
-  useEffect(() => {
-    if (cartItems.length <= 0) {
-      return navigate("/cart");
-    }
-  }, [cartItems]);
 
   return (
     <div className="shipping">
@@ -211,8 +208,8 @@ const Shipping = () => {
           </label>
         </div>
 
-        <button type="submit" form="myForm">
-          Pay Now
+        <button type="submit" disabled={isProcessing} form="myForm">
+          {isProcessing ? "Processing..." : "Pay Now"}
         </button>
       </div>
     </div>

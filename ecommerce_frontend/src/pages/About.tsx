@@ -17,15 +17,15 @@ const About = () => {
         <div className="intro">
           <h1>Our Story</h1>
           <p>
-            Launced in 2015, Exclusive is South Asia's premier online shopping
-            makterplace with an active presense in Bangladesh. Supported by wide
-            range of tailored marketing, data and service solutions, Exclusive
-            has 10,500 sallers and 300 brands and serves 3 millioons customers
+            Launced in 2023, ByteBazaar is Asia's premier online shopping
+            makterplace with an active presense in India. Supported by wide
+            range of electronic's marketing, data and service solutions. ByteBazaar
+            has 10,500 sellers and 300 brands and serves 3 millions customers
             across the region.{" "}
           </p>
           <p>
-            Exclusive has more than 1 Million products to offer, growing at a
-            very fast. Exclusive offers a diverse assotment in categories
+            ByteBazaar has more than 1 Million products to offer, growing at a
+            very fast. ByteBazaar offers a diverse allotment in categories
             ranging from consumer.
           </p>
         </div>

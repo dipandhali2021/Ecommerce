@@ -1,23 +1,23 @@
-import { signOut } from "firebase/auth";
-import { useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
+  FaHeart,
   FaSearch,
   FaShoppingBag,
   FaSignInAlt,
   FaSignOutAlt,
   FaUser,
 } from "react-icons/fa";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { IoCloseCircle } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import { User } from "../types/types";
+import { getUser } from "../redux/api/userAPI";
+import { userExists, userNotExists } from "../redux/reducer/userReducer";
+import { RootState } from "../redux/store";
 
-interface PropsType {
-  user: User | null;
-}
-
-const Header = ({ user }: PropsType) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const logoutHandler = async () => {
@@ -29,6 +29,19 @@ const Header = ({ user }: PropsType) => {
       toast.error("Sign Out Failed");
     }
   };
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  useEffect(() => {}, [user]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid);
+        dispatch(userExists(data.user));
+      } else {
+        dispatch(userNotExists());
+      }
+    });
+  }, []);
 
   return (
     <div className="top-bar">
@@ -45,7 +58,10 @@ const Header = ({ user }: PropsType) => {
       </nav>
       <nav className="header">
         <Link className="logo" to={"/"}>
-          ByteBazaar
+          <span>B</span>
+          <p>yte</p>
+          <span>B</span>
+          <p>azaar</p>
         </Link>
 
         <div className="navigation">
@@ -57,7 +73,6 @@ const Header = ({ user }: PropsType) => {
         <Link to={"/search"}>
           <div className="search-box">
             <span>What are you looking for?</span>
-         
 
             <FaSearch />
           </div>
@@ -65,7 +80,7 @@ const Header = ({ user }: PropsType) => {
 
         <div className="account">
           <Link to={"/wishlist"}>
-            <MdOutlineFavoriteBorder />
+            <FaHeart />
           </Link>
           <Link to={"/cart"}>
             <FaShoppingBag />
@@ -76,6 +91,9 @@ const Header = ({ user }: PropsType) => {
                 <FaUser />
               </button>
               <dialog open={isOpen}>
+                <span onClick={()=>setIsOpen(!isOpen)}>
+                  <IoCloseCircle />
+                </span>
                 <div>
                   {user.role === "admin" && (
                     <Link

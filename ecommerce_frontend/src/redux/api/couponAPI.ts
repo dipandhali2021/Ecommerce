@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AllCouponResponse, NewCouponRequest, NewCouponResponse } from "../../types/api-types";
+import { AllCouponResponse, NewCouponRequest, NewCouponResponse, deleteCouponRequest } from "../../types/api-types";
 
 export const couponAPI = createApi({
   reducerPath: "couponAPI",
@@ -22,7 +22,15 @@ export const couponAPI = createApi({
       }),
       invalidatesTags: ["coupon"],
     }),
+
+    deleteCoupon: builder.mutation<NewCouponResponse, deleteCouponRequest>({
+      query: ({adminId,couponId}) => ({
+        url: `coupon/delete/${couponId}?id=${adminId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["coupon"],
+    })
   }),
 });
 
-export const { useAllCouponQuery,useNewCouponMutation } = couponAPI;
+export const { useAllCouponQuery,useNewCouponMutation,useDeleteCouponMutation } = couponAPI;

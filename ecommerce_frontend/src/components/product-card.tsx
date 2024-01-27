@@ -1,5 +1,5 @@
 import { FaCircleMinus } from "react-icons/fa6";
-import { MdFavoriteBorder } from "react-icons/md";
+import { FaHeart } from "react-icons/fa";
 import { TiStarFullOutline } from "react-icons/ti";
 import { useLocation, useNavigate } from "react-router-dom";
 import { server } from "../redux/store";
@@ -55,7 +55,7 @@ const ProductCard = ({
               })
             }
           >
-            {pathname == "/wishlist" ? <FaCircleMinus /> : <MdFavoriteBorder />}
+            {pathname == "/wishlist" ? <span ><FaCircleMinus /></span> : <span><FaHeart /></span>}
           </div>
         </div>
 

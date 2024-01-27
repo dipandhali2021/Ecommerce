@@ -65,6 +65,28 @@ export const myOrders = tryCatch(async (req: Request, res, next) => {
   });
 });
 
+export const myOrdersDelete = tryCatch(async (req: Request, res, next) => {
+  const { userId, orderId } = req.query;
+
+  if (!userId || !orderId) {
+    return next(new ErrorHandler("Please provide  all the fields", 400));
+  }
+  const order = await Order.findById(orderId);
+  if (!order) return next(new ErrorHandler("Order not found", 404));
+  await order.deleteOne();
+  invalidateCache({
+    order: true,
+    product: false,
+    admin: true,
+    userId: order.user,
+    orderId: String(order._id),
+  });
+  return res.status(200).json({
+    status: "success",
+    message: "order deleted successfully",
+  });
+});
+
 export const allOrders = tryCatch(async (req: Request, res, next) => {
   const key = `all-orders`;
   let orders;

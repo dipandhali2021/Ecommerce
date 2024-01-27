@@ -82,7 +82,7 @@ const App = () => {
   ) : (
     <Router>
       <ScrollToTop />
-      <Header user={user} />
+      <Header  />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />

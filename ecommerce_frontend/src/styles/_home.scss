@@ -8,6 +8,9 @@
   .hero-banner {
     @include flex(row, flex-start, center, 1rem);
     flex-wrap: wrap-reverse;
+    @media screen and (max-width: 900px) {
+      justify-content: center;
+    }
 
     .banner {
       width: 20%;
@@ -27,7 +30,7 @@
 
     > section {
       @include flex(column, center, center, 1rem);
-      width: 100%;
+
       height: 27rem;
       width: 80%;
       @media (max-width: 900px) {
@@ -121,14 +124,14 @@
 
   .categories-box {
     @include flex(row, space-around, center, 0.5rem);
+    flex-wrap: wrap;
+    width: 100%;
+
 
     > a {
       @include flex(column, center, center, 0.5rem);
       border: 1px solid $color2;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      width: 10rem;
-      height: 10rem;
+      @include square(10rem);
 
       > svg {
         @include square(3rem);
@@ -146,7 +149,7 @@
     width: 100%;
     margin: auto;
     @include flex(row, space-around, flex-start, 0.5rem);
-    padding: 6rem;
+    padding: 6rem 5%;
 
     .delivery {
       @include flex(column, center, center, 0.5rem);
@@ -198,14 +201,16 @@
       }
 
       > div {
-        > svg {
-          background-color: $color1;
-          padding: 0.3rem;
-          @include square(2rem);
-          border-radius: 50%;
-
-          &:hover {
-            color: $color4;
+        > span {
+          > svg {
+            background-color: $color1;
+            padding: 0.4rem;
+            @include square(2.2rem);
+            border-radius: 40%;
+            color: $color2;
+            &:hover {
+              color: $color4;
+            }
           }
         }
       }

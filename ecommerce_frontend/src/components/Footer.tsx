@@ -1,5 +1,6 @@
-import { LuSendHorizonal } from "react-icons/lu";
 
+import { useEffect, useState } from "react";
+import { BsArrowUpCircle } from "react-icons/bs";
 import {
   FaFacebookF,
   FaInstagram,
@@ -7,8 +8,6 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { BsArrowUpCircle } from "react-icons/bs";
 
 const Footer = () => {
   return (
@@ -17,14 +16,7 @@ const Footer = () => {
         <h1>ByteBazaar</h1>
         <h3>Subscribe</h3>
         <p>Get 10% off your first order</p>
-        <div className="input">
-          <input
-            type="text"
-            className="send-email"
-            placeholder="Enter your email"
-          />
-          <LuSendHorizonal />
-        </div>
+        
       </div>
       <div className="subscribe">
         <h2>Support</h2>

@@ -71,12 +71,7 @@ const CheckoutForm = () => {
     }
     setIsProcessing(false);
   };
-  const options = {
-    type: "accordion",
-    defaultCollapsed: false,
-    radios: false,
-    spacedAccordionItems: true,
-  };
+
   return (
     <div className="checkout-container">
       <form onSubmit={submitHandler}>

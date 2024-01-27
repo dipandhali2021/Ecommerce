@@ -50,8 +50,7 @@ a {
 
 $color1: white;
 $color2: rgb(46, 46, 46);
-$color3: rgb(0, 104, 136);
-$color4: rgb(219, 68, 68);
+$color4: rgb(219, 67, 67);
 $color5: rgba(223, 223, 223, 0.596);
 
 .red {
@@ -114,10 +113,14 @@ $color5: rgba(223, 223, 223, 0.596);
   width: 100%;
   margin: auto;
   overflow: auto;
-  > h1 {
-    @include heading;
-    margin: 1rem 0;
-    text-align: left;
+
+  .my-orders {
+    padding: 0 10rem 10rem 10rem;
+    > h1 {
+      @include heading;
+      margin: 1rem 0;
+      text-align: left;
+    }
   }
 }
 
@@ -135,11 +138,17 @@ $color5: rgba(223, 223, 223, 0.596);
     width: 100%;
     background-color: #000000;
     padding: 0.5rem 4rem;
+    
+    @media screen and (max-width: 768px){
+      @include flex(row, center, center, 1rem);
+      flex-wrap: wrap;
+    }
 
     color: white;
     .offer-deatils {
       @include flex(row, center, center, 1rem);
       width: 100%;
+      text-align: center;
     }
     > button {
       border: none;
@@ -175,8 +184,12 @@ $color5: rgba(223, 223, 223, 0.596);
 
   .header {
     @include flex(row, space-between, center, 1.2rem);
-    padding: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 5%;
     width: 100%;
+    @media screen and (max-width: 768px) {
+      @include flex(row, center, center, 1.2rem);
+    }
 
     .navigation {
       @include flex(row, center, center, 1rem);
@@ -187,35 +200,45 @@ $color5: rgba(223, 223, 223, 0.596);
       background: #f5f5f5;
       border-radius: 0.4rem;
       padding: 0.5rem 1rem;
-      
+      > span {
+        @include flex(row, center, center, 1rem);
+        font-size: 0.8rem;
+      }
       > svg {
         @include square(1rem);
       }
     }
     a {
+      @include flex(row, center, center, 0rem);
       color: $color2;
       letter-spacing: 2px;
-      font-size: 1rem;
-
+      font-size: 1.1rem;
+      > span {
+        color: $color4;
+      }
       &:hover {
         color: $color4;
       }
     }
     .logo {
-      @include heading(5px, 400);
-      font-size: 1.5rem;
+      @include heading(5px, 600);
+      font-size: 2rem;
     }
     .account {
       @include flex(row, center, center, 1rem);
+      height: 100%;
+      position: relative;
 
       > a {
+      
         > svg {
           @include square(1.5rem);
+          align-self: center;
         }
       }
       > button {
         border: none;
-
+        @include flex(row, center, flex-end, 1rem);
         font-size: 1.2rem;
         cursor: pointer;
         background-color: transparent;
@@ -224,6 +247,8 @@ $color5: rgba(223, 223, 223, 0.596);
         }
         > svg {
           @include square(1.4rem);
+         
+
         }
       }
       button {
@@ -243,20 +268,31 @@ $color5: rgba(223, 223, 223, 0.596);
       padding: 1rem;
       @include square(8rem);
       position: absolute;
-      left: 90%;
-      top: 3%;
+      left: 0rem;
+      top: 2rem;
       > div {
-        @include flex(column, flext-start, flex-start, 0.25rem);
-        >button{
+        @include flex(column, center, flex-start, 0.25rem);
+        > button {
           @include flex(row, center, center, 0.25rem);
-          >span{
+          > span {
             @include heading;
             text-transform: capitalize;
-            
           }
         }
       }
-
+      >span{
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        
+        > svg {
+          @include square(1.5rem);
+        }
+        &:hover{
+          color: $color4;
+          cursor: pointer;
+        }
+      }
     }
   }
 }
@@ -406,6 +442,46 @@ $color5: rgba(223, 223, 223, 0.596);
       &:last-child {
         border-right: none;
       }
+    }
+  }
+}
+
+.order-user-details {
+  @include flex(row, center, flex-start, 1rem);
+
+  width: 100%;
+  padding: 2rem;
+  .order-info-card {
+    width: 50%;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 2rem;
+    @include flex(column, unset, unset, 1rem);
+    position: relative;
+
+    > h2 {
+      @include heading(2px, 400);
+      text-align: center;
+    }
+  }
+  .address-info-card {
+    @include flex(column, flex-start, flex-start, 0.3rem);
+    padding: 2rem;
+    width: 50%;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    > h1 {
+      text-align: center;
+      @include heading(2px, 400);
+      align-self: center;
+      font-size: 1.5rem;
+    }
+    > h5 {
+      padding-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      @include heading(2px, 300);
     }
   }
 }

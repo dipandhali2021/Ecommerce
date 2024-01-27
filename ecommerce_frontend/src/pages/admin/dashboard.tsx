@@ -16,14 +16,14 @@ import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 
 interface DataType {
-  name: string;
+  categories: string;
   value: string;
 }
 
 const columns: Column<DataType>[] = [
   {
-    Header: "Name",
-    accessor: "name",
+    Header: "Categories",
+    accessor: "categories",
   },
   {
     Header: "Value",
@@ -42,7 +42,7 @@ const Dashboard = () => {
     if (data)
       setRows(
         data.stats.categoryCount.map((i) => ({
-          name: Object.keys(i)[0],
+          categories: Object.keys(i)[0],
           value: `${Object.values(i)[0]}%`,
         }))
       );

@@ -60,7 +60,11 @@
       padding: 2rem;
       @include flex(column, unset, unset, 1rem);
       position: relative;
-
+      >img{
+        @include square(25rem);
+        align-self: center;
+        object-fit: contain;
+      }
       > h2 {
         @include heading(2px, 400);
         text-align: center;

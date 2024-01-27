@@ -59,8 +59,8 @@ const Search = () => {
   const isNextPage = page > searchData?.totalPage! - 1;
   return (
     <div className="product-search-name">
+      <h1>Products</h1>
       <aside>
-        <h2>Filters</h2>
         <div>
           <h4>Sort</h4>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
@@ -69,16 +69,7 @@ const Search = () => {
             <option value="dsc">Price (High to Low)</option>
           </select>
         </div>
-        <div>
-          <h4>Max Price:{maxPrice || ""}</h4>
-          <input
-            type="range"
-            min={100}
-            max={1000000}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-          />
-        </div>
+       
         <div>
           <h4>Category</h4>
           <select
@@ -94,16 +85,30 @@ const Search = () => {
               ))}
           </select>
         </div>
+
+
+        <div>
+          <h4>Max Price:{maxPrice || ""}</h4>
+          <input
+            type="range"
+            min={100}
+            max={1000000}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+          />
+        </div>
+
+        <div>
+          <h4>Search </h4>
+          <input
+            type="text"
+            placeholder="Search by name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </aside>
       <main>
-        <h1>Products</h1>
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
         {productLoading ? (
           <Skeleton length={10} />
         ) : (

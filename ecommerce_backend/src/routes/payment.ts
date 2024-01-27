@@ -20,6 +20,6 @@ app.post("/coupon/new", adminOnly,upload.none(), newCoupon);
 
 app.get("/coupon/all", adminOnly, allCoupons);
 
-app.delete("/coupon/:id", adminOnly, deleteCoupon);
+app.delete("/coupon/delete/:id", adminOnly, deleteCoupon);
 
 export default app;

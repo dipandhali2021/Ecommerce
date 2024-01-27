@@ -52,8 +52,8 @@ const Contact = () => {
             <span>
               Fill out our form and we will contact you within 24 hours.
             </span>
-            <span>Emails: customer@exclusive.com</span>
-            <span>Emails: support@exclusive.com</span>
+            <span>Emails: customer@bytebazaar.com</span>
+            <span>Emails: support@bytebazaar.com</span>
           </div>
         </div>
       </div>
