@@ -14,28 +14,10 @@ import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const [isProductDeleted, setIsProductDeleted] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
-
-  const [updateProduct] = useUpdateProductMutation();
-  const [deleteProduct] = useDeleteProductMutation();
-
-  const deleteHandler = async () => {
-    const res = await deleteProduct({
-      userId: user?._id!,
-      productId: data?.product._id!,
-    });
-
-    setIsProductDeleted(true);
-
-    responseToast(res, navigate, "/admin/product");
-  };
-
-  const { data, isLoading, isError } = !isProductDeleted
-    ? useProductDetailsQuery(params.id!)
-    : { data: null, isError: false, isLoading: false };
+  const { data, isLoading, isError } = useProductDetailsQuery(params.id!);
 
   const { photo, name, price, stock, category, description } =
     data?.product || {
@@ -56,6 +38,9 @@ const Productmanagement = () => {
 
   const [photoFile, setPhotoFile] = useState<File[]>([]);
   const [photoUpdate, setPhotoUpdate] = useState<string[]>([]);
+
+  const [updateProduct] = useUpdateProductMutation();
+
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
     const allFiles: File[] = [];
@@ -94,7 +79,8 @@ const Productmanagement = () => {
     if (stockUpdate !== undefined) formData.set("stock", String(stockUpdate));
     if (categoryUpdate) formData.set("category", categoryUpdate);
     if (descriptionUpdate) formData.set("description", descriptionUpdate);
-    if (photoFile) {
+
+    if (photoFile.length != 0) {
       photoFile.forEach((photo) => {
         formData.append("photo", photo);
       });
@@ -107,12 +93,24 @@ const Productmanagement = () => {
     });
     responseToast(res, navigate, "/admin/product");
   };
+  const [deleteProduct] = useDeleteProductMutation();
+  const deleteHandler = async () => {
+    const res = await deleteProduct({
+      userId: user?._id!,
+      productId: data?.product._id!,
+    });
+
+    responseToast(res, navigate, "/admin/product");
+  };
 
   useEffect(() => {
-    setNameUpdate(data?.product.name!);
-    setPriceUpdate(data?.product.price!);
-    setStockUpdate(data?.product.stock!);
-    setCategoryUpdate(data?.product.category!);
+    if (data) {
+      setNameUpdate(data?.product.name!);
+      setPriceUpdate(data?.product.price!);
+      setStockUpdate(data?.product.stock!);
+      setCategoryUpdate(data?.product.category!);
+      setDescriptionUpdate(data?.product.description!);
+    }
   }, [data]);
   let photoArray = Array.isArray(photo) ? photo : [photo];
   if (isError) return <Navigate to="/404" />;

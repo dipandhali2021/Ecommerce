@@ -2,7 +2,6 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { Skeleton } from "../components/Loader";
 import { useOrderDetailsQuery } from "../redux/api/orderAPI";
 import { Order, OrderItem } from "../types/types";
-import { useProductDetailsQuery } from "../redux/api/productAPI";
 
 const defaultData: Order = {
   shippingInfo: {
