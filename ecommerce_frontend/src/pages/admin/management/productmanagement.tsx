@@ -13,13 +13,29 @@ import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
-  const { user } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const [isProductDeleted, setIsProductDeleted] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useProductDetailsQuery(params.id!);
+
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const deleteHandler = async () => {
+    const res = await deleteProduct({
+      userId: user?._id!,
+      productId: data?.product._id!,
+    });
+
+    setIsProductDeleted(true);
+
+    responseToast(res, navigate, "/admin/product");
+  };
+
+  const { data, isLoading, isError } = !isProductDeleted
+    ? useProductDetailsQuery(params.id!)
+    : { data: null, isError: false, isLoading: false };
 
   const { photo, name, price, stock, category, description } =
     data?.product || {
@@ -37,9 +53,6 @@ const Productmanagement = () => {
   const [descriptionUpdate, setDescriptionUpdate] =
     useState<string>(description);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
-
-  const [updateProduct] = useUpdateProductMutation();
-  const [deleteProduct] = useDeleteProductMutation();
 
   const [photoFile, setPhotoFile] = useState<File[]>([]);
   const [photoUpdate, setPhotoUpdate] = useState<string[]>([]);
@@ -89,14 +102,6 @@ const Productmanagement = () => {
 
     const res = await updateProduct({
       formData,
-      userId: user?._id!,
-      productId: data?.product._id!,
-    });
-    responseToast(res, navigate, "/admin/product");
-  };
-
-  const deleteHandler = async () => {
-    const res = await deleteProduct({
       userId: user?._id!,
       productId: data?.product._id!,
     });

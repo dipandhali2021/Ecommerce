@@ -153,11 +153,18 @@ export const updateProduct = tryCatch(async (req, res, next) => {
       });
     });
 
+
+    
+
     // Add new photos
-    const photos = (req.files as Express.Multer.File[]).map(
-      (file) => file.path
-    );
-    product.photo = photos;
+    const photos = (await Promise.all((req.files as Express.Multer.File[]).map(
+      async (file) => {
+        const response = await uploadOnCloudinary(file.path,"products");
+        return response?.secure_url;
+      }
+    ))).filter((photo) => photo !== undefined); 
+
+    product.photo = photos as string[];
   }
 
   if (name) product.name = name;

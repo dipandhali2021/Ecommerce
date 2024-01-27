@@ -52,6 +52,9 @@ const Coupon = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { isLoading, data, isError, error } = useAllCouponQuery(user?._id!);
   const [deleteCoupon] = useDeleteCouponMutation();
+
+
+  
   const deleteHandler = async (id: string) => {
     const res = await deleteCoupon({ couponId:id, adminId: user?._id! });
     responseToast(res, null, "");
