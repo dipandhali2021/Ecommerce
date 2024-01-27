@@ -116,7 +116,9 @@ const Orders = () => {
     <div className="container">
       <div className="my-orders">
         <h1>My Orders</h1>
-        <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
+        {data?.orders.length === 0 ? (<h2>No Orders Found</h2>):(
+          <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
+        )}
       </div>
     </div>
   );

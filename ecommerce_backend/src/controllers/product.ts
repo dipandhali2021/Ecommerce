@@ -10,6 +10,7 @@ import ErrorHandler from "../utils/utility-class.js";
 import { rm } from "fs";
 import { myCache } from "../app.js";
 import { invalidateCache } from "../utils/features.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const getLatestProducts = tryCatch(async (req, res, next) => {
   let products;
@@ -110,8 +111,12 @@ export const newProduct = tryCatch(
         new ErrorHandler("Please provide all the required fields", 400)
       );
     }
-    const photoPaths = (photos as Express.Multer.File[]).map(
-      (photo) => photo.path
+
+    const photoPaths = await Promise.all(
+      (photos as Express.Multer.File[]).map(async (photo) => {
+        const response = await uploadOnCloudinary(photo.path,"products");
+        return response?.secure_url;
+      })
     );
 
     await Product.create({

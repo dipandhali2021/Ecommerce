@@ -1,34 +1,49 @@
-import axios from "axios";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { IoCallOutline, IoMailOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { useNewMessageMutation } from "../redux/api/messageAPI";
+import { RootState } from "../redux/store";
+import { responseToast } from "../utils/features";
 
 export const databaseServer = import.meta.env.VITE_REALTIME_DATABASE;
 
 const Contact = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
   const [userData, setUserata] = useState({
     name: "",
     email: "",
-    phone: +91,
+    phone: "",
     message: "",
   });
-  
 
-  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const [newMessage] = useNewMessageMutation();
+
+  const submitMessageHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await axios.post(`${databaseServer}/contact.json`, userData);
-    if (res.status === 200) {
-      toast.success("Message sent successfully");
-      setUserata({
-        name: "",
-        email: "",
-        phone: 0,
-        message: "",
-      });
-    }
-  };
 
-  
+    if (
+      !userData.email ||
+      !userData.message ||
+      !userData.phone ||
+      !userData.name
+    )
+      return toast.error("Please Fill All The Fields");
+    const formData = new FormData();
+    formData.set("name", userData.name);
+    formData.set("email", userData.email);
+    formData.set("phone", userData.phone);
+    formData.set("message", userData.message);
+
+    const res = await newMessage({ id: user?._id!, formData });
+    responseToast(res, null, "");
+    setUserata({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+  };
 
   return (
     <div className="contact">
@@ -58,7 +73,7 @@ const Contact = () => {
         </div>
       </div>
       <div className="right-contact-container">
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitMessageHandler}>
           <div className="input-box">
             <input
               required
@@ -82,12 +97,12 @@ const Contact = () => {
             />
             <input
               required
-              type="number"
+              type="string"
               placeholder="Your Phone"
               name="phone"
               value={userData.phone}
               onChange={(e) =>
-                setUserata({ ...userData, phone: Number(e.target.value) })
+                setUserata({ ...userData, phone: e.target.value })
               }
             />
           </div>

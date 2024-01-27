@@ -3,6 +3,7 @@ import {
   CartItem,
   Coupon,
   Line,
+  Messages,
   Order,
   Pie,
   Product,
@@ -15,6 +16,13 @@ export type MessageResponse = {
   success: boolean;
   message: string;
 };
+
+export type AllMessageResponse = {
+  success: boolean;
+  messages: Messages[];
+};
+
+
 
 export type AllUsersResponse = {
   success: boolean;
@@ -73,6 +81,7 @@ export type AllCouponResponse = {
   coupons: Coupon[];
 };
 
+
 export type PieResponse = {
   success: boolean;
   charts: Pie;
@@ -101,9 +110,17 @@ export type NewCouponRequest = {
   id: string;
   formData: FormData;
 };
+export type NewMessageRequest = {
+  id: string;
+  formData: FormData;
+};
 export type deleteCouponRequest = {
   adminId:string,
   couponId:string
+};
+export type deleteMessageRequest = {
+  adminId: string;
+  messageId: string;
 };
 export type updateProductRequest = {
   userId: string;

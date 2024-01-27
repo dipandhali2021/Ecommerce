@@ -1,21 +1,20 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import AdminSidebar from "../../../components/admin/AdminSidebar";
 import { useSelector } from "react-redux";
-import { userReducerInitialState } from "../../../types/reducer-types";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Skeleton } from "../../../components/Loader";
+import AdminSidebar from "../../../components/admin/AdminSidebar";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../../redux/api/productAPI";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { server } from "../../../redux/store";
-import { Skeleton } from "../../../components/Loader";
+import { RootState } from "../../../redux/store";
 import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
   const { user } = useSelector(
-    (state: { userReducer: userReducerInitialState }) => state.userReducer
+    (state: RootState) => state.userReducer
   );
 
   const params = useParams();
@@ -124,11 +123,11 @@ const Productmanagement = () => {
             <section>
               <strong>Id: {data?.product._id}</strong>
 
-              <img src={`${server}/${photoArray[0]}`} alt="Product" />
+              <img src={photoArray[0]} alt="Product" />
 
               <aside>
                 {photoArray.slice(1).map((photo, index) => (
-                  <img key={index} src={`${server}/${photo}`} alt="Product" />
+                  <img key={index} src={photo} alt="Product" />
                 ))}
               </aside>
               <p>

@@ -15,7 +15,7 @@ import { auth } from "./firebase";
 import { getUser } from "./redux/api/userAPI";
 import { userExists, userNotExists } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
-import Footer, { PrivacyPolicy, TermsOfUse,FAQ } from "./components/Footer";
+import Footer, { PrivacyPolicy, TermsOfUse, FAQ } from "./components/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -82,7 +82,7 @@ const App = () => {
   ) : (
     <Router>
       <ScrollToTop />
-      <Header  />
+      <Header />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />

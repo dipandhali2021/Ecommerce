@@ -100,6 +100,13 @@ export type Coupon = {
   coupon: string;
   amount: number;
 };
+export type Messages = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+};
 
 type RevenueDistribution = {
   netMargin: number;

@@ -1,8 +1,7 @@
-import { FaCircleMinus } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
+import { FaCircleMinus } from "react-icons/fa6";
 import { TiStarFullOutline } from "react-icons/ti";
 import { useLocation, useNavigate } from "react-router-dom";
-import { server } from "../redux/store";
 import { CartItem, WishlistItem } from "../types/types";
 type ProductCardProps = {
   productId: string;
@@ -60,7 +59,7 @@ const ProductCard = ({
         </div>
 
         <img
-          src={`${server}/${photo}`}
+          src={photo}
           alt={name}
           onClick={() => navigate(`/product/${productId}`)}
         />

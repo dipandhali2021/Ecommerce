@@ -54,6 +54,7 @@ export type invalidateCacheProps = {
   userId?: string;
   orderId?: string;
   productId?: string| string[];
+  messages?: boolean;
 };
 
 export type OrderItemType = {

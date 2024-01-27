@@ -7,15 +7,14 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Skeleton } from "../components/Loader";
+import ProductCard from "../components/product-card";
 import {
   useProductDetailsQuery,
   useSearchProductsQuery,
 } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
-import { server } from "../redux/store";
-import { CartItem, WishlistItem } from "../types/types";
-import ProductCard from "../components/product-card";
 import { addToWishlist } from "../redux/reducer/wishlistReducer";
+import { CartItem, WishlistItem } from "../types/types";
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -92,7 +91,7 @@ const ProductDetails = () => {
                 {photo.map((p) => {
                   return (
                     <img
-                      src={`${server}/${p}`}
+                      src={p}
                       alt={name}
                       onClick={() => setMainImage(p)}
                     />
@@ -100,7 +99,7 @@ const ProductDetails = () => {
                 })}
               </div>
               <div className="live-image">
-                <img src={`${server}/${mainImage}`} alt={name} />
+                <img src={mainImage} alt={name} />
               </div>
             </div>
             <div className="product-details">

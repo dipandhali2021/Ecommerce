@@ -20,6 +20,7 @@ export const invalidateCache = ({
   userId,
   orderId,
   productId,
+  messages,
 }: invalidateCacheProps) => {
   if (product) {
     const productKeys: string[] = [
@@ -55,6 +56,9 @@ export const invalidateCache = ({
     ];
 
     myCache.del(adminKeys);
+  }
+  if(messages){
+    myCache.del("messages")
   }
 };
 

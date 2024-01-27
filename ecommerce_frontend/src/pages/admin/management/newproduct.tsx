@@ -16,6 +16,7 @@ const NewProduct = () => {
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
   const [stock, setStock] = useState<number>(1);
+  const [uploading, setUploading] = useState<boolean>(false);
 
   const [newProdut] = useNewProductMutation();
 
@@ -53,7 +54,9 @@ const NewProduct = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!photos.length || !price || stock < 0 || !category || !name) return toast.error("Please Fill All The Fields");
+    setUploading(true);
+    if (!photos.length || !price || stock < 0 || !category || !name)
+      return toast.error("Please Fill All The Fields");
     const formData = new FormData();
     formData.set("name", name);
     formData.set("price", String(price));
@@ -65,6 +68,7 @@ const NewProduct = () => {
     });
     const res = await newProdut({ id: user?._id!, formData });
     responseToast(res, navigate, "/admin/product");
+    setUploading(false);
   };
   return (
     <div className="admin-container">
@@ -137,7 +141,9 @@ const NewProduct = () => {
                 multiple
                 onChange={changeImageHandler}
               />
-              <button type="submit">Create</button>
+              <button type="submit">
+                {uploading ? "Uploading..." : "Create"}
+              </button>
             </main>
             <p>Upload Maximum 4 Photos of the Product</p>
           </form>

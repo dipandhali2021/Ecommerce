@@ -8,6 +8,7 @@ import productRoute from "./routes/product.js";
 import orderRoute from "./routes/order.js";
 import paymentRoute from "./routes/payment.js";
 import dashboardRoute from "./routes/stats.js";
+import messageRoute from "./routes/message.js";
 import { connectDB } from "./utils/features.js";
 import { ErrorMiddleware } from "./middlewares/error.js";
 import cors from 'cors';
@@ -42,6 +43,7 @@ app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/payment", paymentRoute);
 app.use("/api/v1/payment", paymentRoute);
 app.use("/api/v1/dashboard", dashboardRoute);
+app.use("/api/v1/message", messageRoute )
 
 
 app.use("/uploads", express.static("uploads"));

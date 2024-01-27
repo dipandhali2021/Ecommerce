@@ -1,16 +1,24 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Column } from "react-table";
 import { Skeleton } from "../../components/Loader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
-import { databaseServer } from "../Contact";
+import {
+  useAllMessagesQuery,
+  useDeleteMessageMutation,
+} from "../../redux/api/messageAPI";
+import { RootState } from "../../redux/store";
+import { CustomError } from "../../types/api-types";
+import { responseToast } from "../../utils/features";
 
 interface DataType {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   message: string;
+  action: ReactElement;
 }
 
 const columns: Column<DataType>[] = [
@@ -30,41 +38,51 @@ const columns: Column<DataType>[] = [
     Header: "Message",
     accessor: "message",
   },
+  {
+    Header: "Action",
+    accessor: "action",
+  },
 ];
 
 const AdminContact = () => {
-  const [contactData, setContactData] = useState<DataType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { data } = await axios.get(`${databaseServer}/contact.json`);
-      let values = Object.values(data);
-      setContactData(values as DataType[]);
-      setLoading(false);
-    };
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { isError, isLoading, data, error } = useAllMessagesQuery(user._id!);
 
-    fetchData();
-  }, []);
+  const [deleteUser] = useDeleteMessageMutation();
 
+  if (isError) toast.error((error as CustomError).data.message);
+
+  const deleteHandler = async (messageId: string) => {
+    const res = await deleteUser({ messageId, adminId: user?._id! });
+    responseToast(res, null, "");
+  };
   const [rows, setRows] = useState<DataType[]>([]);
+
   useEffect(() => {
-    if (contactData)
+    if (data)
       setRows(
-        contactData.map((i) => ({
+        data?.messages.map((i) => ({
           name: i.name,
           email: i.email,
           phone: i.phone,
           message: i.message,
+          action: (
+            <button
+              onClick={() => deleteHandler(i._id)}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
+          ),
         }))
       );
-  }, [contactData]);
+  }, [data]);
 
   const Table = TableHOC<DataType>(
     columns,
     rows,
     "contact-box",
-    "Contact",
+    "Messages",
     rows.length > 6
   )();
 
@@ -72,7 +90,7 @@ const AdminContact = () => {
     <div className="admin-container">
       <AdminSidebar />
       <div className="admin-contact">
-        <main>{loading ? <Skeleton length={20} /> : Table}</main>
+        <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { orderApi } from "./api/orderAPI";
 import { dashboardAPI } from "./api/dashboardAPI";
 import { wishlistReducer } from "./reducer/wishlistReducer";
 import { couponAPI } from "./api/couponAPI";
+import { messageAPI } from "./api/messageAPI";
 
 export const server = import.meta.env.VITE_SERVER;
 
@@ -17,6 +18,7 @@ export const store: Store = configureStore({
     [orderApi.reducerPath]: orderApi.reducer,
     [dashboardAPI.reducerPath]: dashboardAPI.reducer,
     [couponAPI.reducerPath]: couponAPI.reducer,
+    [messageAPI.reducerPath]: messageAPI.reducer,
     [userReducer.name]: userReducer.reducer,
     [cartReducer.name]: cartReducer.reducer,
     [wishlistReducer.name]: wishlistReducer.reducer,
@@ -28,6 +30,7 @@ export const store: Store = configureStore({
       orderApi.middleware,
       dashboardAPI.middleware,
       couponAPI.middleware,
+      messageAPI.middleware,
     ];
     return mid().concat(customMiddleware);
   },

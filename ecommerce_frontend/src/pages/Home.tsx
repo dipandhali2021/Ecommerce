@@ -128,15 +128,18 @@ const Home = () => {
           </Carousel>
         </section>
       </div>
-      <h1>
-        Latest Products
-        <Link to={"/search"} className="findmore">
-          More
-        </Link>
-      </h1>
+      {data?.products.length == 0 ? (
+        <h1> * Add Products to see Latest Products</h1>
+      ) : (
+        <h1>
+          Latest Products
+          <Link to={"/search"} className="findmore">
+            More
+          </Link>
+        </h1>
+      )}
 
       <main>
-        
         {isLoading ? (
           <Skeleton width="80vw" />
         ) : (
@@ -149,7 +152,6 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
-  
               wishHandler={addtoWishlistHandler}
             />
           ))
@@ -189,11 +191,16 @@ const Home = () => {
           Tablet
         </Link>
       </div>
-      <h1>
-        Best Selling Products
-       
-      </h1>
-
+      {bestSellingData?.products.length == 0 ? (
+        <h1> * Add Products to see Best Selling Products</h1>
+      ) : (
+        <h1>
+          Best Selling Products
+          <Link to={"/search"} className="findmore">
+            More
+          </Link>
+        </h1>
+      )}
       <main>
         {bestSellingLoading ? (
           <Skeleton width="80vw" />
@@ -207,7 +214,6 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
-  
               wishHandler={addtoWishlistHandler}
             />
           ))
@@ -235,12 +241,16 @@ const Home = () => {
           </div>
         </Carousel>
       </section>
-      <h1>
-        Explore Our Products
-        <Link to={"/search"} className="findmore">
-          More
-        </Link>
-      </h1>
+      {data?.products.length == 0 ? (
+        <h1> * Add Products to see Our Products</h1>
+      ) : (
+        <h1>
+          Explore Our Products
+          <Link to={"/search"} className="findmore">
+            More
+          </Link>
+        </h1>
+      )}
 
       <main>
         {isLoading ? (
@@ -255,7 +265,6 @@ const Home = () => {
               stock={i.stock}
               handler={addToCartHandler}
               photo={i.photo[0]}
-      
               wishHandler={addtoWishlistHandler}
             />
           ))

@@ -109,6 +109,7 @@ const Search = () => {
         </div>
       </aside>
       <main>
+        {searchData?.products.length === 0 ? (<h2>No Items Found</h2>):(<div></div>)}
         {productLoading ? (
           <Skeleton length={10} />
         ) : (

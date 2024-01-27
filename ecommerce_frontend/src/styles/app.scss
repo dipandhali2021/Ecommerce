@@ -121,6 +121,12 @@ $color5: rgba(223, 223, 223, 0.596);
       margin: 1rem 0;
       text-align: left;
     }
+
+    >h2{
+      @include heading;
+      padding: 8rem;
+      text-align: center;
+    }
   }
 }
 

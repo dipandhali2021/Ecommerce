@@ -68,3 +68,5 @@ export const deleteUser = tryCatch(async (req, res, next) => {
     message: "User deleted successfully",
   });
 });
+
+

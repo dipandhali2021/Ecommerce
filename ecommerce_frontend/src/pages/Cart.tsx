@@ -77,8 +77,8 @@ const Cart = () => {
   useEffect(() => {
     if (cartItems)
       setRows(
-        cartItems.map((i) => ({
-          photo: <img src={`${server}/${i.photo}`} />,
+        cartItems.map((i:CartItem) => ({
+          photo: <img src={i.photo} />,
           name: i.name,
           price: i.price,
           quantity: (
