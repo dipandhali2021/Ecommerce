@@ -14,6 +14,7 @@ import TableHOC from "../../components/admin/TableHOC";
 import { useStatsQuery } from "../../redux/api/dashboardAPI";
 import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
+import { getLastMonths } from "../../utils/features";
 
 interface DataType {
   categories: string;
@@ -32,6 +33,7 @@ const columns: Column<DataType>[] = [
 ];
 
 const Dashboard = () => {
+  const { lastSixMonths: months } = getLastMonths();
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { isLoading, data, isError, error } = useStatsQuery(user?._id!);
   const stats = data?.stats!;
@@ -99,6 +101,7 @@ const Dashboard = () => {
                 <h2>Revenue & Transaction </h2>
 
                 <BarChart
+                  labels={months}
                   data_1={stats.chart.revenue}
                   data_2={stats.chart.order}
                   title_1="Revenue"
