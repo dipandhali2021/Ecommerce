@@ -31,6 +31,40 @@
 }
 
 @media screen and (width<= 768px) {
+  .contact {
+    @include flex(column, center, center, 1.5rem);
+    padding: 6rem 2rem;
+  }
+
+  .about {
+    > section {
+      @include flex(column, center, center, 1.5rem);
+      padding: 6rem 2rem;
+    }
+
+    .person {
+      @include grid(1fr 1fr, 1rem);
+      padding: 1rem;
+    }
+  }
+
+  .features {
+    padding: 1rem;
+    @include grid(1fr 1fr, 1rem);
+    height: 100%;
+
+    .delivery,
+    .about-features {
+      height: 100%;
+    }
+  }
+
+  footer {
+    @include flex(column, center, center, 1rem);
+  }
+
+
+
   .cart {
     display: block;
     padding: 2rem;

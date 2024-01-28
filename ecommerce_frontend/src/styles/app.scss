@@ -14,9 +14,7 @@
 
 body {
   user-select: none;
-
 }
-
 
 a {
   text-decoration: none;
@@ -97,7 +95,7 @@ $color5: rgba(223, 223, 223, 0.596);
       text-align: left;
     }
 
-    >h2{
+    > h2 {
       @include heading;
       padding: 8rem;
       text-align: center;
@@ -119,8 +117,6 @@ $color5: rgba(223, 223, 223, 0.596);
     width: 100%;
     background-color: #000000;
     padding: 0.5rem 4rem;
-    
-  
 
     color: white;
     .offer-deatils {
@@ -170,8 +166,11 @@ $color5: rgba(223, 223, 223, 0.596);
     }
 
     .navigation {
-      @include flex(row, center, center, 1rem);
-      gap: 5rem;
+      @include flex(row, center, center, 5rem);
+
+      @media screen and (max-width: 768px) {
+        gap: 1rem;
+      }
     }
     .search-box {
       @include flex(row, center, center, 1rem);
@@ -208,7 +207,6 @@ $color5: rgba(223, 223, 223, 0.596);
       position: relative;
 
       > a {
-      
         > svg {
           @include square(1.5rem);
           align-self: center;
@@ -225,8 +223,6 @@ $color5: rgba(223, 223, 223, 0.596);
         }
         > svg {
           @include square(1.4rem);
-         
-
         }
       }
       button {
@@ -258,15 +254,15 @@ $color5: rgba(223, 223, 223, 0.596);
           }
         }
       }
-      >span{
+      > span {
         position: absolute;
         top: 0.5rem;
         right: 0.5rem;
-        
+
         > svg {
           @include square(1.5rem);
         }
-        &:hover{
+        &:hover {
           color: $color4;
           cursor: pointer;
         }
@@ -280,6 +276,10 @@ $color5: rgba(223, 223, 223, 0.596);
   @include flex(column);
   > svg {
     font-size: 4rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 60vh;
   }
 }
 
@@ -298,6 +298,19 @@ $color5: rgba(223, 223, 223, 0.596);
     margin: 5rem;
     padding: 1rem;
     font-size: 1.1rem;
+  }
+  @media screen and (max-width: 768px) {
+    > h1 {
+      font-size: 4rem;
+      text-align: center;
+    }
+    > p {
+      text-align: center;
+      padding: 0 2rem;
+    }
+    > a {
+      margin: 2rem;
+    }
   }
 }
 

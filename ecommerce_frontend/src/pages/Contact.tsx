@@ -16,11 +16,13 @@ const Contact = () => {
     phone: "",
     message: "",
   });
+  const [processing, setProcessing] = useState(false);
 
   const [newMessage] = useNewMessageMutation();
 
   const submitMessageHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setProcessing(true);
 
     if (
       !userData.email ||
@@ -43,6 +45,7 @@ const Contact = () => {
       phone: "",
       message: "",
     });
+    setProcessing(false);
   };
 
   return (
@@ -118,7 +121,7 @@ const Contact = () => {
           ></textarea>
 
           <button type="submit" className="btn">
-            Send Message
+            {processing ? "Sending Messages..." : "Send Message"}
           </button>
         </form>
       </div>

@@ -16,7 +16,12 @@
         @include heading(0.5rem, 700);
         font-size: 2rem;
       }
+      @media  screen and (max-width: 768px){
+        width: 100%;
+      }
     }
+
+    
     .intro-image {
       width: 60%;
       > section {
@@ -56,11 +61,12 @@
 .features {
   width: 100%;
   margin: auto;
-  @include flex(row, space-around, center, 0.5rem);
+  @include flex(row, space-around, flex-start, 0.5rem);
   padding: 6rem;
 
+
   .delivery {
-    @include flex(column, center, center, 0.5rem);
+    @include flex(column, flex-start, center, 0.5rem);
     .feature-icons {
       background-color: rgb(145, 145, 145);
       @include square(5rem);

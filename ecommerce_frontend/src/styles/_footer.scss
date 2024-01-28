@@ -7,10 +7,7 @@ footer {
   width: 100%;
   padding: 2rem 5%;
   position: relative;
-  @media screen and (max-width: 768px){
-    @include flex(row, center, center, 1.5rem);
-   
-  }
+
 
   .subscribe {
     @include flex(column, flex-start, flex-start, 1rem);
