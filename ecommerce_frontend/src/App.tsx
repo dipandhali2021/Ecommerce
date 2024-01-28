@@ -36,7 +36,7 @@ const WishList = lazy(() => import("./pages/WishList"));
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
-const Customers = lazy(() => import("./pages/admin/Customers"));
+const Customers = lazy(() => import("./pages/admin/customer"));
 const Transaction = lazy(() => import("./pages/admin/transaction"));
 const AdminContact = lazy(() => import("./pages/admin/AdminContact"));
 const Barcharts = lazy(() => import("./pages/admin/charts/barcharts"));
