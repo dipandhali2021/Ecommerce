@@ -44,14 +44,14 @@ const Footer = () => {
         <p>Save $3 with App New User Only</p>
         <div className="download-app">
           <div className="qr">
-            <img src="../src/assets/qr.png" alt="qr" />
+            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/fz9c9dppqbiqz2oa1qle" alt="qr" />
           </div>
           <div className="link">
             <div className="play-store">
-              <img src="../src/assets/play.png" alt="qr" />
+              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/fdlacfscxsgivr02ianu" alt="qr" />
             </div>
             <div className="app-store">
-              <img src="../src/assets/app.png" alt="qr" />
+              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/bxoygbdgl8j8bkujclso" alt="qr" />
             </div>
           </div>
         </div>

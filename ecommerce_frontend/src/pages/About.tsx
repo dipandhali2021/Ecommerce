@@ -73,9 +73,9 @@ const About = () => {
       </div>
       <div className="person">
       <Profile
-        name="Tom Cruise"
+        name="Jose P. Vigil"
         role="Founder & Chairman"
-        img="../src/assets/tom.png"
+        img="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i9nv5xl6zfu1ilivbgxy"
         social={{
           instagram: <FaInstagram />,
           linkedin: <FaLinkedinIn />,
@@ -83,9 +83,9 @@ const About = () => {
         }}
       />
       <Profile
-        name="Emma Watson"
+        name="Juanita J. Warren"
         role="Managing Director"
-        img="../src/assets/emma.png"
+        img="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/tyb7wlg2tavgdkjwbqrk"
         social={{
           instagram: <FaInstagram />,
           linkedin: <FaLinkedinIn />,
@@ -95,7 +95,7 @@ const About = () => {
       <Profile
         name="Will Smith"
         role="Product Designer"
-        img="../src/assets/will.png"
+        img="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/yxeftwqmmctrp9ugspqj"
         social={{
           instagram: <FaInstagram />,
           linkedin: <FaLinkedinIn />,

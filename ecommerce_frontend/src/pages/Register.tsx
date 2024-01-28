@@ -36,7 +36,7 @@ const navigate = useNavigate();
       const res = await login({
         name: name!,
         email: user.email!,
-        photo: "../src/assets/profile.png",
+        photo: "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,
@@ -67,7 +67,7 @@ const navigate = useNavigate();
         email: user.user.email!,
         photo:
           user.user.photoURL ||
-          "../src/assets/profile.png",
+          "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,

@@ -94,13 +94,13 @@ const Home = () => {
             showStatus={false}
           >
             <div>
-              <img src="../src/assets/banner.png" alt="Image 1" />
+              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 1" />
             </div>
             <div>
-              <img src="../src/assets/banner.png" alt="Image 2" />
+              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 2" />
             </div>
             <div>
-              <img src="../src/assets/banner.png" alt="Image 3" />
+              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 3" />
             </div>
           </Carousel>
         </section>
@@ -208,13 +208,13 @@ const Home = () => {
           showStatus={false}
         >
           <div>
-            <img src="../src/assets/categoriesB.png" alt="Image 1" />
+            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 1" />
           </div>
           <div>
-            <img src="../src/assets/categoriesB.png" alt="Image 2" />
+            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 2" />
           </div>
           <div>
-            <img src="../src/assets/categoriesB.png" alt="Image 3" />
+            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 3" />
           </div>
         </Carousel>
       </section>
