@@ -1,11 +1,13 @@
-import axios from "axios";
-import { ReactElement, useEffect, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { VscError } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
 import TableHOC from "../components/admin/TableHOC";
+import { useApplyCouponQuery } from "../redux/api/couponAPI";
 import {
   addToCart,
   calculatePrice,
@@ -14,8 +16,7 @@ import {
 } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 import { CartItem } from "../types/types";
-import { FaPlus, FaMinus } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import axios from "axios";
 
 interface DataType {
   photo: ReactElement;
@@ -77,7 +78,7 @@ const Cart = () => {
   useEffect(() => {
     if (cartItems)
       setRows(
-        cartItems.map((i:CartItem) => ({
+        cartItems.map((i: CartItem) => ({
           photo: <img src={i.photo} />,
           name: i.name,
           price: i.price,
@@ -149,13 +150,15 @@ const Cart = () => {
       <div className="total">
         <div className="left">
           <div className="coupon">
-            <h3>Apply Coupon</h3>
             <input
               placeholder="Coupon Code"
               type="text"
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
             />
+  
+              <h3>Apply Coupon</h3>
+     
           </div>
           {couponCode &&
             (isValidCouponCode ? (

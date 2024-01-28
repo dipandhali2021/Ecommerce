@@ -17,15 +17,16 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
   const [gender, setGender] = useState("");
   const [date, setDate] = useState("");
+  const [processing, setProcessing] = useState(false);
 
 const navigate = useNavigate();
 
   const [login] = useLoginMutation();
   const registerHandler = async () => {
     try {
+      setProcessing(true);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -50,9 +51,10 @@ const navigate = useNavigate();
         const messsage = (error.data as MessageResponse).message;
         toast.error(messsage);
       }
+      setProcessing(false);
     } catch (error) {
-      console.log(error);
-      toast.error("error");
+      setProcessing(false);
+      toast.error((error as Error).message);
     }
   };
 
@@ -136,7 +138,7 @@ const navigate = useNavigate();
           />
         </div>
         <div>
-          <button onClick={registerHandler}>Register</button>
+          <button onClick={registerHandler}>{!processing?"Register":"Processing"}</button>
         </div>
         <aside>
           <button onClick={loginHandler}>

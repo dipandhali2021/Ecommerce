@@ -17,6 +17,7 @@ import { RootState, server } from "../redux/store";
 import { newOrderRequest } from "../types/api-types";
 import { CartItem } from "../types/types";
 import { responseToast } from "../utils/features";
+import { set } from "firebase/database";
 
 interface DataType {
   photo: ReactElement;
@@ -66,9 +67,12 @@ const Shipping = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsProcessing(true);
-    dispatch(saveShippingInfo(shippingInfo));
     try {
+      if (paymentMethod == "") {
+        return toast.error("Please select a payment method");
+      }
+      setIsProcessing(true);
+      dispatch(saveShippingInfo(shippingInfo));
       const { data } = await axios.post(
         `${server}/api/v1/payment/create`,
         {
@@ -80,9 +84,7 @@ const Shipping = () => {
           },
         }
       );
-      if (paymentMethod == "") {
-        return toast.error("Please select a payment method");
-      }
+     
 
       if (paymentMethod === "Bank") {
         navigate("/pay", {
@@ -106,9 +108,12 @@ const Shipping = () => {
         setIsProcessing(false);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      setIsProcessing(false);
+      toast.error((error as Error).message || "Something went wrong");
     }
   };
+
+
   const [rows, setRows] = useState<DataType[]>([]);
   useEffect(() => {
     if (cartItems)

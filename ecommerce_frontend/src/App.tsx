@@ -8,14 +8,14 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import Footer, { FAQ, PrivacyPolicy, TermsOfUse } from "./components/Footer";
 import Header from "./components/Header";
 import Loader from "./components/Loader";
-import ProtectedRoute from "./components/protected-route";
+import ProtectedRoute, { ProtectedAuthRoute } from "./components/protected-route";
 import { auth } from "./firebase";
 import { getUser } from "./redux/api/userAPI";
 import { userExists, userNotExists } from "./redux/reducer/userReducer";
 import { RootState } from "./redux/store";
-import Footer, { PrivacyPolicy, TermsOfUse, FAQ } from "./components/Footer";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -36,7 +36,7 @@ const WishList = lazy(() => import("./pages/WishList"));
 //admin
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
-const Customers = lazy(() => import("./pages/admin/customers"));
+const Customers = lazy(() => import("./pages/admin/Customers"));
 const Transaction = lazy(() => import("./pages/admin/transaction"));
 const AdminContact = lazy(() => import("./pages/admin/AdminContact"));
 const Barcharts = lazy(() => import("./pages/admin/charts/barcharts"));
@@ -96,19 +96,20 @@ const App = () => {
           <Route
             path="/register"
             element={
-              <ProtectedRoute isAuthenticated={!user ? true : false}>
+              <ProtectedAuthRoute isAuthenticated={!user ? true : false}>
                 <Register />
-              </ProtectedRoute>
+              </ProtectedAuthRoute>
             }
           />
           <Route
             path="/login"
             element={
-              <ProtectedRoute isAuthenticated={!user ? true : false}>
+              <ProtectedAuthRoute isAuthenticated={!user ? true : false}>
                 <Login />
-              </ProtectedRoute>
+              </ProtectedAuthRoute>
             }
           />
+          <Route path="/login" element={<Login />} />
           {/* Logged In User Routes */}
           <Route
             element={<ProtectedRoute isAuthenticated={user ? true : false} />}

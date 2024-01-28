@@ -14,34 +14,9 @@
 
 body {
   user-select: none;
-  top: 0 !important;
-  .translated-text-class:hover,
-  .translated-text-class:hover * {
-    // targeting any child elements
-    background-color: transparent !important;
-    box-shadow: none !important; // remove box shadow
-  }
-  .goog-text-highlight {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  .goog-tooltip {
-    display: none !important;
-  }
-  .goog-text-highlight {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
 
-  .goog-tooltip:hover {
-    display: none !important;
-  }
 }
-body > .skiptranslate {
-  display: none !important;
-}
+
 
 a {
   text-decoration: none;
@@ -145,10 +120,7 @@ $color5: rgba(223, 223, 223, 0.596);
     background-color: #000000;
     padding: 0.5rem 4rem;
     
-    @media screen and (max-width: 768px){
-      @include flex(row, center, center, 1rem);
-      flex-wrap: wrap;
-    }
+  
 
     color: white;
     .offer-deatils {

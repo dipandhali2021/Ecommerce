@@ -12,7 +12,7 @@ const app = express.Router();
 const upload = multer();
 
 //route - /api/v1/oder/new
-app.post("/new", adminOnly, upload.none(), newMessage);
+app.post("/new", upload.none(), newMessage);
 app.get("/all", adminOnly, getAllMessages);
 app.delete("/delete/:id", adminOnly, deleteMessage);
 

@@ -53,10 +53,8 @@ const Coupon = () => {
   const { isLoading, data, isError, error } = useAllCouponQuery(user?._id!);
   const [deleteCoupon] = useDeleteCouponMutation();
 
-
-  
   const deleteHandler = async (id: string) => {
-    const res = await deleteCoupon({ couponId:id, adminId: user?._id! });
+    const res = await deleteCoupon({ couponId: id, adminId: user?._id! });
     responseToast(res, null, "");
   };
   const [rows, setRows] = useState<DataType[]>([]);
@@ -67,7 +65,7 @@ const Coupon = () => {
         data.coupons.map((i) => ({
           code: i.coupon,
           amount: i.amount,
-          action:(<button onClick={() => deleteHandler(i._id)}>Delete</button>)
+          action: <button onClick={() => deleteHandler(i._id)}>Delete</button>,
         }))
       );
   }, [data]);
@@ -204,7 +202,11 @@ const Coupon = () => {
             </aside>
           </section>
 
-          <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
+          {data?.coupons.length === 0 ? (
+            <h1>No Coupons</h1>
+          ) : (
+            <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
+          )}
         </div>
       </main>
     </div>

@@ -53,7 +53,7 @@ const Header = () => {
         </div>
 
         <div className="language">
-          <div id="google_translate_element"></div>
+       
         </div>
       </nav>
       <nav className="header">

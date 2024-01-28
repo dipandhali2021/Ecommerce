@@ -47,7 +47,13 @@ export const cartReducer = createSlice({
         0
       );
       state.subtotal = subtotal;
-      state.shippingCharge = state.subtotal > 1000 ? 0 : 200;
+      if (state.subtotal === 0) {
+        state.shippingCharge = 0;
+      } else if (state.subtotal < 1000) {
+        state.shippingCharge = 200;
+      } else {
+        state.shippingCharge = 0;
+      }
       state.tax = Math.round(state.subtotal * 0.18);
       state.total =
         state.subtotal + state.tax + state.shippingCharge - state.discount;

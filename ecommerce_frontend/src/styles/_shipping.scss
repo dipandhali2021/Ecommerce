@@ -36,6 +36,9 @@
   .order-items {
     @include flex(column, center, flex-start, 1rem);
     padding-bottom: 1rem;
+    >main >h1{
+      @include heading(2px);
+    }
     > h3 {
       @include heading(2px);
       margin: 1rem;

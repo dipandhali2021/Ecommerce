@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { BsSmartwatch } from "react-icons/bs";
 import { FaTabletScreenButton } from "react-icons/fa6";
@@ -13,6 +12,8 @@ import {
 import { RiCustomerServiceLine } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useDispatch } from "react-redux";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
 import { Skeleton } from "../components/Loader";
 import ProductCard from "../components/product-card";
@@ -22,11 +23,9 @@ import {
   useLatestProductsQuery,
 } from "../redux/api/productAPI";
 import { addToCart } from "../redux/reducer/cartReducer";
+import { addToWishlist } from "../redux/reducer/wishlistReducer";
 import { CustomError } from "../types/api-types";
 import { CartItem, WishlistItem } from "../types/types";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { addToWishlist } from "../redux/reducer/wishlistReducer";
 
 declare global {
   interface Window {
@@ -56,29 +55,7 @@ const Home = () => {
     toast.error(err.data.message);
   }
 
-  const googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        includedLanguages: "en,es,fr,de,ja,ko,ru,ar",
-        autoDisplay: false,
-      },
-      "google_translate_element"
-    );
-  };
-  useEffect(() => {
-    if (!document.getElementById("google-translate-script")) {
-      var addScript = document.createElement("script");
-      addScript.setAttribute(
-        "src",
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      );
-      addScript.setAttribute("id", "google-translate-script");
-      document.body.appendChild(addScript);
-    }
 
-    window.googleTranslateElementInit = googleTranslateElementInit;
-  }, []);
 
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < 1) return toast.error("Out of Stock");
@@ -192,7 +169,7 @@ const Home = () => {
         </Link>
       </div>
       {bestSellingData?.products.length == 0 ? (
-        <h1> * Add Products to see Best Selling Products</h1>
+        <h1> * No Best Selling Products till now</h1>
       ) : (
         <h1>
           Best Selling Products

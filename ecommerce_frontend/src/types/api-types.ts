@@ -22,8 +22,6 @@ export type AllMessageResponse = {
   messages: Messages[];
 };
 
-
-
 export type AllUsersResponse = {
   success: boolean;
   users: User[];
@@ -76,11 +74,14 @@ export type NewCouponResponse = {
   success: boolean;
   message: string;
 };
+export type ApplyCouponResponse = {
+  success: boolean;
+  discount: number;
+};
 export type AllCouponResponse = {
   status: string;
   coupons: Coupon[];
 };
-
 
 export type PieResponse = {
   success: boolean;
@@ -110,13 +111,14 @@ export type NewCouponRequest = {
   id: string;
   formData: FormData;
 };
+
 export type NewMessageRequest = {
   id: string;
   formData: FormData;
 };
 export type deleteCouponRequest = {
-  adminId:string,
-  couponId:string
+  adminId: string;
+  couponId: string;
 };
 export type deleteMessageRequest = {
   adminId: string;

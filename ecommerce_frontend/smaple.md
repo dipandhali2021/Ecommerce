@@ -1,19 +1,22 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Skeleton } from "../../../components/Loader";
 import AdminSidebar from "../../../components/admin/AdminSidebar";
+import { useSelector } from "react-redux";
+import { userReducerInitialState } from "../../../types/reducer-types";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
   useUpdateProductMutation,
 } from "../../../redux/api/productAPI";
-import { RootState } from "../../../redux/store";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { server } from "../../../redux/store";
+import { Skeleton } from "../../../components/Loader";
 import { responseToast } from "../../../utils/features";
 
 const Productmanagement = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user } = useSelector(
+    (state: { userReducer: userReducerInitialState }) => state.userReducer
+  );
 
   const params = useParams();
   const navigate = useNavigate();
@@ -36,11 +39,11 @@ const Productmanagement = () => {
     useState<string>(description);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
 
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+
   const [photoFile, setPhotoFile] = useState<File[]>([]);
   const [photoUpdate, setPhotoUpdate] = useState<string[]>([]);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [updateProduct] = useUpdateProductMutation();
-
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
     const allFiles: File[] = [];
@@ -73,15 +76,13 @@ const Productmanagement = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsProcessing(true);
     const formData = new FormData();
     if (nameUpdate) formData.set("name", nameUpdate);
     if (priceUpdate) formData.set("price", String(priceUpdate));
     if (stockUpdate !== undefined) formData.set("stock", String(stockUpdate));
     if (categoryUpdate) formData.set("category", categoryUpdate);
-    if (descriptionUpdate) formData.set("description", descriptionUpdate);
-
-    if (photoFile.length != 0) {
+    if(descriptionUpdate) formData.set("description",descriptionUpdate);
+    if (photoFile) {
       photoFile.forEach((photo) => {
         formData.append("photo", photo);
       });
@@ -94,26 +95,22 @@ const Productmanagement = () => {
     });
     responseToast(res, navigate, "/admin/product");
   };
-  const [deleteProduct] = useDeleteProductMutation();
+
   const deleteHandler = async () => {
     const res = await deleteProduct({
       userId: user?._id!,
       productId: data?.product._id!,
     });
-    setIsProcessing(false)
     responseToast(res, navigate, "/admin/product");
   };
 
   useEffect(() => {
-    if (data) {
-      setNameUpdate(data?.product.name!);
-      setPriceUpdate(data?.product.price!);
-      setStockUpdate(data?.product.stock!);
-      setCategoryUpdate(data?.product.category!);
-      setDescriptionUpdate(data?.product.description!);
-    }
+    setNameUpdate(data?.product.name!);
+    setPriceUpdate(data?.product.price!);
+    setStockUpdate(data?.product.stock!);
+    setCategoryUpdate(data?.product.category!);
   }, [data]);
-  let photoArray = Array.isArray(photo) ? photo : [photo];
+
   if (isError) return <Navigate to="/404" />;
 
   return (
@@ -123,21 +120,11 @@ const Productmanagement = () => {
         {isLoading ? (
           <Skeleton length={20} />
         ) : (
-          <article>
+          <>
             <section>
-              <strong>Id: {data?.product._id}</strong>
-
-              <img src={photoArray[0]} alt="Product" />
-
-              <aside>
-                {photoArray.slice(1).map((photo, index) => (
-                  <img key={index} src={photo} alt="Product" />
-                ))}
-              </aside>
-              <p>
-                {name} ({category})
-              </p>
-              <div>{description}</div>
+              <strong>{data?.product._id}</strong>
+              <img src={`${server}/${photo[0]}`} alt="Product" />
+              <p>{name}</p>
               {stock > 0 ? (
                 <span className="green">{stock} Available</span>
               ) : (
@@ -145,14 +132,12 @@ const Productmanagement = () => {
               )}
               <h3>₹{price}</h3>
             </section>
-            <button className="product-delete-btn" onClick={deleteHandler}>
-              <FaTrash />
-            </button>
-            <main>
+            <article>
+              <button className="product-delete-btn" onClick={deleteHandler}>
+                <FaTrash />
+              </button>
               <form onSubmit={submitHandler}>
-                <header>
-                  <h2>Manage</h2>
-                </header>
+                <h2>Manage</h2>
                 <div>
                   <label>Name</label>
                   <input
@@ -204,16 +189,16 @@ const Productmanagement = () => {
                   <label>Photo</label>
                   <input type="file" multiple onChange={changeImageHandler} />
                 </div>
-                <aside>
+                <div>
                   {photoUpdate.map((photoUpdate, index) => (
                     <img key={index} src={photoUpdate} alt="preview" />
                   ))}
-                </aside>
+                </div>
 
-                <button type="submit">{!isProcessing?"Update":"Processing..."}</button>
+                <button type="submit">Update</button>
               </form>
-            </main>
-          </article>
+            </article>
+          </>
         )}
       </main>
     </div>

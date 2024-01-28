@@ -103,15 +103,14 @@ const TransactionManagement = () => {
                     _id={i._id}
                     quantity={i.quantity}
                     price={i.price}
-                    
                   />
                 ))}
               </section>
 
+              <button className="product-delete-btn" onClick={deleteHandler}>
+                <FaTrash />
+              </button>
               <article className="shipping-info-card">
-                <button className="product-delete-btn" onClick={deleteHandler}>
-                  <FaTrash />
-                </button>
                 <h1>Order Info</h1>
                 <h5>User Info</h5>
                 <p>Name: {name}</p>
@@ -159,7 +158,6 @@ const ProductCard = ({
   price,
   quantity,
   productId,
-
 }: OrderItem) => (
   <div className="transaction-product-card">
     <img src={photo} alt={name} />

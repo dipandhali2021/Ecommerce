@@ -44,6 +44,7 @@ export const getUser = async (id: string) => {
     );
     return data;
   } catch (error) {
+
     throw error;
   }
 };

@@ -59,58 +59,60 @@
     }
   }
 
-  .total{
+  .total {
     margin: 2rem;
     @include flex(row, space-between, flex-start, 3rem);
 
-
-    .left{
+    .left {
       @include flex(column, space-around, flex-start, 1rem);
       width: 50%;
-     .coupon{
-      @include flex(row, space-between, center, 1rem);
-      width: 100%;
-      >input{
-        @include inputStyle(100%, 1rem, unset, 1px solid rgba(13, 13, 13, 0.196));
-        border-radius: 5px;
-      }
+      .coupon {
+        @include flex(row, space-between, center, 1rem);
+        width: 100%;
+        > input {
+          @include inputStyle(
+            100%,
+            1rem,
+            unset,
+            1px solid rgba(13, 13, 13, 0.196)
+          );
+          border-radius: 5px;
+        }
 
-      >h3{
-        @include heading(2px);
-        text-transform: capitalize;
-        background-color: $color4;
-        color: $color1;
-        padding: 0.6rem;
-        width: 50%;
-        text-align: center;
+        > h3 {
+          @include heading(2px);
+          text-transform: capitalize;
+          background-color: $color4;
+          color: $color1;
+          padding: 0.8rem;
+          width: 100%;
+          text-align: center;
+        }
       }
-     }
-    > span{
-      margin: auto;
-     }
+      > span {
+        margin: auto;
+      }
     }
 
-    aside{
+    aside {
       @include flex(column, space-around, flex-start, 2rem);
       width: 50%;
       margin: 0 4rem;
-      border:1px solid $color2;
+      border: 1px solid $color2;
       padding: 1rem;
       border-radius: 0.3rem;
       flex-wrap: wrap;
 
-      >h3{
+      > h3 {
         @include heading(1rem);
       }
-      >div{
+      > div {
         @include flex(row, space-between, flex-start, 1rem);
         width: 100%;
         border-bottom: 1px solid $color2;
         padding-bottom: 0.5rem;
-
-        
       }
-      >a{
+      > a {
         background-color: $color4;
         color: $color1;
         padding: 1rem;

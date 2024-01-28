@@ -65,9 +65,10 @@ export const appplyDiscount = tryCatch(async (req, res, next) => {
   if (!discount) {
     return next(new ErrorHandler("Invalid Coupon", 400));
   }
-
+  console.log(coupon)
+  console.log(discount);
   return res.status(200).json({
-    status: "success",
+    success: true,
     discount: discount.amount,
   });
 });

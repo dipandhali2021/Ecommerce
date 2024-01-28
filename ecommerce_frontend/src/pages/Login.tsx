@@ -1,14 +1,14 @@
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
 } from "firebase/auth";
 
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { MessageResponse } from "../types/api-types";
@@ -20,11 +20,13 @@ const Login = () => {
   const [gender] = useState("");
   const [date] = useState("");
   const [login] = useLoginMutation();
+  const [processing, setProcessing] = useState(false);
 
-
+  const navigate = useNavigate();
 
   const registerHandler = async () => {
     try {
+      setProcessing(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -43,20 +45,22 @@ const Login = () => {
 
       if ("data" in res) {
         toast.success(res.data.message);
+        navigate("/");
       } else {
         const error = res.error as FetchBaseQueryError;
         const messsage = (error.data as MessageResponse).message;
         toast.error(messsage);
-        
       }
+      setProcessing(false);
     } catch (error) {
-      console.log(error);
-      toast.error("error");
+      setProcessing(false);
+      toast.error((error as Error).message);
     }
   };
 
   const loginHandler = async () => {
     try {
+      
       const provider = new GoogleAuthProvider();
       const user = await signInWithPopup(auth, provider);
       const res = await login({
@@ -76,6 +80,7 @@ const Login = () => {
         const messsage = (error.data as MessageResponse).message;
         toast.error(messsage);
       }
+     
     } catch (error) {
       toast.error("error");
     }
@@ -110,7 +115,9 @@ const Login = () => {
         </div>
 
         <div>
-          <button onClick={registerHandler}>Log In</button>
+          <button onClick={registerHandler}>
+            {!processing ? "Log In" : "Processing"}
+          </button>
         </div>
         <aside>
           <button onClick={loginHandler}>
