@@ -1,4 +1,5 @@
-import { FormEvent, ReactElement, useEffect, useState } from "react";
+import axios from "axios";
+import { ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -7,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
 import TableHOC from "../components/admin/TableHOC";
-import { useApplyCouponQuery } from "../redux/api/couponAPI";
 import {
   addToCart,
   calculatePrice,
@@ -16,7 +16,6 @@ import {
 } from "../redux/reducer/cartReducer";
 import { RootState, server } from "../redux/store";
 import { CartItem } from "../types/types";
-import axios from "axios";
 
 interface DataType {
   photo: ReactElement;

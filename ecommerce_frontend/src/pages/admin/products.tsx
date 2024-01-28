@@ -8,7 +8,7 @@ import { Skeleton } from "../../components/Loader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
 import { useAllProductsQuery } from "../../redux/api/productAPI";
-import { RootState, server } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { CustomError } from "../../types/api-types";
 
 interface DataType {

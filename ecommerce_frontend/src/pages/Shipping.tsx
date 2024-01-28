@@ -17,7 +17,6 @@ import { RootState, server } from "../redux/store";
 import { newOrderRequest } from "../types/api-types";
 import { CartItem } from "../types/types";
 import { responseToast } from "../utils/features";
-import { set } from "firebase/database";
 
 interface DataType {
   photo: ReactElement;
