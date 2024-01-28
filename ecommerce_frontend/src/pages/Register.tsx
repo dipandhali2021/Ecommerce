@@ -77,6 +77,7 @@ const navigate = useNavigate();
 
       if ("data" in res) {
         toast.success(res.data.message);
+        navigate("/");
       } else {
         const error = res.error as FetchBaseQueryError;
         const messsage = (error.data as MessageResponse).message;

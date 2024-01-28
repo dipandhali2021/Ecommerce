@@ -75,10 +75,12 @@ const Login = () => {
 
       if ("data" in res) {
         toast.success(res.data.message);
+        navigate("/");
       } else {
         const error = res.error as FetchBaseQueryError;
         const messsage = (error.data as MessageResponse).message;
         toast.error(messsage);
+        
       }
      
     } catch (error) {
