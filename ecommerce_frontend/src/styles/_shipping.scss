@@ -1,5 +1,6 @@
 .shipping {
   @include flex(row, center, stretch, 4rem);
+  flex-wrap: wrap;
 
   > form {
     max-width: 450px;

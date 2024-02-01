@@ -31,7 +31,6 @@
     > section {
       @include flex(column, center, center, 1rem);
 
-      height: 27rem;
       width: 80%;
       @media (max-width: 900px) {
         width: 100%;

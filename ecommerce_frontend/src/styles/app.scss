@@ -51,7 +51,7 @@ $color5: rgba(223, 223, 223, 0.596);
 @import "admin-styles/products";
 @import "admin-styles/chart";
 @import "admin-styles/dashboardapp";
-@import "admin-styles/mediaquery";
+
 @import "admin-styles/admincontact";
 
 .wishlist {
@@ -572,3 +572,7 @@ $color5: rgba(223, 223, 223, 0.596);
     opacity: 0.6;
   }
 }
+
+
+
+@import "admin-styles/mediaquery";

@@ -40,6 +40,11 @@ __Axios__: A promise-based HTTP client for making requests to the server.
 __Redux__: A state management library for managing the state of the application in a predictable way.
 
 
+## Test Admin Login
+email:test@gmail.com
+password:123456
+
+
 ## Getting Started
 Follow these steps to set up the ByteBazaar frontend on your local machine.
 
@@ -88,7 +93,7 @@ VITE_SERVER=
 ## Run the Application
 
 ```
-npm start
+npm run dev
 ```
 Visit `http://localhost:3000` in your browser to explore the ByteBazaar frontend.
 

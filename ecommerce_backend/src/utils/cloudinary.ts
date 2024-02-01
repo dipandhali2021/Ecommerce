@@ -1,10 +1,19 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { config } from "dotenv";
+
+config({
+  path: "./.env",
+});
+
+const cloud_name = process.env.CLOUDINARY_CLOUD_NAME || "";
+const api_key = process.env.CLOUDINARY_API_KEY || "";
+const api_secret = process.env.CLOUDINARY_API_SECRET || "";
 
 cloudinary.config({
-  cloud_name: "da9skd1ks",
-  api_key: "187789145313252",
-  api_secret: "hyQ63B3g_7b_nAzazS8okeAgZZY",
+  cloud_name: cloud_name,
+  api_key: api_key,
+  api_secret: api_secret,
 });
 
 const uploadOnCloudinary = async (
@@ -19,7 +28,6 @@ const uploadOnCloudinary = async (
       folder: folderName,
       use_filename: true,
       unique_filename: false,
-      
     });
     //delete the file from local storage
     fs.unlinkSync(localFilePath);

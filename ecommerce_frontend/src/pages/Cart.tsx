@@ -22,7 +22,7 @@ interface DataType {
   name: string;
   price: number;
   quantity: ReactElement;
-  subtotal: number;
+  subtotal?: ReactElement;
   remove: ReactElement;
 }
 
@@ -92,7 +92,7 @@ const Cart = () => {
               </button>
             </div>
           ),
-          subtotal: i.price * i.quantity,
+          subtotal: <div className="subtotal">{i.price * i.quantity}</div>,
           remove: (
             <div className="remove">
               <button onClick={() => remove(i.productId)}>
@@ -144,7 +144,9 @@ const Cart = () => {
 
   return (
     <div className="cart-items">
-      <main>{cartItems.length > 0 ? Table : <h1>No Items Added</h1>}</main>
+      <main className="react-table">
+        {cartItems.length > 0 ? Table : <h1>No Items Added</h1>}
+      </main>
       <Link to={"/search"}>Return to Shop</Link>
       <div className="total">
         <div className="left">
@@ -155,9 +157,8 @@ const Cart = () => {
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
             />
-  
-              <h3>Apply Coupon</h3>
-     
+
+            <h3>Apply Coupon</h3>
           </div>
           {couponCode &&
             (isValidCouponCode ? (

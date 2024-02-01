@@ -45,6 +45,9 @@
     .person {
       @include grid(1fr 1fr, 1rem);
       padding: 1rem;
+      align-items: start;
+
+      
     }
   }
 
@@ -63,7 +66,16 @@
     @include flex(column, center, center, 1rem);
   }
 
+  .home .hero-banner {
+    > section {
+      height: 100%;
+    }
 
+    .banner {
+      @include grid(1fr 1fr 1fr, 1rem);
+      width: 100%;
+    }
+  }
 
   .cart {
     display: block;
@@ -88,6 +100,101 @@
       gap: 0;
     }
   }
+
+  .cart-items {
+    padding: 0rem;
+    > main {
+      width: 90%;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .total {
+      @include flex(column, space-around, center, 1rem);
+      width: 90%;
+
+      .left {
+        width: 100%;
+      }
+      aside {
+        width: 100%;
+      }
+    }
+  }
+
+  .shipping {
+    width: 100%;
+    @include flex(column, flex-start, stretch, 2rem);
+    padding: 2rem;
+
+    > h1 {
+      @include heading(2px);
+      margin: 2rem;
+      text-align: center;
+    }
+
+    > input,
+    > select {
+      @include inputStyle;
+      border: 1px solid rgba(31, 31, 31, 0.351);
+
+      font-size: 1.05rem;
+      border-radius: 5px;
+    }
+
+    > button {
+      @include btn(1rem, $color4, $color1);
+      border-radius: 5px;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .product-search-name {
+    > aside {
+      @include grid(1fr 1fr, 0.5rem);
+    }
+
+    > main {
+      .search-product-list {
+        @include grid(1fr 1fr, 1rem);
+        justify-items: center;
+
+        .product-card {
+          width: 10rem;
+          .off {
+            padding: 0;
+          }
+          img {
+            width: 14rem;
+            height: 14rem;
+          }
+        }
+      }
+    }
+  }
+
+  .wishlist {
+    padding: 0;
+    @include grid(1fr 1fr, 0.5rem);
+    justify-items: center;
+
+    .product-card {
+      width: 10rem;
+      .off {
+        padding: 0;
+      }
+      img {
+        width: 14rem;
+        height: 14rem;
+      }
+    }
+  }
+  
 
   .product-search-page {
     display: block;

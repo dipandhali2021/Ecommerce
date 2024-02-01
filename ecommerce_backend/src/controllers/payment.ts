@@ -1,7 +1,7 @@
 import { stripe } from "../app.js";
 import { tryCatch } from "../middlewares/error.js";
 import { Coupon } from "../models/coupon.js";
-import { NewCouponRequstBody, NewProductRequstBody } from "../types/types.js";
+import { NewCouponRequstBody} from "../types/types.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { Request, Response, NextFunction } from "express";
 export const createPaymentIntent = tryCatch(async (req, res, next) => {

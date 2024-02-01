@@ -25,7 +25,7 @@ MongoDB installed and running
 __Clone the Repository__
 
 ```
-git clone https://github.com/your-username/ByteBazaar.git
+git clone https://github.com/dipandhali2021/Ecommerce.git
 
 ```
 
