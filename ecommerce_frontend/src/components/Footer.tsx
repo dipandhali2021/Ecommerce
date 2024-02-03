@@ -21,7 +21,7 @@ const Footer = () => {
       <div className="subscribe">
         <h2>Support</h2>
         <p> 512/14, 5 Th Floor, Raheja Chamber, Nariman Point</p>
-        <p>exclusive@bytebazaar.com</p>
+        <p>help@bytebazaar.com</p>
         <p> +02222881098</p>
       </div>
       <div className="subscribe">
@@ -986,7 +986,7 @@ export const TermsOfUse = () => {
 
       <p>
         We care about data privacy and security. Please review our Privacy
-        Policy: bigbazaar/privacy-policy.com. By using the Services, you agree
+        Policy: bytebazaar/privacy-policy.com. By using the Services, you agree
         to be bound by our Privacy Policy, which is incorporated into these
         Legal Terms. Please be advised the Services are hosted in India. If you
         access the Services from any other region of the world with laws or

@@ -6,8 +6,7 @@ import {
   MdOutlineCameraAlt,
   MdOutlineComputer,
   MdOutlineHeadphones,
-  MdOutlinePhoneIphone,
-  MdVideogameAsset,
+  MdOutlinePhoneIphone
 } from "react-icons/md";
 import { RiCustomerServiceLine } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
@@ -55,8 +54,6 @@ const Home = () => {
     toast.error(err.data.message);
   }
 
-
-
   const addToCartHandler = (cartItem: CartItem) => {
     if (cartItem?.stock < 1) return toast.error("Out of Stock");
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity }));
@@ -94,13 +91,22 @@ const Home = () => {
             showStatus={false}
           >
             <div>
-              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 1" />
+              <img
+                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                alt="Image 1"
+              />
             </div>
             <div>
-              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 2" />
+              <img
+                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                alt="Image 2"
+              />
             </div>
             <div>
-              <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png" alt="Image 3" />
+              <img
+                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                alt="Image 3"
+              />
             </div>
           </Carousel>
         </section>
@@ -158,11 +164,6 @@ const Home = () => {
           HeadPhone
         </Link>
 
-        <Link to="/categories/gaming">
-          <MdVideogameAsset />
-          Gaming
-        </Link>
-
         <Link to="/categories/tablet">
           <FaTabletScreenButton />
           Tablet
@@ -208,13 +209,22 @@ const Home = () => {
           showStatus={false}
         >
           <div>
-            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 1" />
+            <img
+              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              alt="Image 1"
+            />
           </div>
           <div>
-            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 2" />
+            <img
+              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              alt="Image 2"
+            />
           </div>
           <div>
-            <img src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx" alt="Image 3" />
+            <img
+              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              alt="Image 3"
+            />
           </div>
         </Carousel>
       </section>

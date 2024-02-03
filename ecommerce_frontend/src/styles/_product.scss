@@ -1,9 +1,11 @@
 .product-page {
   @include flex(column, center,flex-start,  1rem);
+ 
   padding: 2rem 10%;
   .product {
    
     @include flex(row, space-around, center, 1rem);
+    flex-wrap: wrap;
     height: 100%;
     width: 100%;
 
@@ -126,6 +128,8 @@
 
   .search-product-list{
     @include flex(row, flex-start, center, 1rem);
+    overflow-x: auto;
+    width: 100%;
     
     
   }

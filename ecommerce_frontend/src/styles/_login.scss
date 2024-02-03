@@ -32,7 +32,9 @@
     > div {
       width: 100%;
       @include flex(row, center, center);
-
+      >p{
+        text-align: center;
+      }
       > input,
       > select,>input:focus {
         padding-top: 1rem;

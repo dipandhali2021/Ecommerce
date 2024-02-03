@@ -21,7 +21,7 @@ const Register = () => {
   const [date, setDate] = useState("");
   const [processing, setProcessing] = useState(false);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [login] = useLoginMutation();
   const registerHandler = async () => {
@@ -36,7 +36,8 @@ const navigate = useNavigate();
       const res = await login({
         name: name!,
         email: user.email!,
-        photo: "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
+        photo:
+          "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,
@@ -73,7 +74,6 @@ const navigate = useNavigate();
         dob: date,
         _id: user.user.uid!,
       });
-      
 
       if ("data" in res) {
         toast.success(res.data.message);
@@ -133,13 +133,18 @@ const navigate = useNavigate();
         <div>
           <input
             required
-            type="date"
+            placeholder="DD/MM/YYYY"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <div>
-          <button onClick={registerHandler}>{!processing?"Register":"Processing"}</button>
+          <button onClick={registerHandler}>
+            {!processing ? "Register" : "Processing"}
+          </button>
+        </div>
+        <div>
+          <p>*Fill Gender and Date of Birth before Sign up with Google</p>
         </div>
         <aside>
           <button onClick={loginHandler}>

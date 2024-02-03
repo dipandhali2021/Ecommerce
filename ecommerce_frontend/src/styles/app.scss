@@ -89,6 +89,9 @@ $color5: rgba(223, 223, 223, 0.596);
 
   .my-orders {
     padding: 0 10rem 10rem 10rem;
+    >main{
+      overflow-x: auto;
+    }
     > h1 {
       @include heading;
       margin: 1rem 0;
