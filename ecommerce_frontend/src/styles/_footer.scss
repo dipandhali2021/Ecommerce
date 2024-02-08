@@ -8,16 +8,32 @@ footer {
   padding: 2rem 5%;
   position: relative;
 
-
   .subscribe {
     @include flex(column, flex-start, flex-start, 1rem);
     height: 100%;
     width: 15rem;
     max-width: 20rem;
-    >h1{
+    .github {
+      @include flex(row, center, center, 0.5rem);
+
+      padding: 0.5rem 1rem;
+      border: 1px solid $color1;
+      border-radius: 0.5rem;
+      > svg {
+        @include square(1.5rem);
+        color: $color1;
+      }
+      &:hover {
+        border: 1px solid $color4;
+        > svg {
+          color: $color4;
+        }
+      }
+    }
+    > h1 {
       @include heading(2px, 600);
     }
-    >h2{
+    > h2 {
       @include heading(2px, 500);
     }
     > a {
@@ -80,7 +96,8 @@ footer {
   width: 100%;
 
   > h1,
-  > h2 ,>h4{
+  > h2,
+  > h4 {
     @include heading(2px, 600);
   }
 
@@ -97,18 +114,17 @@ footer {
   }
 }
 
-
-.scroll-to-top{
+.scroll-to-top {
   position: absolute;
   bottom: 2rem;
   right: 2rem;
-  >div{
-  >svg{
-    @include square(2rem);
-    color: $color1;
-    &:hover{
-      color: $color4;
+  > div {
+    > svg {
+      @include square(2rem);
+      color: $color1;
+      &:hover {
+        color: $color4;
+      }
     }
   }
-}
 }

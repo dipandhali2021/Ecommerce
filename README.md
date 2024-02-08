@@ -14,8 +14,8 @@ __MERN__ stands for:
 The combination of these technologies forms a powerful and efficient full-stack development environment, enabling the creation of modern and scalable web applications.
 
 ## Test Admin Login
-email:test@gmail.com
-password:123456
+- email: test@gmail.com
+- password: 123456
 
 ## Getting Started
 

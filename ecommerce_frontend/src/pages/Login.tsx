@@ -36,7 +36,7 @@ const Login = () => {
       const res = await login({
         name: name!,
         email: user.email!,
-        photo: "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
+        photo: "/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,
@@ -66,7 +66,7 @@ const Login = () => {
       const res = await login({
         name: user.user.displayName!,
         email: user.user.email!,
-        photo: user.user.photoURL || "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
+        photo: user.user.photoURL || "/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,

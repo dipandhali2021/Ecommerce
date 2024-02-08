@@ -92,19 +92,19 @@ const Home = () => {
           >
             <div>
               <img
-                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                src="/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
                 alt="Image 1"
               />
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                src="/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
                 alt="Image 2"
               />
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
+                src="/ecommerce-assets/aluk049x4ru3wqtajnq5.png"
                 alt="Image 3"
               />
             </div>
@@ -210,19 +210,19 @@ const Home = () => {
         >
           <div>
             <img
-              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              src="/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
               alt="Image 1"
             />
           </div>
           <div>
             <img
-              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              src="/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
               alt="Image 2"
             />
           </div>
           <div>
             <img
-              src="https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
+              src="/ecommerce-assets/i5verxhvyrvjjgd9vnnx"
               alt="Image 3"
             />
           </div>
