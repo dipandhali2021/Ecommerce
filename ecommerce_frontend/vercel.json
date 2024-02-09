@@ -1,7 +1,6 @@
 {
     "rewrites":  [
-      {"source": "/(.*)", "destination": "/"},
-      {"source":"/ecommerce-assets","destination":"https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003"}
+      {"source": "/(.*)", "destination": "/"}      
     ]
     
-}
+  }
