@@ -6,9 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    proxy: {
-      "/ecommerce-assets":
-        "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003",
-    },
+    
   },
 });

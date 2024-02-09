@@ -37,7 +37,7 @@ const Register = () => {
         name: name!,
         email: user.email!,
         photo:
-          "/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
+          "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,
@@ -68,7 +68,7 @@ const Register = () => {
         email: user.user.email!,
         photo:
           user.user.photoURL ||
-          "/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
+          "https://res.cloudinary.com/da9skd1ks/image/upload/v1706444003/ecommerce-assets/n9zo9cdhtcjzwhyrwx1w",
         gender,
         role: "user",
         dob: date,
